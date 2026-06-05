@@ -1,8 +1,8 @@
 {
-  "repoName":"UserRepo",
-  "author":"Jeff Kopko",
-  "workshopTitle":"Hugo for Fortinet TECWorkshops",
-  "themeVariant":"CloudCSEMovie",
+  "repoName":"fortiweb-api-mcp-protection",
+  "author":"Wondyrad Tefera",
+  "workshopTitle":"Using FortiWeb to Protect Web Applications, API and MCP Workloads",
+  "themeVariant":"",
   "logoBannerText":"FortiHugo",
   "logoBannerSubText":"",
   "errorLevel":"warning",
@@ -18,20 +18,20 @@
     "weight":10
   },
   {
-    "text": "Fortinet Standard Workshop Guide",
-    "URL": "https://fortinetcloudcse.github.io/UserRepo",
+    "text": "FortiWeb Admin Guide",
+    "URL": "https://docs.fortinet.com/product/fortiweb/8.0",
     "icon": "fa-tools",
     "weight":20
   },
   {
-    "text": "Fortinet Standard Workshop Template Repo",
-    "URL": "https://github.com/FortinetCloudCSE/UserRepo",
+    "text": "FortiWeb Datasheet",
+    "URL": "https://www.fortinet.com/content/dam/fortinet/assets/data-sheets/FortiWeb.pdf",
     "icon": "fa-tools",
     "weight":30
   },
   {
-    "text": "Fortinet Hugo reLearn theme - Guide",
-    "URL": "https://mcshelby.github.io/hugo-theme-relearn/index.html",
+    "text": "FortiWeb Ordering Guide",
+    "URL": "https://www.fortinet.com/content/dam/fortinet/assets/data-sheets/og-fortiweb.pdf",
     "icon": "fa-tools",
     "weight":40
   }
