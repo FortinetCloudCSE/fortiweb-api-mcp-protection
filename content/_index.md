@@ -1,32 +1,20 @@
 ---
-title: "Fortinet TECWorkshop Template - MVP2"
-linkTitle: "TECWorkshop Template"
+title: "Protecting Modern Applications, APIs, and MCP Services with FortiWeb"
+linkTitle: "Protecting Modern Applications, APIs, and MCP Services with FortiWeb"
 weight: 1
 archetype: "home"
-description: "Hugo for Fortinet TEC Workshops"
+description: "Protecting Modern Applications, APIs, and MCP Services with FortiWeb"
 ---
 
 
-THIS IS A TEST
 
 
 
 ### {{% badge style="info" color="red" icon="fa-fw fas fa-exclamation-triangle" title=" " %}}Change{{% /badge %}} FYI, YOU WILL NOW NEED TO CHECKIN WITH YOUR EMAIL ADDRESS TO VIEW THIS GUIDE
-This change helps with analytics and data gathering and is consistent with UserRepo guide (this repo) serving as the root of every new workshop (e.g. this guide is always on latest and greatest featureset which gets cloned into every new workshop)  
 
-This site will explain how to use the [Hugo Web Framework](https://gohugo.io/) & the ["reLearn" Theme](https://mcshelby.github.io/hugo-theme-relearn/index.html) to effectively organize & deliver Fortinet TEC Workshops & Product demos in a consistent, simple, and visually appealing format.
-
-The beauty of this framework lies in its simplicity.  Within approx 30 mins, anybody can have a site up and running.  Content is created via Markdown files, and the workshop guide layout is simply a directory structure.
-
-Follow along on this simple tutorial to get up and running with a Hugo formatted site for your TEC Workshop/training/demo content today!
 
 ### Learning Objectives
-- Setup UserRepo on your system & Build container with Hugo & CentralRepo
-- Learn to work in Hugo to create your content to display proper information flow for your TEC Workshop/demo/training
-- Publish your Hugo site to GitHub pages via a CI/CD model 
- 
-### Hugo and Fortinet TECWorkshops - Visually
-- The purpose of this workflow is to simplify creation of Fortinet TECWorkshop guides while providing an example CI/CD development environment with maximum re-usability 
-- Here's a visual representation of our process which will be fully explained in each chapter
+In this lab, we will walk through how FortiWeb can be used to protect modern web applications, APIs, and MCP based services. The environment will be deployed using Terraform, allowing participants to quickly stand up a complete testing environment. Once the deployment is complete, participants will access the lab through Guacamole and begin working with a preconfigured environment that includes FortiGate integration and basic FortiWeb settings. Features such as load balancing, SSL offloading, and content routing are already configured and will be reviewed to provide architectural context before moving into the hands on security exercises.
 
-{{< FTNThugoFlow >}}
+The goal of this training is to provide practical experience configuring and validating FortiWeb security capabilities. Participants will learn how to detect and block common web application attacks, use machine learning to build behavioral models from application traffic, secure APIs and MCP communications, defend against bot and DDoS attacks, and analyze logs to troubleshoot security events. By the end of the lab, participants should have a solid understanding of how FortiWeb can be deployed to protect modern applications and how its security features can be used to address real world threats.
+ 

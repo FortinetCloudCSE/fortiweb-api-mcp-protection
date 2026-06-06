@@ -1,7 +1,7 @@
 ---
 title: "Deploy the Lab Environment"
 linkTitle: "Deploy the Lab Environment"
-weight: 9
+weight: 2
 ---
 
 ## Deploy the Lab Environment

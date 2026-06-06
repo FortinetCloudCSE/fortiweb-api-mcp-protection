@@ -1,6 +1,6 @@
 ---
 title: "Task 1 – Environment Deployment and Access"
-linkTitle: "Deploy the Lab Enviroment"
+linkTitle: "The Lab Enviroment"
 weight: 1
 ---
 
