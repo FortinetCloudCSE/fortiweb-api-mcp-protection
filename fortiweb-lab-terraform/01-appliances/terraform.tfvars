@@ -1,0 +1,9 @@
+resource_group_name = "rg-fortiweblab-student-CHANGEME"
+location            = "eastus"
+vnet_name           = "vnet-fortiweb-training-lab"
+admin_username      = "azureuser"
+admin_password               = "Fortinetlab1!"
+fortigate_lab_student_password = "Fortinetlab1!"
+fortigate_size      = "Standard_F2s_v2"
+fortiweb_size       = "Standard_F2s_v2"
+fortiweb_data_disk_gb = 30

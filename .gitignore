@@ -1,9 +1,12 @@
 **/.DS_Store
 public/
 docs/
+hugo.toml
+config.toml
 node_modules/
 docker-compose.yml
 package-lock.json
 package.json
 /venv
 fortihugorunner
+tools/fortiweb-lab-traffic/fortiweb-lab-traffic
