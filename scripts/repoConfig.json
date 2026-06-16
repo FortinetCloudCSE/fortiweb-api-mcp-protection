@@ -1,39 +1,43 @@
 {
-  "repoName":"fortiweb-api-mcp-protection",
-  "author":"Wondyrad Tefera",
-  "workshopTitle":"Using FortiWeb to Protect Web Applications, API and MCP Workloads",
-  "themeVariant":"Xperts2025",
-  "logoBannerText":"FortiWeb",
-  "logoBannerSubText":"API and MCP Protection",
-  "errorLevel":"warning",
-  "googleServicesID":"G-5RZBH288ST",
+  "repoName": "fortiweb-api-mcp-protection",
+  "author": "Wondyrad Tefera",
+  "workshopTitle": "Protecting Modern Applications, APIs, and MCP Services with FortiWeb",
+  "themeVariant": "CloudCSEMovie",
+  "logoBannerText": "FortiWeb",
+  "logoBannerSubText": "API and MCP Protection",
+  "errorLevel": "warning",
+  "googleServicesID": "G-5RZBH288ST",
   "marketingCode": "CloudCSE-Xperts2026",
+  "bannerLine1": "FortiWeb Workshop",
+  "bannerLine2": "Protecting Modern Applications, APIs, and MCP Services",
+  "bannerLine3": "Hands-on lab with Terraform-deployed Azure environment",
+  "quizUrl": "",
   "videoHeaderSrc": "/videos/CloudsAnimated.mp4",
   "videoHeaderInterval": "60",
   "shortcuts": [
-  {
-    "text": "Fortinet Cloud CSE GitHub Org",
-    "URL": "https://github.com/FortinetCloudCSE",
-    "icon": "fa-graduation-cap",
-    "weight":10
-  },
-  {
-    "text": "FortiWeb Admin Guide",
-    "URL": "https://docs.fortinet.com/product/fortiweb/8.0",
-    "icon": "fa-tools",
-    "weight":20
-  },
-  {
-    "text": "FortiWeb Datasheet",
-    "URL": "https://www.fortinet.com/content/dam/fortinet/assets/data-sheets/FortiWeb.pdf",
-    "icon": "fa-tools",
-    "weight":30
-  },
-  {
-    "text": "FortiWeb Ordering Guide",
-    "URL": "https://www.fortinet.com/content/dam/fortinet/assets/data-sheets/og-fortiweb.pdf",
-    "icon": "fa-tools",
-    "weight":40
-  }
+    {
+      "text": "Fortinet Cloud CSE GitHub Org",
+      "URL": "https://github.com/FortinetCloudCSE",
+      "icon": "fa-graduation-cap",
+      "weight": 10
+    },
+    {
+      "text": "FortiWeb Admin Guide",
+      "URL": "https://docs.fortinet.com/product/fortiweb/8.0",
+      "icon": "fa-tools",
+      "weight": 20
+    },
+    {
+      "text": "FortiWeb Datasheet",
+      "URL": "https://www.fortinet.com/content/dam/fortinet/assets/data-sheets/FortiWeb.pdf",
+      "icon": "fa-tools",
+      "weight": 30
+    },
+    {
+      "text": "FortiWeb Ordering Guide",
+      "URL": "https://www.fortinet.com/content/dam/fortinet/assets/data-sheets/og-fortiweb.pdf",
+      "icon": "fa-tools",
+      "weight": 40
+    }
   ]
 }

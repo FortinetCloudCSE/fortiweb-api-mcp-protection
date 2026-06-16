@@ -1,0 +1,7 @@
+resource_group_name = "rg-fortiweblab-student-CHANGEME"
+vnet_name           = "vnet-fortiweb-training-lab"
+guac_image_id       = "/subscriptions/17ea9b3d-1449-40fd-9a1e-4d6f01cef632/resourceGroups/rg_Wondy_Fortiweb_Training/providers/Microsoft.Compute/galleries/fortiweb_lab_gallery/images/guacamole-client-image/versions/0.0.1"
+docker1_image_id    = "/subscriptions/17ea9b3d-1449-40fd-9a1e-4d6f01cef632/resourceGroups/rg_Wondy_Fortiweb_Training/providers/Microsoft.Compute/galleries/fortiweb_lab_gallery/images/Linux-docker-1/versions/0.0.1"
+docker2_image_id    = "/subscriptions/17ea9b3d-1449-40fd-9a1e-4d6f01cef632/resourceGroups/rg_Wondy_Fortiweb_Training/providers/Microsoft.Compute/galleries/fortiweb_lab_gallery/images/Linux-docker-2/versions/0.0.1"
+guac_size           = "Standard_D2s_v3"
+docker_size         = "Standard_D2s_v3"
