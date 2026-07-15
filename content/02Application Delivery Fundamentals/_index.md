@@ -4,19 +4,13 @@ linkTitle: "Ch 2: Application Delivery Fundamentals"
 weight: 20
 ---
 
-## Lab – Reviewing the Application Delivery Configuration
+## **Objective**
 
-Before FortiWeb can protect an application, it must first know where that application resides. This is accomplished by defining one or more backend application servers in a **Server Pool**.
+In this chapter, you will review how FortiWeb is used to deliver multiple web applications in the lab environment.
 
-A Server Pool can contain a single application server or multiple servers that provide the same service. When multiple servers are present, FortiWeb can provide traditional application delivery features such as health monitoring, load balancing, and session persistence, while simultaneously providing Web Application Firewall (WAF) protection.
+The application delivery configuration has already been built for you. The goal of this chapter is not to configure FortiWeb from scratch, but to understand the overall structure, review the key components, and see how traffic flows through FortiWeb to the backend applications.
 
-In this lab, the application delivery configuration has already been completed. Rather than creating the configuration from scratch, you will review the objects that have been configured and become familiar with how the applications are published through FortiWeb.
-
-### **Objective**
-
-Understand how FortiWeb is being used for application delivery.
-
-This module is informational only. Configuration has been pre-built.
+FortiWeb provides more than Web Application Firewall services. It can also act as an application delivery platform by providing load balancing, SSL/TLS offloading, and content routing. These capabilities allow FortiWeb to publish multiple applications while keeping the security services directly in the traffic path.
 
 ### **Topics Covered**
 
