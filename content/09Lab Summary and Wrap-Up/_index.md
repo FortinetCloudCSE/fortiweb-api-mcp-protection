@@ -12,7 +12,7 @@ At the conclusion of this lab, participants will have:
 * Accessed and managed the lab through Guacamole  
 * Understood load balancing, SSL offloading, and content routing concepts  
 * Protected applications from common web attacks  
-* Built and enforced machine learning models  
+* Built and enforced Machine Learning-Based Anomaly Detection models  
 * Secured REST APIs  
 * Protected MCP/AI-enabled services  
 * Mitigated bot and DDoS attacks  
@@ -29,7 +29,7 @@ Deploy → Understand Traffic Flow → Protect Web Apps → Learn Behavior → P
 | Ch 1 | Getting Started — deploy and access the lab |
 | Ch 2 | Application Delivery Fundamentals |
 | Ch 3 | Protecting Applications from Common Attacks |
-| Ch 4 | Machine Learning and Behavioral Modeling |
+| Ch 4 | Machine Learning-Based Anomaly Detection |
 | Ch 5 | API Security |
 | Ch 6 | MCP Protection |
 | Ch 7 | Bot Protection and DDoS Mitigation |
