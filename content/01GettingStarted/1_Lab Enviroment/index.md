@@ -12,7 +12,7 @@ Deploy the training environment and become familiar with the lab topology.
 
 The diagram below summarizes the FortiWeb training lab: Guacamole client access, FortiGate perimeter, FortiWeb WAF, and Docker application targets.
 
-![FortiWeb Training Lab topology — WAF, API Security, MCP Security, FortiGate perimeter, and Docker training targets](fortiweb-training-lab-topology.png)
+![FortiWeb Training Lab topology — WAF, API Security, MCP Security, FortiGate perimeter, and Docker training targets](lab-image.png)
 
 | Component | Role | Key addresses |
 |-----------|------|----------------|
