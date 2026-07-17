@@ -24,6 +24,10 @@ In later exercises, you will create a Web Protection Profile, generate a broader
 DVWA is an intentionally vulnerable web application designed for security education and testing. All attacks in this lab are performed in a controlled training environment. The objective is to understand common web application vulnerabilities and how a WAF such as FortiWeb protects against them.
 {{% /notice %}}
 
+{{% notice tip %}}
+To transfer text from your local computer into the Guacamole desktop, open the Guacamole side menu with **Ctrl + Shift + Command** on macOS or **Ctrl + Shift + Alt** on Windows. Paste the text into the Guacamole clipboard panel, then paste it into the application inside the remote desktop.
+{{% /notice %}}
+
 ---
 
 ### Step 1 – Access the Guacamole Desktop
@@ -32,9 +36,9 @@ DVWA is an intentionally vulnerable web application designed for security educat
 2. Once the desktop appears, launch the web browser.
 3. From the browser’s shortcut/bookmarks bar, click the **DVWA** shortcut.
 
-The DVWA login page should appear.
+The DVWA login page should appear at `dvwa.fortiweblab.local`.
 
-![DVWA login page — add screenshot](dvwa-login.png)
+![DVWA login page](dvwa-login.png)
 
 ---
 
@@ -49,11 +53,13 @@ Use one of the following credential pairs:
 
 After successful authentication, the DVWA home page is displayed.
 
-![DVWA home page after login — add screenshot](dvwa-home.png)
+![DVWA home page after login](dvwa-home.png)
 
 {{% notice tip %}}
 If the application prompts you to create or reset the database, notify your instructor before proceeding.
 {{% /notice %}}
+
+Before beginning the tests, confirm that DVWA displays **Security Level: low**. If it does not, select **DVWA Security**, change the level to **Low**, and save the setting. The payloads in this exercise are designed for DVWA’s Low security level.
 
 ---
 
@@ -85,9 +91,11 @@ Improperly validated database input remains one of the most common causes of maj
    1' OR '1'='1
    ```
 
+![SQL Injection payload entered in the User ID field](dvwa-sqli-payload.png)
+
 4. Click **Submit**.
 
-![SQL Injection results showing multiple user records — add screenshot](dvwa-sqli-results.png)
+![SQL Injection results showing multiple user records](dvwa-sqli-results.png)
 
 #### Observe
 
@@ -126,9 +134,11 @@ Because operating system commands execute with the privileges of the web applica
    127.0.0.1; whoami
    ```
 
+![Command Injection payload entered in the IP address field](dvwa-cmdi-payload.png)
+
 4. Click **Submit**.
 
-![Command Injection output showing whoami result — add screenshot](dvwa-cmdi-results.png)
+![Command Injection output showing the web-server account](dvwa-cmdi-results.png)
 
 #### Observe
 
@@ -160,14 +170,19 @@ Strong session management is an important component of web application security.
 #### Perform the exercise
 
 1. From the DVWA navigation menu, select **Weak Session IDs**.
-2. Click **Generate** several times.
-3. Record several generated Session IDs.
+2. Open Chrome Developer Tools by pressing **F12** or **Ctrl + Shift + I**.
+3. Select the **Network** tab.
+4. Click **Generate** on the Weak Session IDs page.
+5. In Developer Tools, select the `weak_id` request.
+6. Open **Headers** and locate the `Set-Cookie` response header.
+7. Record the value of the `dvwaSession` cookie.
+8. Repeat the Generate action several times and record each new value.
 
-![Weak Session IDs showing predictable sequence — add screenshot](dvwa-weak-session-ids.png)
+![Developer Tools showing the predictable dvwaSession cookie](dvwa-weak-session-ids.png)
 
 #### Observe
 
-Notice whether the Session IDs appear to follow a predictable sequence or pattern. If an attacker can predict future Session IDs, they may be able to hijack another authenticated user’s session.
+Compare the recorded `dvwaSession` values. Notice whether they follow a predictable sequence or pattern. If an attacker can predict a valid session identifier, they may be able to impersonate another session.
 
 Record your observations before continuing.
 
