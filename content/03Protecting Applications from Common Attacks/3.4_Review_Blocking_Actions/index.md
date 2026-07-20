@@ -10,59 +10,95 @@ weight: 40
 
 In this exercise, you review the FortiWeb Attack Log after the DVWA mapped attack campaign from Exercise 3.3.
 
-You identify different attack types detected by the Web Protection Profile, examine log details, and compare this protected behavior with the unprotected baseline from Exercise 3.1.
+You identify different attack types detected by the Web Protection Profile, examine log details, browse multiple log pages, and compare this protected behavior with the unprotected baseline from Exercise 3.1.
 
 ---
 
-### Step 1 – Open the FortiWeb Attack Logs
+### Step 1 – Log In to FortiWeb
 
-1. Log in to the FortiWeb administrative interface.
-2. Navigate to:
+1. From the Guacamole desktop, open Chrome (Internet icon).
+2. Use the FortiWeb bookmark, or browse to:
+
+   ```text
+   https://10.10.2.100:8443
+   ```
+
+3. Sign in with the lab credentials:
+
+| Field | Value |
+|-------|-------|
+| Username | `Fortilab` |
+| Password | `Fortinetlab1!` |
+
+![FortiWeb login page](fortiweb-login.png)
+
+{{% notice tip %}}
+Accept the self-signed certificate warning if prompted.
+{{% /notice %}}
+
+---
+
+### Step 2 – Open the Attack Log
+
+1. Navigate to:
 
    **Log & Report → Log Access → Attack**
 
-The Attack Log displays the malicious requests detected by FortiWeb.
+2. If results do not appear immediately, click the **Refresh** icon.
 
-If the results do not appear immediately, click the **Refresh** icon.
+The Attack Log lists malicious requests detected by FortiWeb. After the DVWA mapped campaign, you should see a large number of events for host `dvwa.fortiweblab.local` under policy `juiceshop-DVWA`.
 
-![FortiWeb Attack Log overview after DVWA campaign — add screenshot](attack-log-overview.png)
+![Attack Log overview after the DVWA campaign](attack-log-overview.png)
+
+{{% notice tip %}}
+Use the pagination controls at the bottom of the Attack Log to move through additional pages. The DVWA mapped campaign generates many events across multiple pages—browsing beyond the first page helps you see additional attack subtypes, URLs, and source addresses.
+{{% /notice %}}
+
+![Attack Log pagination — browse additional pages](attack-log-xss.png)
 
 ---
 
-### Step 2 – Review Detected SQL Injection Attacks
+### Step 3 – Review Detected SQL Injection Attacks
 
-Locate entries where the following values are displayed:
+Locate or filter entries where the following values are displayed:
 
 | Log Field | Expected Value |
 |-----------|----------------|
 | Main Type | Signature Detection |
 | Sub Type | SQL Injection |
 | HTTP Host | `dvwa.fortiweblab.local` |
+| Policy | `juiceshop-DVWA` |
 
-Review the **URL** column. The request should reference a DVWA SQL Injection endpoint, such as:
+To filter:
+
+1. Click **Add Filter**.
+2. Select **Sub Type**.
+3. Search for and select **SQL Injection**.
+
+Review the **URL** column. Requests should reference DVWA SQL Injection endpoints such as:
 
 * `/vulnerabilities/sqli/`
 * `/vulnerabilities/sqli_blind/`
 
-![Attack Log filtered or highlighting SQL Injection — add screenshot](attack-log-sqli.png)
+![Attack Log showing SQL Injection and related events](attack-log-sqli.png)
+
+![Attack Log filtered for Sub Type = SQL Injection](attack-log-sqli-filter.png)
 
 #### Observe
 
-FortiWeb identifies the malicious request as SQL Injection because the payload matches one or more configured attack signatures.
-
-Depending on the action configured in the signature policy, FortiWeb may alert, deny, or block the request.
+FortiWeb identifies the request as SQL Injection because the payload matches one or more signatures in the **DVWA** signature policy. Depending on the configured action, FortiWeb may alert, deny, or block the request.
 
 ---
 
-### Step 3 – Review Detected Cross-Site Scripting Attacks
+### Step 4 – Review Detected Cross-Site Scripting Attacks
 
-Use the log filter to display Cross-Site Scripting events:
+Clear or change the filter to display Cross-Site Scripting events:
 
 1. Click **Add Filter**.
 2. Select **Sub Type**.
 3. Search for and select **Cross Site Scripting**.
 
-The filtered results should display entries similar to the following:
+Expected values include:
 
 | Log Field | Expected Value |
 |-----------|----------------|
@@ -70,65 +106,51 @@ The filtered results should display entries similar to the following:
 | Sub Type | Cross Site Scripting |
 | HTTP Host | `dvwa.fortiweblab.local` |
 
-The URL may reference a DVWA XSS endpoint such as:
-
-* `/vulnerabilities/xss_r/`
-
-![Attack Log filtered for Cross Site Scripting — add screenshot](attack-log-xss.png)
+The URL may reference a DVWA XSS endpoint such as `/vulnerabilities/xss_r/` and may contain encoded script elements such as `<script>`.
 
 #### Observe
-
-The URL or request parameter may contain encoded HTML or JavaScript elements such as `<script>`, `<img>`, or `<svg>`.
 
 FortiWeb decodes and analyzes the request before comparing it against the configured attack signatures.
 
 ---
 
-### Step 4 – Review Other Detected Attacks
+### Step 5 – Review Other Detected Attacks
 
-Clear or modify the existing filter and review the remaining log entries.
+Clear or modify the filter and browse additional log pages. Depending on the campaign and enabled signatures, you may also see categories such as:
 
-Depending on the attack payloads included in the traffic generator and the enabled FortiWeb signatures, you may see categories such as:
-
-* SQL Injection
-* Cross-Site Scripting
+* Generic Attacks
+* Directory Traversal / Local File Inclusion
+* Information Disclosure
 * OS Command Injection
 * Remote File Inclusion
-* Local File Inclusion
-* Directory Traversal
-* Server-Side Injection
 * Protocol violations
-* Content-encoding evasion
-
-![Attack Log showing multiple attack subtypes — add screenshot](attack-log-multiple-types.png)
 
 {{% notice tip %}}
-Not every category is guaranteed to appear. Detection depends on the attack payload, the DVWA endpoint, the enabled signature set, and the actions configured in the Web Protection Profile.
+Not every category is guaranteed to appear on the first page. Use pagination and filters to explore the full set of detections generated by the mapped attack campaign.
 {{% /notice %}}
 
 ---
 
-### Step 5 – Open an Individual Attack Log
+### Step 6 – Open an Individual Attack Log
 
-Select one of the attack log entries to view its details.
+1. Select one attack log entry.
+2. Review the **Log Details** pane on the right.
+3. Expand **Detailed Information** and click **More Details** if available.
 
-Review the available information, including:
+Review fields such as:
 
 * Date and time
-* Server policy
-* Source IP address
+* Server policy (`juiceshop-DVWA`)
+* Source IP address and country
 * Destination IP address
-* Threat level
-* Main attack type
-* Attack subtype
-* HTTP host
-* Requested URL
-* Matched signature
-* FortiWeb action
-* HTTP method
-* Request parameters
+* Threat level / severity
+* Main type and subtype
+* HTTP host and URL
+* Matched signature ID and message
+* Action taken (for example, `Alert_Deny`)
+* Matched pattern
 
-![Individual attack log detail view — add screenshot](attack-log-detail.png)
+![Individual attack log details — Directory Traversal example](attack-log-detail.png)
 
 #### Consider
 
@@ -138,15 +160,25 @@ The log identifies **what** happened, **when** it happened, **where** the reques
 
 ---
 
-### Step 6 – Compare Source IP Addresses
+### Note – Analyze with AI (FortiAI)
+
+When you open an individual attack log, the Log Details pane includes an **Analyze with AI** button.
+
+![Log Details pane showing Analyze with AI](attack-log-analyze-ai.png)
+
+**Analyze with AI** sends the selected attack log to the FortiAI Assistant for context-aware analysis. FortiAI can summarize the event, assess potential risk and impact, and suggest mitigation or configuration changes—without requiring you to copy log data manually.
+
+{{% notice note %}}
+This lab does **not** require you to use **Analyze with AI**. The button is shown here for awareness only. For details, see [Analyze Individual Attack Logs with FortiAI](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/570355/analyze-individual-attack-logs-with-fortiai-8-0-1) in the FortiWeb 8.0.5 Administration Guide.
+{{% /notice %}}
+
+---
+
+### Step 7 – Compare Source IP Addresses
 
 Review the **Source** column in the Attack Log.
 
-You may notice that the traffic generator uses different simulated source IP addresses. These addresses help create a more realistic attack campaign and allow you to observe how FortiWeb records traffic that appears to come from multiple locations.
-
-The displayed country flag is based on the geolocation associated with the simulated source IP address.
-
-![Attack Log source IPs and geolocation flags — add screenshot](attack-log-source-ips.png)
+The traffic generator uses different simulated source IP addresses and displays corresponding country flags. This creates a more realistic campaign and shows how FortiWeb records multi-source activity.
 
 {{% notice note %}}
 These are simulated client addresses supplied by the lab traffic generator. They do not indicate that real external systems are attacking the lab.
@@ -158,11 +190,14 @@ These are simulated client addresses supplied by the lab traffic generator. They
 
 Confirm that you completed the following:
 
-* Opened the FortiWeb Attack Log
+* Logged in to FortiWeb
+* Opened **Log & Report → Log Access → Attack**
+* Browsed more than one page of Attack Log results
 * Located SQL Injection events
 * Filtered for Cross-Site Scripting events
 * Reviewed at least one detailed attack log entry
 * Confirmed that the target host was `dvwa.fortiweblab.local`
+* Noted the **Analyze with AI** option (not required for this lab)
 
 ---
 
@@ -172,8 +207,8 @@ Confirm that you completed the following:
 2. What value appeared in the **Main Type** field for SQL Injection and Cross-Site Scripting attacks?
 3. Which DVWA URL paths appeared most frequently in the logs?
 4. Were the attacks only logged, or were they blocked?
-5. Which log field identifies the Web Protection mechanism responsible for detecting the request?
-6. Why is mapping attacks to the correct DVWA vulnerability page more effective than sending every payload to the same URL?
+5. Which log field identifies the signature or protection mechanism responsible for detecting the request?
+6. Why should you browse multiple Attack Log pages after a mapped campaign?
 7. How does this protected behavior differ from the baseline results in Exercise 3.1?
 
 ---

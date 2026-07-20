@@ -6,39 +6,88 @@ weight: 10
 
 ## Access the Lab Environment
 
-After deployment completes, use Guacamole to reach the lab desktop and the systems you will use throughout the course.
+After deployment completes, use Apache Guacamole to access the lab’s Linux desktop. From this desktop, you can open FortiWeb, FortiGate, the training applications, and the traffic-generation tools.
 
-### Step 1 – Log In to Guacamole
+### Before You Begin
 
-1. Open the Guacamole URL printed at the end of deployment:
+Locate the public IP address provided at the end of the deployment process in the previous section. You will use that address to reach Guacamole.
 
-   ```text
-   http://<guacamole_access>
-   ```
+### Step 1 – Open the Guacamole Login Page
 
-2. Sign in with the Guacamole credentials provided by your instructor (or configured in the lab gallery image).
-3. Connect to the Linux jump-host desktop session.
+From your local desktop, open a web browser and enter:
 
-![Guacamole login or desktop session — add screenshot](guacamole-login.png)
+```text
+http://<provided-ip-address>:8080/guacamole/#/
+```
 
-### Step 2 – Review Available Tools and Credentials
+Replace `<provided-ip-address>` with the public IP address from the deployment output.
 
-From the Guacamole desktop, confirm that you can reach the following systems:
+![Apache Guacamole login page](guacamole-login.png)
 
-| System | Access from Guacamole | Username | Password |
-|--------|------------------------|----------|----------|
-| FortiGate | `https://10.10.3.101` | `lab-student` | `Fortinetlab1!` |
-| FortiWeb | `https://10.10.2.100` | `Fortilab` | `Fortinetlab1!` |
-| Lab applications | Browser shortcuts / bookmarks | Varies by application | See later exercises |
-| Traffic generator | Terminal → `~/fortiweb-lab-traffic` | Student account | N/A |
-
-{{% notice tip %}}
-Accept any self-signed certificate warnings for FortiGate and FortiWeb in the lab environment.
+{{% notice note %}}
+Guacamole uses HTTP in this isolated lab. Your browser may label the connection **Not Secure**. Do not reuse these lab credentials outside the training environment.
 {{% /notice %}}
 
-![Browser bookmarks and terminal on Guacamole desktop — add screenshot](guacamole-desktop-tools.png)
+### Step 2 – Sign In to Guacamole
 
-### Step 3 – Review the Application Architecture
+Enter the following credentials:
+
+| Field | Value |
+|-------|-------|
+| Username | `guacadmin` |
+| Password | `Fortinet1!` |
+
+Click **Login**.
+
+![Guacamole credentials entered on the login page](guacamole-credentials.png)
+
+### Step 3 – Open the Client Connection
+
+After you sign in, the Guacamole home page displays the available connections.
+
+Click the **Client** connection.
+
+![Guacamole home page showing the Client connection](guacamole-client-connection.png)
+
+Guacamole opens the Linux working desktop in the browser.
+
+![Linux working desktop opened through Guacamole](guacamole-desktop.png)
+
+### Step 4 – Open Google Chrome
+
+On the Linux desktop, click the blue **Internet** globe icon on the bottom panel to open Google Chrome.
+
+![Internet button used to launch Google Chrome](open-chrome.png)
+
+### Step 5 – Review the Browser Bookmarks
+
+The applications and administrative interfaces used in the lab are already bookmarked in Chrome. The bookmarks include:
+
+* FortiWeb
+* FortiGate
+* Swagger UI
+* crAPI
+* OWASP Juice Shop
+* DVWA
+* Other lab applications
+
+![Chrome showing the bookmarked lab applications](chrome-bookmarks.png)
+
+Use the bookmarks rather than manually entering each application URL.
+
+### Lab Credentials
+
+| System | Username | Password |
+|--------|----------|----------|
+| Guacamole | `guacadmin` | `Fortinet1!` |
+| FortiGate | `Fortilab` | `Fortinetlab1!` |
+| FortiWeb | `Fortilab` | `Fortinetlab1!` |
+
+{{% notice tip %}}
+FortiGate and FortiWeb use lab certificates. Accept the self-signed certificate warning when prompted.
+{{% /notice %}}
+
+### Review the Application Architecture
 
 While connected to the jump host, identify the major components you will work with:
 
@@ -52,6 +101,8 @@ Refer to the topology diagram in [The Lab Environment](../1_Lab%20Enviroment/) a
 
 ### Key Takeaways
 
-* Access the lab through Guacamole after deployment
-* Use the jump host to reach FortiGate, FortiWeb, applications, and tools
-* Confirm the major components before starting the security exercises
+* Access Guacamole at `http://<provided-ip-address>:8080/guacamole/#/`
+* Sign in with the dedicated Guacamole lab credentials
+* Open the **Client** connection to reach the Linux desktop
+* Use the Internet button to launch Chrome
+* Use the preconfigured bookmarks to access FortiWeb and the lab applications
