@@ -20,60 +20,40 @@ The traffic generator and DVWA application are part of a controlled training env
 
 ---
 
-### Step 1 – Open a Terminal
+### Step 1 – Open a Terminal on the Guacamole Desktop
 
-From the Guacamole desktop, open the terminal application.
+From the Guacamole desktop, open a terminal.
 
-The command prompt should display the student account on the Guacamole system.
+You can launch Terminal from the **Applications** menu or from the dock at the bottom of the desktop. The Internet (globe) icon opens Chrome; use that later when you review FortiWeb logs in Exercise 3.4.
 
-![Guacamole terminal ready for lab traffic tool — add screenshot](guacamole-terminal.png)
+![Guacamole desktop — use Terminal for the traffic tool; Internet opens Chrome](open-terminal-or-browser.png)
+
+The command prompt should display the student account on the Guacamole system:
+
+```text
+student@guacamole01:~$
+```
 
 ---
 
-### Step 2 – Navigate to the Traffic Generator Directory
+### Step 2 – Navigate to the Traffic Generator Directory and Launch the Tool
 
 At the terminal prompt, enter:
 
 ```bash
 cd ~/fortiweb-lab-traffic
-```
-
-Confirm that the prompt shows the following directory:
-
-```text
-student@guacamole01:~/fortiweb-lab-traffic$
-```
-
----
-
-### Step 3 – Launch the FortiWeb Lab Traffic Tool
-
-Run the following command:
-
-```bash
 ./fortiweb-lab-traffic
 ```
 
-The FortiWeb Lab Traffic Launcher menu appears:
+![Navigate to fortiweb-lab-traffic and launch the tool](guacamole-terminal.png)
 
-```text
-================================
-  FortiWeb Lab Traffic Launcher
-================================
+The **FortiWeb Lab Traffic Launcher** main menu appears:
 
-1. Web application traffic generator
-2. API traffic generator
-3. MCP traffic generator
-4. Run complete FortiWeb training scenario
-5. Run all attack campaigns concurrently
-6. Exit
-```
-
-![FortiWeb Lab Traffic Launcher main menu — add screenshot](traffic-launcher-main-menu.png)
+![FortiWeb Lab Traffic Launcher main menu](traffic-launcher-main-menu.png)
 
 ---
 
-### Step 4 – Select the Web Application Traffic Generator
+### Step 3 – Select the Web Application Traffic Generator
 
 At the `Select option:` prompt, enter:
 
@@ -81,7 +61,7 @@ At the `Select option:` prompt, enter:
 1
 ```
 
-This opens the Web Application Traffic Generator menu.
+This opens the **Web Application Traffic** menu.
 
 The current target may display:
 
@@ -90,16 +70,14 @@ Target: https://juiceshop.fortiweblab.local/
 ```
 
 {{% notice tip %}}
-The target shown at the top of the menu may initially reference Juice Shop. The DVWA mapped-attack option automatically sends each request to the appropriate DVWA host and vulnerability page.
+The target shown at the top of the menu may initially reference Juice Shop. Option **16** (DVWA mapped attacks) automatically sends each request to `dvwa.fortiweblab.local` and the matching vulnerability page.
 {{% /notice %}}
-
-![Web Application Traffic Generator menu — add screenshot](web-app-traffic-generator-menu.png)
 
 ---
 
-### Step 5 – Run the DVWA Mapped Attack Campaign
+### Step 4 – Run the DVWA Mapped Attack Campaign
 
-From the Web Application Traffic Generator menu, enter:
+From the Web Application Traffic menu, enter:
 
 ```text
 16
@@ -111,30 +89,33 @@ Option **16** is:
 DVWA mapped attacks - attacks matched to each DVWA page
 ```
 
-The script begins sending attack payloads to the DVWA application. Each attack is mapped to the corresponding vulnerable DVWA page. For example:
+![Web Application Traffic menu — select option 16 for DVWA mapped attacks](web-app-traffic-generator-menu.png)
 
-* SQL Injection payloads are sent to the SQL Injection page
-* Cross-Site Scripting payloads are sent to the XSS page
-* Command Injection payloads are sent to the Command Injection page
-* Other supported attacks are sent to the appropriate DVWA vulnerability endpoint
+The script begins sending attack payloads to DVWA. Each attack type is mapped to the corresponding vulnerable page. For example:
 
-Allow the script to run until the attack campaign is complete.
+* SQL Injection and Blind SQL Injection payloads are sent to the SQL Injection endpoints
+* Cross-Site Scripting payloads are sent to the XSS pages
+* Command Injection and other supported attacks are sent to their matching DVWA endpoints
 
-![DVWA mapped attack campaign running in terminal — add screenshot](dvwa-mapped-attacks-running.png)
+While the campaign runs, the terminal displays request lines, status codes, simulated source IPs, and scenario summaries as each mapped attack finishes.
+
+![DVWA mapped attacks running — Blind SQL Injection completing and Reflected XSS starting](dvwa-mapped-attacks-running.png)
 
 {{% notice warning %}}
 Do not close the terminal while the script is running.
 {{% /notice %}}
 
+Allow the script to run until every mapped attack scenario has completed.
+
 ---
 
-### Step 6 – Confirm Campaign Completion
+### Step 5 – Confirm Campaign Completion
 
-When the campaign finishes, review the terminal output for a completion message or summary of requests sent.
+When the DVWA mapped-attack campaign finishes, the tool returns to the same **Web Application Traffic** menu you used to select option **16**.
 
-![DVWA mapped attack campaign completed — add screenshot](dvwa-mapped-attacks-complete.png)
+![Web Application Traffic menu returned after the attack campaign completes](dvwa-mapped-attacks-complete.png)
 
-You do not need to re-enter each attack manually. The campaign produces a broader and more consistent set of events for log review in the next exercise.
+You can leave the menu open, select **0** to go back to the main launcher, or exit the tool. You do not need to re-enter each attack manually—the campaign has already produced the events needed for log review in the next exercise.
 
 ---
 
@@ -142,10 +123,11 @@ You do not need to re-enter each attack manually. The campaign produces a broade
 
 Confirm that you completed the following:
 
-* Launched the `fortiweb-lab-traffic` tool
+* Launched `./fortiweb-lab-traffic`
 * Selected option **1** – Web application traffic generator
 * Selected option **16** – DVWA mapped attacks
 * Allowed the attack campaign to complete without closing the terminal
+* Confirmed that the Web Application Traffic menu reappeared after completion
 
 ---
 
