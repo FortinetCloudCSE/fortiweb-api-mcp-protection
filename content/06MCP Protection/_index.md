@@ -8,7 +8,7 @@ weight: 60
 
 Modern AI assistants can retrieve live information, invoke tools, and interact with external systems through the **Model Context Protocol (MCP)**. These capabilities make AI applications more useful, but they also introduce a new attack surface.
 
-In this chapter, you learn how FortiWeb provides protocol-aware protection for MCP-enabled applications. You generate legitimate MCP traffic, configure MCP Security, launch an MCP attack campaign, and analyze the resulting Traffic and Attack Logs.
+In this chapter, you learn how FortiWeb provides protocol-aware protection for MCP-enabled applications. You configure MCP Security, generate legitimate MCP traffic, launch an MCP attack campaign, and analyze the resulting Traffic and Attack Logs.
 
 ### Learning Objectives
 
@@ -80,8 +80,8 @@ Validates streamed JSON-RPC message structure against official MCP schema files 
 
 ### Hands-On Tasks
 
-* [Exercise 6.1 – Generate Legitimate MCP Traffic](6.1_Generate_Legitimate_MCP_Traffic/)
-* [Exercise 6.2 – Configure MCP Security](6.2_Configure_MCP_Security/)
+* [Exercise 6.1 – Configure MCP Security](6.1_Configure_MCP_Security/)
+* [Exercise 6.2 – Generate Legitimate MCP Traffic](6.2_Generate_Legitimate_MCP_Traffic/)
 * [Exercise 6.3 – Launch MCP Attacks](6.3_Launch_MCP_Attacks/)
 * [Exercise 6.4 – Review MCP Attack Logs](6.4_Review_MCP_Attack_Logs/)
 
