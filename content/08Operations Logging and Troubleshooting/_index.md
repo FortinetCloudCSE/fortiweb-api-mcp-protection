@@ -14,11 +14,13 @@ Deploying FortiWeb is only the beginning of protecting an application. Administr
 
 In this chapter, you use FortiWeb logs to validate policy behavior and follow a structured troubleshooting process.
 
+For official troubleshooting procedures, diagnostics, and common issue guidance, see [Troubleshooting](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/738263/troubleshooting) in the FortiWeb 8.0.5 Administration Guide.
+
 ### Learning Objectives
 
 After completing this chapter, you will be able to:
 
-* Distinguish Attack, Traffic, Event, and System Logs
+* Distinguish Attack, Traffic, and Event Logs
 * Investigate events across web, API, MCP, and bot-protection scenarios
 * Tune policies using evidence rather than broad exceptions
 * Troubleshoot application access from client to backend
@@ -30,10 +32,15 @@ After completing this chapter, you will be able to:
 |-----|-------------|
 | Attack | Understand which protection detected a request and what action was taken |
 | Traffic | Verify request flow, response status, and backend forwarding |
-| Event | Audit administrator activity, configuration changes, and system events |
-| System | Investigate appliance health, services, HA, licensing, and errors |
+| Event | Audit administrator activity, configuration changes, updates, and system notifications |
 
-![FortiWeb log categories — optional overview](fortiweb-log-categories.png)
+Open logs from:
+
+**Log&Report → Log Access**
+
+Then select **Attack**, **Event**, or **Traffic** as needed.
+
+![Log&Report → Log Access navigation (Attack, Event, Traffic)](fortiweb-log-categories.png)
 
 ### Recommended Investigation Workflow
 
