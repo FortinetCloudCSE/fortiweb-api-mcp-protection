@@ -8,7 +8,7 @@ weight: 40
 
 Configure FortiWeb’s **Machine Learning-Based Anomaly Detection** to automatically learn the normal behavior of the OWASP Juice Shop application.
 
-Using legitimate application traffic, FortiWeb builds a behavioral model of the application. Once learning is complete, you place the policy into **Enforcement Mode** and verify that FortiWeb detects and blocks requests that deviate from learned behavior.
+Using legitimate application traffic, FortiWeb builds a behavioral model of the application. Once learning reaches the **Running** state, you verify the model and then generate attack traffic to confirm that FortiWeb detects and blocks requests that deviate from learned behavior.
 
 Unlike traditional signature-based protection alone, Machine Learning enables FortiWeb to detect abnormal application behavior—providing an additional layer of protection against previously unseen attacks.
 
@@ -21,7 +21,6 @@ After completing this chapter, you will be able to:
 * Configure Machine Learning for a FortiWeb policy
 * Generate legitimate application traffic to build a behavioral model
 * Verify that Machine Learning has completed the learning process
-* Enable Enforcement Mode
 * Generate anomalous application traffic
 * Review Machine Learning detections in FortiWeb logs
 
@@ -49,7 +48,7 @@ Once this baseline has been established, every new request is compared against t
 
 This approach helps FortiWeb identify suspicious requests even when no signature exists—providing an additional layer of protection against zero-day attacks, application abuse, and other unknown threats.
 
-![Signature vs Machine Learning comparison — optional diagram](ml-vs-signatures.png)
+![Signature Detection vs Machine Learning-Based Anomaly Detection](ml-vs-signatures.png)
 
 ---
 
@@ -71,13 +70,13 @@ Once sufficient samples have been collected, FortiWeb creates mathematical model
 
 FortiWeb performs this analysis using **two complementary layers** of Machine Learning, improving detection accuracy while reducing false positives.
 
-![Two-layer Machine Learning model — optional diagram](ml-two-layer-model.png)
+![Two-Layer Machine Learning-Based Anomaly Detection](ml-two-layer-model.png)
 
 #### Layer 1 – Behavioral Modeling
 
-The first layer learns how the application behaves.
+The first layer learns how the protected application behaves from traffic that passes through FortiWeb.
 
-FortiWeb analyzes legitimate requests and builds mathematical models describing relationships between URLs, HTTP methods, parameters, and expected parameter values. After learning completes, every incoming request is compared against this behavioral model.
+FortiWeb uses a Hidden Markov Model (HMM) to monitor URLs, HTTP methods, and parameters. It collects samples, generalizes them into patterns, and builds mathematical models for those parameters and methods. After learning completes, every request is compared against the model to determine whether it is an **anomaly**.
 
 Examples of anomalies detected during this stage include:
 
@@ -93,49 +92,59 @@ The purpose of this layer is **not** to determine whether a request is malicious
 
 Not every unusual request is an attack. Applications evolve, users behave unpredictably, and developers introduce new functionality.
 
-To reduce false positives, requests identified as anomalous by the behavioral model are evaluated by a second Machine Learning layer. This layer uses pre-trained threat models developed from real-world attack samples to determine whether the anomaly is likely malicious.
+When Layer 1 marks a request as anomalous, FortiWeb evaluates it with a second Machine Learning layer of **pre-trained threat models**. Each model represents an attack category—such as SQL Injection, Cross-Site Scripting (XSS), or command/code injection—and is trained from analysis of thousands of attack samples.
 
-These models recognize attack categories such as:
+These threat models are created and maintained by FortiGuard and pushed to FortiWeb appliances through the FortiWeb Security Service, similar to signature updates. When new attack techniques appear, FortiGuard re-trains the relevant model and distributes the update.
 
-* SQL Injection
-* Cross-Site Scripting (XSS)
-* Command Injection
-* Directory Traversal
-* Other common web application attacks
+Layer 2 helps FortiWeb decide whether an anomaly is a real attack or a benign deviation that should be ignored, which reduces false positives.
 
-By combining behavioral anomaly detection with threat classification, FortiWeb can protect against both known and previously unseen techniques while minimizing unnecessary blocking of legitimate users.
+By combining local behavioral anomaly detection with FortiGuard threat classification, FortiWeb can protect against both known and previously unseen techniques while minimizing unnecessary blocking of legitimate users.
+
+#### Example – Normal Traffic, Anomalies, and Attacks
+
+The following example shows how the two layers work together in practice. FortiWeb first checks whether a parameter value matches normally expected characters and length. Unusual values are treated as anomalies. FortiGuard Support Vector Machine (SVM) threat models then separate benign anomalies from real attacks.
+
+![How FortiWeb ML Works — Normal Traffic, Anomalies, and Attacks](ml-how-it-works-example.png)
+
+| Scenario | Example input | Classification | Action |
+| --- | --- | --- | --- |
+| Normal traffic | `firstname=Mark&lastname=Smith` | Matches expected letters and length | Allowed |
+| Benign anomaly | `firstname=Janette&lastname=Smit&` | Unusual character, but not a threat | Allowed |
+| Attack | `firstname="SELECT * FROM CUSTOMER"` | Anomaly **and** confirmed attack | Blocked |
+
+For additional detail, see [ML-based anomaly detection](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/94907/ml-based-anomaly-detection) in the FortiWeb 8.0.5 Administration Guide.
 
 ---
 
 ### Machine Learning Lifecycle
 
-Machine Learning-Based Anomaly Detection progresses through several stages as FortiWeb learns and protects an application. These stages can be monitored from the **Machine Learning Overview** page in the FortiWeb management interface.
+Machine Learning-Based Anomaly Detection progresses through several HMM learning stages as FortiWeb learns and protects an application. These stages can be monitored from the **Machine Learning Overview** page in the FortiWeb management interface.
 
-![Machine Learning lifecycle stages — optional diagram](ml-lifecycle.png)
+![Machine Learning lifecycle stages](ml-lifecycle.png)
 
 #### Stage 1 – Collecting
 
 During the **Collecting** stage, FortiWeb gathers representative samples of legitimate application traffic.
 
-Only successful application requests that accurately represent normal behavior are used to build the behavioral model. The quality of the model depends heavily on the quality and diversity of the collected traffic—so the learning phase should include realistic user activity rather than repetitive or artificial requests alone.
+Only requests that meet FortiWeb’s sampling criteria are used—typically successful responses (`200` or `302`) with text/HTML content and parameters in the URL or body. Collected values are generalized into patterns (for example, email addresses become something like `A_N@A.A`) rather than stored as raw strings. The quality of the model depends heavily on the quality and diversity of the collected traffic—so the learning phase should include realistic user activity rather than repetitive or artificial requests alone.
 
 #### Stage 2 – Building
 
-Once enough legitimate traffic has been collected, FortiWeb begins generating the mathematical models used for anomaly detection.
+Once sample collection for a parameter is complete, FortiWeb enters the **Building** stage and generates the mathematical HMM models used for anomaly detection.
 
-During this stage, relationships between URLs, HTTP methods, parameters, and parameter value patterns are analyzed to create a behavioral model representing normal application activity. The time required depends on the amount and diversity of collected traffic.
+FortiWeb first builds an **initial model** after enough samples are collected, then continues refining until patterns stabilize into a more accurate **standard model**. Relationships between URLs, HTTP methods, parameters, and parameter value patterns are analyzed to represent normal application activity. The time required depends on the amount and diversity of collected traffic.
 
 #### Stage 3 – Running
 
-After the behavioral models have stabilized, FortiWeb transitions into the **Running** state.
+After model testing completes successfully, FortiWeb transitions into the **Running** state.
 
-Every incoming request is evaluated against the learned behavioral model. Requests that match learned behavior are processed normally. Requests identified as anomalous are passed to the second Machine Learning layer for threat classification before the configured policy action is applied.
+Every incoming request is evaluated against the learned behavioral model. Requests that match learned behavior are processed normally. Requests identified as anomalous are passed to the second Machine Learning layer (FortiGuard SVM threat models) for threat classification before the configured policy action—Alert, Alert & Deny, or Period Block—is applied. FortiWeb continues collecting new samples so models stay current as the application evolves.
 
 #### Stage 4 – Discarded
 
 Not every application parameter can be modeled successfully.
 
-If FortiWeb determines that a parameter does not have sufficient consistency to build a reliable behavioral model, that parameter is placed into the **Discarded** state. Discarded parameters are excluded from anomaly detection while the remainder of the application continues to benefit from Machine Learning protection.
+If FortiWeb determines that it cannot build a reliable mathematical model for a parameter, that parameter is placed into the **Discarded** state. Discarded parameters are excluded from anomaly detection while the remainder of the application continues to benefit from Machine Learning protection.
 
 ---
 
@@ -166,17 +175,17 @@ This traffic allows FortiWeb to build an accurate behavioral model within minute
 
 #### **Hands-On Configuration**
 
-* Enabling Machine Learning in Learning mode
+* Creating Anomaly Detection for the Juice Shop domain
+* Tuning CLI sample thresholds for efficient lab model generation
 * Generating legitimate Juice Shop traffic
-* Verifying the behavioral model
-* Switching to Enforcement Mode
+* Verifying the behavioral model reached the Running state
 * Testing unexpected and malicious requests
 
 ### **Hands-On Tasks**
 
 * [Exercise 4.1 – Configure Machine Learning](4.1_Configure_Machine_Learning/)
 * [Exercise 4.2 – Generate Legitimate Traffic](4.2_Generate_Legitimate_Traffic/)
-* [Exercise 4.3 – Switch to Enforcement Mode](4.3_Switch_to_Enforcement_Mode/)
+* [Exercise 4.3 – Verify the Behavioral Model](4.3_Verify_Behavioral_Model/)
 * [Exercise 4.4 – Test Unexpected Requests](4.4_Test_Unexpected_Requests/)
 
 ### **Key Takeaways**

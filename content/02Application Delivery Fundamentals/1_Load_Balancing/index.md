@@ -129,9 +129,9 @@ When a Server Pool contains multiple members, FortiWeb uses its load-balancing, 
 
 ### Step 5 – Review Health Status
 
-After saving and enabling the Server Policy, return to:
+After saving and enabling the Server Policy, review the FortiView Dashboards:
 
-**Server Objects → Server → Server Pool**
+**Dashboard --> Fortiview Topology**
 
 Open the Server Pool associated with the policy and confirm that the backend member is shown as healthy or available.
 
