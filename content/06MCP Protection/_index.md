@@ -36,7 +36,9 @@ An MCP deployment normally includes:
 
 MCP commonly carries structured JSON-RPC messages over transports such as Streamable HTTP. Some deployments also use Server-Sent Events (SSE) for streamed server responses.
 
-![MCP client, FortiWeb, and MCP server architecture — optional diagram](mcp-architecture.png)
+![MCP client, FortiWeb, and MCP server architecture](mcp-architecture.png)
+
+For additional detail, see [MCP Protocol](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/97697/mcp-protocol) in the FortiWeb 8.0.5 Administration Guide.
 
 ### Why MCP Security Matters
 
@@ -58,21 +60,23 @@ MCP-aware inspection complements—not replaces—authorization, least-privilege
 
 ### How FortiWeb Protects MCP Applications
 
-FortiWeb operates as a reverse proxy between the MCP client and MCP server. It can inspect MCP messages and apply several complementary controls:
+FortiWeb operates as a reverse proxy between the MCP client and MCP server. It sits in the **Protocol Constraints** layer so it can validate Streamable HTTP / Server-Sent Events (SSE) JSON-RPC traffic before deeper WAF or DLP inspection. FortiWeb identifies MCP streams using headers such as `Accept: text/event-stream` or `Content-Type: text/event-stream`, then inspects each message block as it arrives.
+
+It can apply several complementary controls:
 
 #### Signature Detection
 
-Inspects MCP methods, tool names, and parameters for known techniques such as SQL Injection, XSS, Command Injection, and Directory Traversal.
+Inspects MCP methods, tool names, and parameters—including values in `params.arguments`—for known techniques such as SQL Injection, XSS, Command Injection, and Directory Traversal.
 
 #### Prompt Poisoning Protection
 
-Analyzes prompts and tool arguments for instructions designed to override intended behavior, bypass controls, retrieve sensitive information, or trigger unauthorized actions.
+Analyzes prompts, tool descriptions, and tool arguments for instructions designed to override intended behavior, bypass controls, retrieve sensitive information, or trigger unauthorized actions (including jailbreak-style prompts).
 
 #### MCP JSON Schema Validation
 
-Validates JSON-RPC message structure, required fields, and data types. Malformed messages can be rejected before they reach the MCP server.
+Validates streamed JSON-RPC message structure against official MCP schema files from FortiGuard. Malformed messages, missing required fields, or incorrect data types can be rejected before they reach the MCP server.
 
-![FortiWeb MCP inspection layers — optional diagram](fortiweb-mcp-inspection.png)
+![FortiWeb MCP inspection layers](fortiweb-mcp-inspection.png)
 
 ### Hands-On Tasks
 
