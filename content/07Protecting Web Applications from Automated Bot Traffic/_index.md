@@ -34,7 +34,11 @@ Legitimate bots include search-engine crawlers, monitoring services, feed reader
 
 Sophisticated bots can rotate source addresses, spoof browser identifiers, and imitate human navigation. Reliable detection therefore requires more than a single signature.
 
-![Legitimate and malicious bot categories — optional diagram](bot-categories.png)
+![Legitimate vs malicious bot categories](bot-categories.png)
+
+In FortiWeb, **Known Bots** uses FortiGuard intelligence to classify **Known Good Bots** (for example, search-engine spiders that may be exempted from DoS, brute-force, Geo IP, and related sensors), **Likely Good Bots** (partial IP or User-Agent match), and **Malicious Bots** (content scrapers, vulnerability spiders, and other unwanted automation identified largely via `User-Agent` analysis).
+
+For additional detail, see [Bot mitigation](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/881142/bot-mitigation) and [Configuring known bots](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/584423/configuring-known-bots) in the FortiWeb 8.0.5 Administration Guide.
 
 ### FortiWeb Bot Mitigation
 
@@ -56,10 +60,9 @@ Client-side biometric and browser-validation techniques apply to browser-capable
 
 ### Hands-On Tasks
 
-* [Exercise 7.1 – Configure Bot Detection](7.1_Configure_Bot_Detection/)
-* [Exercise 7.2 – Create and Apply the Bot Mitigation Policy](7.2_Create_Bot_Mitigation_Policy/)
-* [Exercise 7.3 – Generate Legitimate and Bot Traffic](7.3_Generate_Bot_Traffic/)
-* [Exercise 7.4 – Review Bot Detections](7.4_Review_Bot_Detections/)
+* [Exercise 7.1 – Configure Bot Mitigation](7.1_Configure_Bot_Mitigation/)
+* [Exercise 7.2 – Generate Legitimate and Bot Traffic](7.2_Generate_Bot_Traffic/)
+* [Exercise 7.3 – Review Bot Detections](7.3_Review_Bot_Detections/)
 
 ### Key Takeaways
 

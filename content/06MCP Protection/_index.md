@@ -8,7 +8,7 @@ weight: 60
 
 Modern AI assistants can retrieve live information, invoke tools, and interact with external systems through the **Model Context Protocol (MCP)**. These capabilities make AI applications more useful, but they also introduce a new attack surface.
 
-In this chapter, you learn how FortiWeb provides protocol-aware protection for MCP-enabled applications. You generate legitimate MCP traffic, configure MCP Security, launch an MCP attack campaign, and analyze the resulting Traffic and Attack Logs.
+In this chapter, you learn how FortiWeb provides protocol-aware protection for MCP-enabled applications. You configure MCP Security, generate legitimate MCP traffic, launch an MCP attack campaign, and analyze the resulting Traffic and Attack Logs.
 
 ### Learning Objectives
 
@@ -62,6 +62,10 @@ MCP-aware inspection complements—not replaces—authorization, least-privilege
 
 FortiWeb operates as a reverse proxy between the MCP client and MCP server. It sits in the **Protocol Constraints** layer so it can validate Streamable HTTP / Server-Sent Events (SSE) JSON-RPC traffic before deeper WAF or DLP inspection. FortiWeb identifies MCP streams using headers such as `Accept: text/event-stream` or `Content-Type: text/event-stream`, then inspects each message block as it arrives.
 
+{{% notice tip %}}
+Unlike Machine Learning Anomaly Detection and ML-based API Protection, MCP Security does not require a learning phase. Protection is immediate once the MCP Security Policy is applied. FortiWeb relies on protocol-aware parsing, signature detection, prompt poisoning detection, and JSON schema validation to inspect MCP traffic in real time.
+{{% /notice %}}
+
 It can apply several complementary controls:
 
 #### Signature Detection
@@ -80,13 +84,14 @@ Validates streamed JSON-RPC message structure against official MCP schema files 
 
 ### Hands-On Tasks
 
-* [Exercise 6.1 – Generate Legitimate MCP Traffic](6.1_Generate_Legitimate_MCP_Traffic/)
-* [Exercise 6.2 – Configure MCP Security](6.2_Configure_MCP_Security/)
+* [Exercise 6.1 – Configure MCP Security](6.1_Configure_MCP_Security/)
+* [Exercise 6.2 – Generate Legitimate MCP Traffic](6.2_Generate_Legitimate_MCP_Traffic/)
 * [Exercise 6.3 – Launch MCP Attacks](6.3_Launch_MCP_Attacks/)
 * [Exercise 6.4 – Review MCP Attack Logs](6.4_Review_MCP_Attack_Logs/)
 
 ### Key Takeaways
 
 * MCP introduces tool-specific risks beyond conventional web requests
+* MCP Security does not require a learning phase—protection starts when the policy is applied
 * FortiWeb combines protocol validation, prompt protection, and signatures
 * Traffic and Attack Logs provide visibility into normal and malicious MCP activity
