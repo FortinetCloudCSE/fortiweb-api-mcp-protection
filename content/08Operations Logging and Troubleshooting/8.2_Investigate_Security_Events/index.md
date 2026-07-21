@@ -8,22 +8,35 @@ weight: 20
 
 ### Objective
 
-Determine what FortiWeb detected, which control made the decision, and whether the request reached the backend.
+Determine what FortiWeb detected, which control made the decision, and whether the request was denied—using Attack Log Details (connection info, packet headers, and matched patterns).
+
+Navigate to:
+
+**Log&Report → Log Access → Attack**
+
+{{% notice tip %}}
+Attack Log Details already include source/destination, method, URL, User-Agent, and packet headers. You do not need to open the Traffic Log for this exercise.
+{{% /notice %}}
+
+---
 
 ### Step 1 – Investigate a DVWA Attack
 
-In the Attack Log, locate a SQL Injection event generated during Chapter 3.
+Locate a SQL Injection event generated during Chapter 3 (filter by **Sub Type: SQL Injection** if helpful).
 
 Review:
 
 * Source and destination
 * Requested URL and HTTP method
 * Server policy
-* Attack signature or detection reason
+* Signature ID and detection reason
 * Protection action
+* Matched pattern and parameter values
 * Timestamp
 
-![Detailed DVWA SQL Injection event — add screenshot](investigate-dvwa-sqli.png)
+In this lab example, policy **juiceshop-DVWA** shows Signature ID `030000042` on parameter `id`, action `Alert_Deny`, for host `dvwa.fortiweblab.local`.
+
+![Detailed DVWA SQL Injection event](investigate-dvwa-sqli.png)
 
 Answer:
 
@@ -32,34 +45,36 @@ Answer:
 3. Would the request have reached the backend?
 4. Do nearby events indicate a larger campaign?
 
+---
+
 ### Step 2 – Investigate an API Event
 
 Locate a PetStore API event from Chapter 5. Identify the endpoint, method, parameter or schema violation, and action.
 
-![Detailed PetStore API security event — add screenshot](investigate-api-event.png)
+In this lab example, a **Machine Learning** / **Query Parameter Violation (OpenAPI)** event for `petstore.fortiweblab.local` shows `Alert_Deny` with a message such as expected string, found array for `#/status`.
+
+![Detailed PetStore API security event](investigate-api-event.png)
+
+---
 
 ### Step 3 – Investigate an MCP Event
 
 Locate an MCP event from Chapter 6. Determine whether it was caused by a signature, prompt protection, or JSON schema validation.
 
-![Detailed MCP security event — add screenshot](investigate-mcp-event.png)
+In this lab example, an XSS Signature Detection on `mcp.fortiweblab.local` (`POST /mcp`) shows Signature ID `010000063` with matched pattern `alert(1)` and action `Alert_Deny`.
 
-### Step 4 – Correlate With Traffic Logs
+![Detailed MCP security event](investigate-mcp-event.png)
 
-Search the Traffic Log using the event time, source, host, and URL. Correlation can reveal the requests before and after a detection and help reconstruct the activity.
-
-![Correlated Traffic and Attack Log entries — add screenshot](correlated-log-events.png)
-
-{{% notice tip %}}
-Record timestamps and time zones carefully. Small timing differences can make correlation difficult across FortiWeb, application, and external logging systems.
-{{% /notice %}}
+---
 
 ### Verification Checklist
 
-* Investigated one web attack
-* Investigated one API event
+* Investigated one web (DVWA) attack in Attack Log Details
+* Investigated one API (PetStore) event
 * Investigated one MCP event
-* Correlated at least one event with Traffic Logs
+* Identified the detecting control and action for each event
+
+---
 
 ### Next Exercise
 
