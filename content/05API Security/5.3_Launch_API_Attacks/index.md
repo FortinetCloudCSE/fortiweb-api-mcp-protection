@@ -10,7 +10,7 @@ weight: 30
 
 Now that FortiWeb has learned normal PetStore API behavior, you launch attacks against the same endpoints.
 
-The FortiWeb Lab Traffic Launcher maps attack payloads to previously discovered PetStore endpoints so you can observe how FortiWeb detects abnormal API requests.
+The FortiWeb Lab Traffic Launcher maps attack payloads to previously discovered PetStore endpoints so you can observe how FortiWeb detects abnormal API requests—using both Machine Learning API Protection and the signature-based **Inline Standard Protection** profile assigned in Exercise 5.2.
 
 ---
 
@@ -23,25 +23,23 @@ cd ~/fortiweb-lab-traffic
 ./fortiweb-lab-traffic
 ```
 
-![FortiWeb Lab Traffic Launcher main menu — add screenshot](traffic-launcher-main-menu.png)
-
----
-
-### Step 2 – Select the API Traffic Generator
-
-At the main menu, enter:
+At the FortiWeb Lab Traffic Launcher menu, enter:
 
 ```text
 2
 ```
 
-![API Traffic Generator menu — add screenshot](api-traffic-generator-menu.png)
+![FortiWeb Lab Traffic Launcher main menu](traffic-launcher-main-menu.png)
+
+This opens the **API JSON Traffic** menu.
+
+![API JSON Traffic generator menu](api-traffic-generator-menu.png)
 
 ---
 
-### Step 3 – Run PetStore Mapped Attacks
+### Step 2 – Run PetStore Mapped Attacks
 
-From the API Traffic Generator menu, enter:
+From the API JSON Traffic menu, enter:
 
 ```text
 20
@@ -50,23 +48,25 @@ From the API Traffic Generator menu, enter:
 Option **20** is:
 
 ```text
-PetStore Mapped Attacks – Focused Discovered Endpoints
+PetStore mapped attacks - focused discovered endpoints
 ```
+
+![Select option 20 – PetStore mapped attacks](select-petstore-mapped-attacks.png)
 
 This scenario generates attacks against previously learned endpoints. Attack types may include:
 
 * SQL Injection
 * Cross-Site Scripting (XSS)
 * Command Injection
+* Directory Traversal
 * Invalid JSON
-* Schema violations
+* Schema / OpenAPI violations
 * Unexpected parameters
 * Malicious parameter values
-* Parameter manipulation
 
-![PetStore mapped attacks running — add screenshot](petstore-mapped-attacks-running.png)
+As the campaign runs, the terminal displays request progress. Many lines may show `ERROR`, `EOF`, `400`, or `500` responses. That often indicates FortiWeb interrupted or denied the connection after detecting an attack—expected behavior with **Alert & Deny** and layered protection enabled.
 
-Because FortiWeb already understands what legitimate PetStore traffic looks like, these abnormal requests can be detected more accurately than with traditional signature-based inspection alone.
+![PetStore mapped attacks running](petstore-mapped-attacks-running.png)
 
 Allow the attack campaign to complete.
 
@@ -74,17 +74,42 @@ Allow the attack campaign to complete.
 Do not close the terminal while the script is running.
 {{% /notice %}}
 
-![PetStore mapped attacks completed — add screenshot](petstore-mapped-attacks-complete.png)
+---
+
+### Step 3 – Confirm Campaign Completion
+
+When the script finishes, the terminal shows a completion message similar to:
+
+```text
+Scenario completed: petstore_focused_mapped_attacks | requests=700 errors=501 elapsed=...
+```
+
+A high error count is normal for this attack scenario when FortiWeb is blocking malicious requests. Control then returns automatically to the **API JSON Traffic** menu.
+
+![PetStore mapped attacks completed and API menu restored](petstore-mapped-attacks-complete.png)
 
 ---
 
-### Step 4 – Confirm Campaign Completion
+### Step 4 – Quick Check of the Attack Log (Optional)
 
-When the script finishes, review the terminal output for a completion message or summary of requests sent.
+If time permits, briefly open FortiWeb Attack Logs to confirm events are appearing before the detailed review in Exercise 5.4.
 
-You do not need to open FortiWeb logs yet—that is the focus of Exercise 5.4. If time permits, you may briefly refresh the Attack Log to confirm events are beginning to appear.
+1. Navigate to:
 
-![Optional quick check of Attack Log after API attacks — add screenshot](attack-log-api-quick-check.png)
+   **Log&Report → Log Access → Attack**
+
+2. Confirm recent entries for the **petstore** policy and host `petstore.fortiweblab.local`.
+
+You should see layered detections, for example:
+
+| Main Type | Example Sub Type / finding |
+|-----------|----------------------------|
+| Signature Detection | SQL Injection, Cross Site Scripting, Generic Attacks |
+| Machine Learning | Query Parameter Violation (OpenAPI) and related API anomalies |
+
+![Attack Log showing signature and Machine Learning detections](attack-log-api-quick-check.png)
+
+Detailed log analysis is the focus of Exercise 5.4.
 
 ---
 
@@ -94,8 +119,9 @@ Confirm that you completed the following:
 
 * Launched `./fortiweb-lab-traffic`
 * Selected option **2** – API traffic generator
-* Selected option **20** – PetStore Mapped Attacks
-* Allowed the attack campaign to complete
+* Selected option **20** – PetStore mapped attacks
+* Allowed the attack campaign to complete and return to the API menu
+* (Optional) Confirmed Attack Log entries for the petstore policy
 
 ---
 

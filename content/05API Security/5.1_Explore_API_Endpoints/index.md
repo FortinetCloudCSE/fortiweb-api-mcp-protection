@@ -14,23 +14,32 @@ This legitimate traffic helps you understand the API surface that FortiWeb will 
 
 ---
 
-### Step 1 – Open PetStore from Guacamole
+### Step 1 – Open Swagger UI from Guacamole
 
 1. Log in to the Guacamole remote desktop.
 2. Launch the web browser.
-3. From the browser’s shortcut/bookmarks bar, open the **PetStore** application (or Swagger UI for PetStore, if provided in the lab).
+3. From the bookmarks bar, click **Swagger UI**.
 
-![PetStore application or Swagger UI home — add screenshot](petstore-home.png)
+![Open Swagger UI from the browser bookmarks bar](swagger-ui-bookmark.png)
 
-{{% notice tip %}}
-If your lab provides both a PetStore UI and a Swagger documentation page, open the Swagger UI as well. It is often the easiest way to see available endpoints, methods, and example request bodies.
+The PetStore OpenAPI documentation opens at:
+
+```text
+https://petstore.fortiweblab.local
+```
+
+![PetStore Swagger UI home page](petstore-swagger-home.png)
+
+{{% notice note %}}
+**Do you need to click Authorize first?**  
+No—not for this lab exercise. Some endpoints show a padlock icon because the OpenAPI schema *declares* a security scheme, but the lab PetStore backend accepts many requests without credentials. You can use **Try it out** and successfully receive `200` responses without authorizing. Leave the **Authorize** button unused unless your instructor asks you to explore authentication later.
 {{% /notice %}}
 
 ---
 
 ### Step 2 – Review Available API Areas
 
-PetStore typically organizes APIs into areas such as:
+PetStore organizes APIs into areas such as:
 
 | Area | Example operations |
 |------|--------------------|
@@ -38,52 +47,58 @@ PetStore typically organizes APIs into areas such as:
 | Store | View inventory, place an order, get an order by ID |
 | User | Create a user, log in, log out, update user details |
 
-Browse the available endpoints and note a few paths and HTTP methods (for example, `GET /pet/findByStatus` or `POST /store/order`).
+Expand the **store** and **user** sections and note a few paths and HTTP methods (for example, `GET /store/inventory` or `POST /store/order`).
 
-![PetStore Swagger endpoints list — add screenshot](petstore-swagger-endpoints.png)
+![PetStore Swagger endpoints for store and user](petstore-swagger-endpoints.png)
+
+A padlock next to an operation means the OpenAPI definition lists a security requirement. In this lab build, that does not always mean the server enforces authentication on that call.
 
 ---
 
-### Step 3 – Perform Several Legitimate API Operations
+### Step 3 – Perform a Legitimate API Operation
 
-Using the PetStore UI or Swagger “Try it out” controls, perform several normal operations, such as:
+1. Expand **store → POST /store/order**.
+2. Click **Try it out**.
 
-* Find pets by status (for example, `available` or `pending`)
-* Retrieve a pet by ID
-* View store inventory
-* Place a sample order
-* Create or look up a user (if available in your lab build)
+![Try it out on POST /store/order](try-it-out-store-order.png)
 
-![PetStore legitimate API operation in browser or Swagger — add screenshot](petstore-legitimate-request.png)
+3. Leave the example JSON body (or make a small harmless change), then click **Execute**.
+4. Confirm the response code is **200** and that the response body returns JSON for the created order.
 
-While using the application, observe that each action generates API requests between the client and the backend. These are structured HTTP requests with JSON payloads—not traditional HTML page loads.
+![Successful POST /store/order response](store-order-response.png)
+
+Optionally, expand **pet** or **user** and try one additional legitimate call (for example, find pets by status or look up a user) so you see more than one endpoint in action.
+
+While using Swagger, observe that each action generates structured API requests with JSON payloads—not traditional HTML page loads.
 
 ---
 
 ### Step 4 – Observe Request and Response Characteristics
 
-For at least one successful operation, note:
+For the successful `POST /store/order` operation, note:
 
-* The requested URL / endpoint
-* The HTTP method (`GET`, `POST`, `PUT`, or `DELETE`)
-* Whether a JSON body was sent
-* Whether the response returned JSON data
-* Any status codes such as `200`, `400`, or `404`
+* Request URL: `https://petstore.fortiweblab.local/api/v3/store/order`
+* HTTP method: `POST`
+* Request body: JSON (for example, `id`, `petId`, `quantity`, `status`)
+* Response: JSON with status `200`
+* No `Authorization` or `api_key` header is required for this lab call
 
-![Browser developer tools or Swagger response showing JSON — add screenshot](petstore-json-response.png)
+Optionally open browser **Developer Tools → Network**, select the `order` request, and compare the Request URL, method, status code, and headers with what Swagger shows.
+
+![Swagger response and browser Network tab for POST /store/order](store-order-devtools.png)
 
 {{% notice note %}}
-You do not need to capture every endpoint manually. Exercise 5.2 uses the FortiWeb Lab Traffic Launcher to generate broader legitimate coverage so FortiWeb can discover and learn the API model more completely.
+You do not need to exercise every endpoint manually. Exercise 5.2 uses the FortiWeb Lab Traffic Launcher to generate broader legitimate coverage so FortiWeb can discover and learn the API model more completely.
 {{% /notice %}}
 
 ---
 
 ### What You Have Accomplished
 
-* Opened the PetStore API application
+* Opened PetStore through Swagger UI
 * Reviewed major API areas (Pet, Store, User)
-* Performed several legitimate API operations
-* Observed that PetStore clients exchange structured JSON over HTTP
+* Executed a legitimate `POST /store/order` without authorizing
+* Observed structured JSON request/response traffic
 
 ### Next Exercise
 

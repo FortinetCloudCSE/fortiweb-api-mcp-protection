@@ -71,7 +71,7 @@ The server returns structured JSON data:
 
 API consumers typically never see a rendered web page—they receive raw data that their application processes and displays. Because APIs provide direct access to application functionality and data, they are among the most valuable targets for attackers.
 
-![REST API request and JSON response — optional diagram](api-rest-json-example.png)
+![REST API request and JSON response](api-rest-json-example.png)
 
 ---
 
@@ -139,7 +139,7 @@ Not every malicious request contains an exploit. Attackers frequently abuse APIs
 
 Because these requests can appear legitimate one at a time, behavioral analysis becomes especially important.
 
-![Common API security challenges — optional diagram](api-security-challenges.png)
+![Common API security challenges](api-security-challenges.png)
 
 ---
 
@@ -159,7 +159,9 @@ FortiWeb provides multiple layers of API security that work together to protect 
 
 Rather than relying on a single detection technique, FortiWeb combines signature-based inspection, schema validation, and behavioral analysis to identify both known attacks and previously unseen threats.
 
-![FortiWeb API protection layers — optional diagram](fortiweb-api-protection-layers.png)
+![FortiWeb API protection layers](fortiweb-api-protection-layers.png)
+
+For additional detail, see [API Protection](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/904556/api-protection) in the FortiWeb 8.0.5 Administration Guide, including related topics such as [OpenAPI Validation](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/933477/openapi-validation) and [Configuring ML Based API Protection policy](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/98060/configuring-ml-based-api-protection-policy).
 
 #### API Discovery
 
@@ -241,7 +243,9 @@ This behavioral analysis helps FortiWeb detect attacks that traditional signatur
 
 Applications evolve over time. New endpoints appear, existing APIs change, and additional parameters are introduced. FortiWeb supports continuous learning so the ML model can adapt as legitimate application behavior changes—helping keep API protection accurate as applications evolve.
 
-![ML-based API Protection components — optional diagram](ml-api-protection-components.png)
+![ML-based API Protection components](ml-api-protection-components.png)
+
+According to FortiWeb documentation, ML-based API Protection learns REST API structure from traffic samples and builds models that screen malicious requests and help prevent sensitive data leakage in API responses. Schema Protection covers API discovery and learned-schema protection; when documentation is available, you can also enforce an uploaded OpenAPI/Swagger file through OpenAPI Validation.
 
 ---
 
