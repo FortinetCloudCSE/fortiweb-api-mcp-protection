@@ -115,7 +115,7 @@ next
 edit "crAPI"
 config pserver-list
 edit 1
-set ip 10.10.1.201
+set ip 10.10.1.202
 set port 8888
 next
 end
@@ -123,7 +123,7 @@ next
 edit "petstore"
 config pserver-list
 edit 1
-set ip 10.10.1.201
+set ip 10.10.1.202
 set port 8081
 next
 end
