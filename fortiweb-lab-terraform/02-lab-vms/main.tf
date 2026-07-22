@@ -23,7 +23,7 @@ resource "azurerm_network_interface" "docker2" {
   name                = "nic-linux-docker-2"
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
-  ip_configuration { name = "primary" subnet_id = data.azurerm_subnet.server.id private_ip_address_allocation = "Static" private_ip_address = "10.10.1.201" }
+  ip_configuration { name = "primary" subnet_id = data.azurerm_subnet.server.id private_ip_address_allocation = "Static" private_ip_address = "10.10.1.202" }
 }
 
 resource "azurerm_linux_virtual_machine" "guac" {
