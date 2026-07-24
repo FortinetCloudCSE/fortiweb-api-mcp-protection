@@ -71,12 +71,15 @@ resource "azurerm_network_interface" "docker2" {
 }
 
 resource "azurerm_linux_virtual_machine" "guac" {
-  name                  = "guacamole01"
-  resource_group_name   = data.azurerm_resource_group.rg.name
-  location              = data.azurerm_resource_group.rg.location
-  size                  = var.guac_size
-  network_interface_ids = [azurerm_network_interface.guac.id]
-  source_image_id       = var.guac_image_id
+  name                            = "guacamole01"
+  resource_group_name             = data.azurerm_resource_group.rg.name
+  location                        = data.azurerm_resource_group.rg.location
+  size                            = var.guac_size
+  admin_username                  = var.admin_username
+  admin_password                  = var.admin_password
+  disable_password_authentication = false
+  network_interface_ids           = [azurerm_network_interface.guac.id]
+  source_image_id                 = var.guac_image_id
 
   os_disk {
     caching              = "ReadWrite"
@@ -85,12 +88,15 @@ resource "azurerm_linux_virtual_machine" "guac" {
 }
 
 resource "azurerm_linux_virtual_machine" "docker1" {
-  name                  = "linux-docker-1"
-  resource_group_name   = data.azurerm_resource_group.rg.name
-  location              = data.azurerm_resource_group.rg.location
-  size                  = var.docker_size
-  network_interface_ids = [azurerm_network_interface.docker1.id]
-  source_image_id       = var.docker1_image_id
+  name                            = "linux-docker-1"
+  resource_group_name             = data.azurerm_resource_group.rg.name
+  location                        = data.azurerm_resource_group.rg.location
+  size                            = var.docker_size
+  admin_username                  = var.admin_username
+  admin_password                  = var.admin_password
+  disable_password_authentication = false
+  network_interface_ids           = [azurerm_network_interface.docker1.id]
+  source_image_id                 = var.docker1_image_id
 
   os_disk {
     caching              = "ReadWrite"
@@ -99,12 +105,15 @@ resource "azurerm_linux_virtual_machine" "docker1" {
 }
 
 resource "azurerm_linux_virtual_machine" "docker2" {
-  name                  = "linux-docker-2"
-  resource_group_name   = data.azurerm_resource_group.rg.name
-  location              = data.azurerm_resource_group.rg.location
-  size                  = var.docker_size
-  network_interface_ids = [azurerm_network_interface.docker2.id]
-  source_image_id       = var.docker2_image_id
+  name                            = "linux-docker-2"
+  resource_group_name             = data.azurerm_resource_group.rg.name
+  location                        = data.azurerm_resource_group.rg.location
+  size                            = var.docker_size
+  admin_username                  = var.admin_username
+  admin_password                  = var.admin_password
+  disable_password_authentication = false
+  network_interface_ids           = [azurerm_network_interface.docker2.id]
+  source_image_id                 = var.docker2_image_id
 
   os_disk {
     caching              = "ReadWrite"
