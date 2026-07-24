@@ -146,7 +146,7 @@ The script:
 * Updates each phase `terraform.tfvars` with that resource group and your public IP
 * Runs the four Terraform phases (`00-foundation` through `03-routes`)
 
-Confirm each `terraform apply` when prompted. When the deploy finishes, note the `guacamole_access` output—you will use it in the next section to open Guacamole.
+When the deploy finishes, note the `guacamole_access` output—you will use it in the next section to open Guacamole. The script runs without prompts (`terraform apply -auto-approve`).
 
 {{% notice warning %}}
 Do not close Cloud Shell while Terraform is applying. If the session disconnects, reopen Cloud Shell and re-run `./deploy-lab.sh` from the `scripts` directory.

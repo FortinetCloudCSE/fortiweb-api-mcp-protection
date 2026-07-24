@@ -85,7 +85,7 @@ for phase in 00-foundation 01-appliances 02-lab-vms 03-routes; do
   echo "========== ${phase} =========="
   cd "${ROOT}/${phase}"
   terraform init -input=false
-  terraform apply
+  terraform apply -input=false -auto-approve
   echo
 done
 
