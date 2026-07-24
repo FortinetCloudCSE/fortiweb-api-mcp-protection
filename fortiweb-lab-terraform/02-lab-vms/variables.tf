@@ -6,6 +6,15 @@ variable "vnet_name" {
   type = string
 }
 
+variable "admin_username" {
+  type = string
+}
+
+variable "admin_password" {
+  type      = string
+  sensitive = true
+}
+
 variable "guac_image_id" {
   type = string
 }
