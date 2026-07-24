@@ -25,17 +25,11 @@ data "azurerm_subnet" "client" {
   resource_group_name  = var.resource_group_name
 }
 
-resource "azurerm_marketplace_agreement" "fortigate" {
-  publisher = var.fortigate_publisher
-  offer     = var.fortigate_offer
-  plan      = var.fortigate_sku
-}
-
-resource "azurerm_marketplace_agreement" "fortiweb" {
-  publisher = var.fortiweb_publisher
-  offer     = var.fortiweb_offer
-  plan      = var.fortiweb_sku
-}
+# Marketplace terms must be accepted once per subscription by an admin
+# (student lab users typically lack Microsoft.MarketplaceOrdering permissions).
+# Accept with:
+#   az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm_v5 --plan fortinet_fg-vm_payg_20190624
+#   az vm image terms accept --publisher fortinet --offer fortinet_fortiweb-vm_v2 --plan fortinet_fw-vm_payg
 
 resource "azurerm_network_interface" "fg_outside" {
   name                 = "nic-fgt-outside"
@@ -148,8 +142,6 @@ resource "azurerm_linux_virtual_machine" "fortigate" {
   custom_data = base64encode(templatefile("${path.module}/${var.fortigate_bootstrap_config}", {
     lab_student_password = var.fortigate_lab_student_password
   }))
-
-  depends_on = [azurerm_marketplace_agreement.fortigate]
 }
 
 resource "azurerm_linux_virtual_machine" "fortiweb" {
@@ -183,8 +175,6 @@ resource "azurerm_linux_virtual_machine" "fortiweb" {
   custom_data = base64encode(templatefile("${path.module}/${var.fortiweb_bootstrap_config}", {
     lab_student_password = var.fortigate_lab_student_password
   }))
-
-  depends_on = [azurerm_marketplace_agreement.fortiweb]
 }
 
 resource "azurerm_managed_disk" "fortiweb_data" {
