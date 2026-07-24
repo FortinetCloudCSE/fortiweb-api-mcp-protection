@@ -57,7 +57,7 @@ Students log in at `https://10.10.2.100` from Guacamole.
 
 A unique resource group per student must already exist (created outside this project).
 
-**Students using `scripts/deploy-lab.sh` do not edit tfvars.** The script discovers the signed-in user's single resource group and updates `resource_group_name`, `student_source_cidr`, and `location` automatically before applying.
+**Students using `scripts/deploy-lab.sh` do not edit tfvars.** The script builds the resource group name as `<whoami>-mcp201-workshop` and updates `resource_group_name`, `student_source_cidr`, and `location` automatically before applying.
 
 For a manual apply (instructors / debugging only), edit each phase `terraform.tfvars` and set:
 
@@ -143,7 +143,7 @@ chmod +x scripts/deploy-lab.sh
 ./scripts/deploy-lab.sh
 ```
 
-The script finds that single visible resource group, writes it into all phases, auto-detects your public IP for `student_source_cidr`, then runs all four applies.
+The script builds `<whoami>-mcp201-workshop` (for example `fweb11-mcp201-workshop`), writes it into all phases, auto-detects your public IP for `student_source_cidr`, then runs all four applies.
 
 Optional: pin Guacamole NSG source IP if auto-detect is wrong (e.g. VPN):
 

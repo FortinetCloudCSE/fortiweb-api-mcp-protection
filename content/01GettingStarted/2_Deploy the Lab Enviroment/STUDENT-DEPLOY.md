@@ -22,4 +22,4 @@ chmod +x deploy-lab.sh
 ./deploy-lab.sh
 ```
 
-The script discovers your single assigned resource group automatically. No Terraform variable edits are required.
+The script constructs your resource group as `<whoami>-mcp201-workshop`. No Terraform variable edits are required.
