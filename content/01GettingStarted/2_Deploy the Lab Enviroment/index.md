@@ -6,15 +6,24 @@ weight: 2
 
 ## Deploy the Lab Environment
 
-Use **Azure Cloud Shell** from your browser to deploy a personal copy of the lab. Each student uses a dedicated resource group:
-
-`rg-fortiweblab-student-<your-id>`
-
-Follow the full step-by-step guide: **[Student Deploy Guide](STUDENT-DEPLOY.md)**
+Detailed steps and screenshots for signing in, opening Azure Cloud Shell, cloning the repository, and running the initialization script are in **[The Lab Environment](../1_Lab%20Enviroment/)**.
 
 ### Quick summary
 
-1. Open [Azure Cloud Shell](https://shell.azure.com) (Bash).
-2. Clone `fortiweb-lab-terraform` into `~/clouddrive`.
-3. Run `./scripts/deploy-lab.sh <your-id>`.
-4. Open `http://<guacamole_access>` in your browser (output at end of deploy).
+1. Sign in to [https://portal.azure.com](https://portal.azure.com) with the credentials from your provisioning email.
+2. Open **Cloud Shell** and select **Bash**.
+3. Mount storage using your unique student resource group.
+4. Clone and deploy:
+
+```bash
+git clone https://github.com/FortinetCloudCSE/fortiweb-api-mcp-protection.git
+cd fortiweb-api-mcp-protection/fortiweb-lab-terraform/scripts
+chmod +x deploy-lab.sh
+./deploy-lab.sh
+```
+
+5. When deploy completes, note `guacamole_access`, then continue to **[Access the Lab Environment](../3_Access%20the%20Lab%20Enviroment/)**.
+
+{{% notice note %}}
+`./deploy-lab.sh` takes no arguments. Your lab user can see only one resource group; the script uses that group automatically.
+{{% /notice %}}
