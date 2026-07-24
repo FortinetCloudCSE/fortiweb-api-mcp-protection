@@ -4,11 +4,10 @@ linkTitle: "The Lab Enviroment"
 weight: 1
 ---
 ---
-title: "1.Quickstart"
-weight: 1
+
 ---
 
-#### Provisioning the Azure environment (40min)
+### Provisioning the Azure environment (40min)
 
 Provision your Azure Environment, enter your Email address and click _Provision_
 {{< launchdemoform labdefinition="fweb-mcp-110" >}}

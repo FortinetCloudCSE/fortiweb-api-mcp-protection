@@ -4,13 +4,14 @@ This Terraform is organized in phases so routing is not applied before FortiGate
 
 ## Phases
 
-1. `00-foundation` - resource group, VNet, subnets, NSGs, Guacamole public IP
+1. `00-foundation` - VNet, subnets, NSGs, Guacamole public IP (uses a pre-created student resource group)
 2. `01-appliances` - FortiGate PAYG and FortiWeb PAYG marketplace VMs
 3. `02-lab-vms` - Guacamole, Docker1, Docker2 from captured images
 4. `03-routes` - route tables and subnet associations
 
 ## Important
 
+- The student resource group is created outside this project; Terraform only deploys into it.
 - Only Guacamole gets a public IP.
 - FortiGate, FortiWeb, Docker1, and Docker2 do not get public IPs.
 - FortiGate and FortiWeb NICs have IP forwarding enabled.
@@ -54,14 +55,16 @@ Students log in at `https://10.10.2.100` from Guacamole.
 
 ## Before applying
 
-Edit each phase `terraform.tfvars` and set:
+A unique resource group per student must already exist (created outside this project). Edit each phase `terraform.tfvars` and set:
 
-- `location`
+- `resource_group_name` (the pre-created student RG)
 - `admin_username`
 - `admin_password`
 - FortiGate/FortiWeb marketplace image values if different in your region
 - Custom image IDs for Guacamole/Docker images
 - `student_source_cidr`
+
+Location is taken from the existing resource group; do not create the RG in these phases.
 
 Run `scripts/find_marketplace_images.sh` to confirm exact publisher/offer/sku/version values in your subscription/region.
 
@@ -129,22 +132,23 @@ Both FortiGate and FortiWeb lines must end with **OK**.
 
 ### 4. Deploy everything (one script)
 
-Replace `<your-id>` with your assigned student ID (e.g. `jsmith`):
+Each student gets a unique Azure portal user with access to exactly one resource group. From Cloud Shell (already signed in as that user):
 
 ```bash
 chmod +x scripts/deploy-lab.sh
-./scripts/deploy-lab.sh <your-id>
+./scripts/deploy-lab.sh
 ```
 
-The script sets resource group `rg-fortiweblab-student-<your-id>` in all phases, auto-detects your public IP for `student_source_cidr`, then runs all four applies.
+The script finds that single visible resource group, writes it into all phases, auto-detects your public IP for `student_source_cidr`, then runs all four applies.
 
-Fixed public IP (VPN):
+Optional: pin Guacamole NSG source IP if auto-detect is wrong (e.g. VPN):
 
 ```bash
-./scripts/deploy-lab.sh <your-id> 203.0.113.10
+export STUDENT_PUBLIC_IP=203.0.113.10
+./scripts/deploy-lab.sh
 ```
 
-**One resource group per student** is required when sharing a subscription.
+**Prerequisite:** background provisioning has already created the lab user and their unique resource group.
 
 ### 5. Open the lab
 
