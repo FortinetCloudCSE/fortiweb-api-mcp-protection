@@ -29,7 +29,7 @@ data "azurerm_subnet" "client" {
 # (student lab users typically lack Microsoft.MarketplaceOrdering permissions).
 # Accept with:
 #   az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm_v5 --plan fortinet_fg-vm_payg_20190624
-#   az vm image terms accept --publisher fortinet --offer fortinet_fortiweb-vm_v2 --plan fortinet_fw-vm_payg
+#   az vm image terms accept --publisher fortinet --offer fortinet_fortiweb-vm_v5 --plan fortinet_fw-vm_payg_v3
 
 resource "azurerm_network_interface" "fg_outside" {
   name                 = "nic-fgt-outside"
