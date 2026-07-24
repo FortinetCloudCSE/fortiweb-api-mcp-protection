@@ -41,7 +41,7 @@ resource "azurerm_network_interface" "fg_outside" {
   name                 = "nic-fgt-outside"
   location             = data.azurerm_resource_group.rg.location
   resource_group_name  = data.azurerm_resource_group.rg.name
-  enable_ip_forwarding = true
+  ip_forwarding_enabled = true
 
   ip_configuration {
     name                          = "outside"
@@ -66,7 +66,7 @@ resource "azurerm_network_interface" "fg_inside" {
   name                 = "nic-fgt-inside"
   location             = data.azurerm_resource_group.rg.location
   resource_group_name  = data.azurerm_resource_group.rg.name
-  enable_ip_forwarding = true
+  ip_forwarding_enabled = true
 
   ip_configuration {
     name                          = "inside"
@@ -81,7 +81,7 @@ resource "azurerm_network_interface" "fweb_protected" {
   name                 = "nic-fweb-protected"
   location             = data.azurerm_resource_group.rg.location
   resource_group_name  = data.azurerm_resource_group.rg.name
-  enable_ip_forwarding = true
+  ip_forwarding_enabled = true
 
   ip_configuration {
     name                          = "protected"
@@ -106,7 +106,7 @@ resource "azurerm_network_interface" "fweb_server" {
   name                 = "nic-fweb-server"
   location             = data.azurerm_resource_group.rg.location
   resource_group_name  = data.azurerm_resource_group.rg.name
-  enable_ip_forwarding = true
+  ip_forwarding_enabled = true
 
   ip_configuration {
     name                          = "server"
