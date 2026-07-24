@@ -55,7 +55,11 @@ Students log in at `https://10.10.2.100` from Guacamole.
 
 ## Before applying
 
-A unique resource group per student must already exist (created outside this project). Edit each phase `terraform.tfvars` and set:
+A unique resource group per student must already exist (created outside this project).
+
+**Students using `scripts/deploy-lab.sh` do not edit tfvars.** The script discovers the signed-in user's single resource group and updates `resource_group_name`, `student_source_cidr`, and `location` automatically before applying.
+
+For a manual apply (instructors / debugging only), edit each phase `terraform.tfvars` and set:
 
 - `resource_group_name` (the pre-created student RG)
 - `admin_username`
