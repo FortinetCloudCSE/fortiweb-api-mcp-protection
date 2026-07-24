@@ -23,12 +23,20 @@ if ! command -v terraform >/dev/null 2>&1; then
   exit 1
 fi
 
-az account show -o none >/dev/null || {
+az account show -o none >/dev/null 2>&1 || {
   echo "ERROR: not logged in to Azure. Open Cloud Shell from the portal while signed in as your lab user."
   exit 1
 }
 
-mapfile -t GROUPS < <(az group list --query "[].name" -o tsv)
+# Capture az output to a variable (not a pipe/process-substitution). Piping az
+# into mapfile closes stdout early and Azure CLI (Python) often prints:
+#   BrokenPipeError: [Errno 32] Broken pipe
+# which can also abort this script under "set -o pipefail".
+GROUPS_RAW="$(az group list --query "[].name" -o tsv 2>/dev/null || true)"
+GROUPS=()
+while IFS= read -r _rg; do
+  [[ -n "${_rg}" ]] && GROUPS+=("${_rg}")
+done <<< "${GROUPS_RAW}"
 GROUP_COUNT="${#GROUPS[@]}"
 
 if [[ "${GROUP_COUNT}" -eq 0 ]]; then
