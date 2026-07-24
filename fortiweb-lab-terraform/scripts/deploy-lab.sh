@@ -5,8 +5,10 @@
 # Cloud Shell (Bash), clone this repo, then run with no arguments:
 #   ./scripts/deploy-lab.sh
 #
-# The lab user is provisioned with access to exactly one resource group.
-# This script discovers that group automatically and does not create it.
+# The lab user is provisioned with a resource group named:
+#   <whoami>-mcp201-workshop
+# Example: fweb11 -> fweb11-mcp201-workshop
+# This script constructs that name and does not create the resource group.
 #
 # Optional: STUDENT_PUBLIC_IP=<ip> to pin Guacamole NSG source instead of auto-detect.
 set -euo pipefail
@@ -28,31 +30,18 @@ az account show -o none >/dev/null 2>&1 || {
   exit 1
 }
 
-# Capture az output to a variable (not a pipe/process-substitution). Piping az
-# into mapfile closes stdout early and Azure CLI (Python) often prints:
-#   BrokenPipeError: [Errno 32] Broken pipe
-# which can also abort this script under "set -o pipefail".
-GROUPS_RAW="$(az group list --query "[].name" -o tsv 2>/dev/null || true)"
-GROUPS=()
-while IFS= read -r _rg; do
-  [[ -n "${_rg}" ]] && GROUPS+=("${_rg}")
-done <<< "${GROUPS_RAW}"
-GROUP_COUNT="${#GROUPS[@]}"
+# Resource groups are named: <cloud-shell-username>-mcp201-workshop
+# Example: whoami=fweb11 -> fweb11-mcp201-workshop
+LAB_USER="$(whoami | tr '[:upper:]' '[:lower:]')"
+RESOURCE_GROUP="${LAB_USER}-mcp201-workshop"
 
-if [[ "${GROUP_COUNT}" -eq 0 ]]; then
-  echo "ERROR: no resource groups are visible to this account."
-  echo "Sign in with your assigned lab user (it should have access to exactly one resource group)."
+if ! az group show --name "${RESOURCE_GROUP}" -o none 2>/dev/null; then
+  echo "ERROR: resource group '${RESOURCE_GROUP}' was not found (or is not readable)."
+  echo "Expected naming pattern: <username>-mcp201-workshop (username from whoami: ${LAB_USER})."
+  echo "Confirm you are signed in as your assigned lab user and that provisioning has completed."
   exit 1
 fi
 
-if [[ "${GROUP_COUNT}" -ne 1 ]]; then
-  echo "ERROR: expected exactly one resource group for this lab user, found ${GROUP_COUNT}:"
-  printf '  %s\n' "${GROUPS[@]}"
-  echo "Sign in with your assigned lab user, which has access to only its own resource group."
-  exit 1
-fi
-
-RESOURCE_GROUP="${GROUPS[0]}"
 RG_LOCATION="$(az group show --name "${RESOURCE_GROUP}" --query location -o tsv)"
 MY_IP="${STUDENT_PUBLIC_IP:-$(curl -fsSL https://api.ipify.org)}"
 STUDENT_CIDR="${MY_IP}/32"
@@ -60,6 +49,7 @@ STUDENT_CIDR="${MY_IP}/32"
 echo "=== FortiWeb lab deploy ==="
 echo "Repo:            ${ROOT}"
 echo "Signed-in user:  $(az account show --query user.name -o tsv)"
+echo "Cloud Shell user: ${LAB_USER}"
 echo "Resource group:  ${RESOURCE_GROUP}"
 echo "RG location:     ${RG_LOCATION}"
 echo "Student NSG IP:  ${STUDENT_CIDR}"

@@ -46,7 +46,7 @@ The diagram below summarizes the FortiWeb training lab: Guacamole client access,
 
 ## Deploy the Lab Environment
 
-Use the Azure credentials from your provisioning email to sign in, open **Azure Cloud Shell**, clone the lab repository, and run the initialization script. Your lab user has access to **exactly one** resource group. The deploy script discovers that group automatically—you do not edit Terraform variable files by hand.
+Use the Azure credentials from your provisioning email to sign in, open **Azure Cloud Shell**, clone the lab repository, and run the initialization script. Your lab user is paired with a resource group named `<username>-mcp201-workshop` (for example `fweb11-mcp201-workshop`). The deploy script builds that name from `whoami`—you do not edit Terraform variable files by hand.
 
 Allow about **25–40 minutes** for the full Terraform deploy after Cloud Shell is ready.
 
@@ -142,7 +142,7 @@ chmod +x deploy-lab.sh
 
 The script:
 
-* Detects the single resource group available to your lab user
+* Builds the resource group name as `<whoami>-mcp201-workshop`
 * Updates each phase `terraform.tfvars` with that resource group and your public IP
 * Runs the four Terraform phases (`00-foundation` through `03-routes`)
 

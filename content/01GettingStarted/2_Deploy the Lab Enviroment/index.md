@@ -25,5 +25,5 @@ chmod +x deploy-lab.sh
 5. When deploy completes, note `guacamole_access`, then continue to **[Access the Lab Environment](../3_Access%20the%20Lab%20Enviroment/)**.
 
 {{% notice note %}}
-`./deploy-lab.sh` takes no arguments. Your lab user can see only one resource group; the script uses that group automatically.
+`./deploy-lab.sh` takes no arguments. It constructs your resource group as `<whoami>-mcp201-workshop` (for example `fweb11-mcp201-workshop`).
 {{% /notice %}}
