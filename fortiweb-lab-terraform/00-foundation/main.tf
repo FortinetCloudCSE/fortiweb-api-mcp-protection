@@ -1,46 +1,46 @@
-resource "azurerm_resource_group" "rg" {
-  name     = var.resource_group_name
-  location = var.location
+# Resource group is provisioned outside this project (one unique RG per student).
+data "azurerm_resource_group" "rg" {
+  name = var.resource_group_name
 }
 
 resource "azurerm_virtual_network" "vnet" {
   name                = var.vnet_name
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
   address_space       = ["10.10.0.0/16"]
 }
 
 resource "azurerm_subnet" "server" {
   name                 = "snet-server-10-10-1"
-  resource_group_name  = azurerm_resource_group.rg.name
+  resource_group_name  = data.azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.10.1.0/24"]
 }
 resource "azurerm_subnet" "protected" {
   name                 = "snet-protected-10-10-2"
-  resource_group_name  = azurerm_resource_group.rg.name
+  resource_group_name  = data.azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.10.2.0/24"]
 }
 resource "azurerm_subnet" "client" {
   name                 = "snet-client-10-10-3"
-  resource_group_name  = azurerm_resource_group.rg.name
+  resource_group_name  = data.azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.10.3.0/24"]
 }
 
 resource "azurerm_public_ip" "guac" {
   name                = "pip-guacamole01"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
   allocation_method   = "Static"
   sku                 = "Standard"
 }
 
 resource "azurerm_network_security_group" "client" {
   name                = "nsg-client-guacamole"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
 
   security_rule {
     name                       = "Allow-Guacamole-HTTPS-From-Student"
@@ -81,8 +81,8 @@ resource "azurerm_network_security_group" "client" {
 
 resource "azurerm_network_security_group" "server" {
   name                = "nsg-server-docker"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
   security_rule {
     name                       = "Allow-VNet-Inbound"
     priority                   = 100
@@ -98,8 +98,8 @@ resource "azurerm_network_security_group" "server" {
 
 resource "azurerm_network_security_group" "protected" {
   name                = "nsg-protected-appliances"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
   security_rule {
     name                       = "Allow-VNet-Inbound"
     priority                   = 100
