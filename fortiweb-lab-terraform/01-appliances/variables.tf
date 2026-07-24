@@ -79,12 +79,12 @@ variable "fortiweb_publisher" {
 
 variable "fortiweb_offer" {
   type    = string
-  default = "fortinet_fortiweb-vm_v2"
+  default = "fortinet_fortiweb-vm_v5"
 }
 
 variable "fortiweb_sku" {
   type    = string
-  default = "fortinet_fw-vm_payg"
+  default = "fortinet_fw-vm_payg_v3"
 }
 
 variable "fortiweb_version" {
