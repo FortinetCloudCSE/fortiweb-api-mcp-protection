@@ -178,6 +178,6 @@ Open **`http://20.1.2.3:8080`** in your laptop browser.
 | Terraform / Azure CLI installed locally | No |
 | Browser | Yes |
 | Azure subscription + Contributor role | Yes |
-| Fortinet marketplace access (PAYG) | Yes (accepted automatically by Terraform) |
+| Fortinet marketplace access (PAYG) | Yes (terms must be pre-accepted once per subscription by an admin) |
 
 Allow **25-30 minutes** for the full deploy. Work from `~/clouddrive` so files persist between Cloud Shell sessions.
