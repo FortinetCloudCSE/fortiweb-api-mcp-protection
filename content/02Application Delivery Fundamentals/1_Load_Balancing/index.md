@@ -41,7 +41,7 @@ A server pool may contain one server or several servers. With multiple members, 
    https://10.10.2.100
    ```
    ```text
-   Fortilab/Fortinetlab1!
+   azureuser/Fortinetlab1!
    ```
 3. Sign in with the lab FortiWeb credentials.
    

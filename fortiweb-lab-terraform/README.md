@@ -12,7 +12,8 @@ This Terraform is organized in phases so routing is not applied before FortiGate
 ## Important
 
 - The student resource group is created outside this project; Terraform only deploys into it.
-- Only Guacamole gets a public IP.
+- Only Guacamole gets an inbound public IP.
+- A NAT Gateway provides outbound-only Internet access for FortiGate/FortiWeb PAYG licensing and FortiGuard.
 - FortiGate, FortiWeb, Docker1, and Docker2 do not get public IPs.
 - FortiGate and FortiWeb NICs have IP forwarding enabled.
 - Guacamole TCP/8080 is publicly reachable for the duration of the workshop.
@@ -49,9 +50,9 @@ Phase `01-appliances` also passes `configs/fortiweb-bootstrap.conf.tpl` to Forti
 | VIPs / vservers | `virt-1`–`virt-4` on `10.10.2.150–153` |
 | Server pools | MCP, DVWA, JUICESHOP, crAPI, petstore → docker hosts |
 | Static routes | Default via `10.10.2.1`; client `10.10.3.0/24` via FortiGate `10.10.2.101` |
-| Admin `lab-student` | `prof_admin`, trusted hosts `10.10.3.0/24`, same password as FortiGate |
+| Azure administrator `azureuser` | `prof_admin`, password set by Terraform deployment |
 
-Students log in at `https://10.10.2.100` from Guacamole. 
+Students log in at `https://10.10.2.100` from Guacamole with `azureuser` / `Fortinetlab1!`.
 
 ## Before applying
 
@@ -159,7 +160,8 @@ Open **`http://20.1.2.3:8080`** in your laptop browser.
 | Login | Value |
 |-------|--------|
 | Guacamole | (credentials baked into gallery image) |
-| FortiGate / FortiWeb GUI | `lab-student` / `Fortinetlab1!` |
+| FortiGate GUI | `lab-student` / `Fortinetlab1!` |
+| FortiWeb GUI | `azureuser` / `Fortinetlab1!` |
 
 
 

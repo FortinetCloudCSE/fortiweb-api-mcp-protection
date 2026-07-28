@@ -80,8 +80,8 @@ Use the bookmarks rather than manually entering each application URL.
 | System | Username | Password |
 |--------|----------|----------|
 | Guacamole | `guacadmin` | `Fortinet1!` |
-| FortiGate | `Fortilab` | `Fortinetlab1!` |
-| FortiWeb | `Fortilab` | `Fortinetlab1!` |
+| FortiGate | `lab-student` | `Fortinetlab1!` |
+| FortiWeb | `azureuser` | `Fortinetlab1!` |
 
 {{% notice tip %}}
 FortiGate and FortiWeb use lab certificates. Accept the self-signed certificate warning when prompted.
