@@ -35,11 +35,36 @@ az account show -o none >/dev/null 2>&1 || {
 LAB_USER="$(whoami | tr '[:upper:]' '[:lower:]')"
 RESOURCE_GROUP="${LAB_USER}-mcp201-workshop"
 
+# Cloud Shell may default to a subscription that does not contain the student RG.
+# Prefer an explicit override, then search all accessible subscriptions.
+if [[ -n "${AZURE_SUBSCRIPTION_ID:-}" ]]; then
+  az account set --subscription "${AZURE_SUBSCRIPTION_ID}"
+elif [[ -n "${ARM_SUBSCRIPTION_ID:-}" ]]; then
+  az account set --subscription "${ARM_SUBSCRIPTION_ID}"
+fi
+
 if ! az group show --name "${RESOURCE_GROUP}" -o none 2>/dev/null; then
-  echo "ERROR: resource group '${RESOURCE_GROUP}' was not found (or is not readable)."
-  echo "Expected naming pattern: <username>-mcp201-workshop (username from whoami: ${LAB_USER})."
-  echo "Confirm you are signed in as your assigned lab user and that provisioning has completed."
-  exit 1
+  echo "Resource group '${RESOURCE_GROUP}' not in current subscription; searching accessible subscriptions..."
+  FOUND_SUB=""
+  while IFS=$'\t' read -r sub_id sub_name; do
+    [[ -z "${sub_id}" ]] && continue
+    if az group show --name "${RESOURCE_GROUP}" --subscription "${sub_id}" -o none 2>/dev/null; then
+      FOUND_SUB="${sub_id}"
+      echo "Found '${RESOURCE_GROUP}' in subscription: ${sub_name} (${sub_id})"
+      az account set --subscription "${sub_id}"
+      break
+    fi
+  done < <(az account list --query "[].{id:id,name:name}" -o tsv)
+
+  if [[ -z "${FOUND_SUB}" ]]; then
+    echo "ERROR: resource group '${RESOURCE_GROUP}' was not found (or is not readable) in any accessible subscription."
+    echo "Expected naming pattern: <username>-mcp201-workshop (username from whoami: ${LAB_USER})."
+    echo "Current subscription: $(az account show --query '{name:name,id:id}' -o json)"
+    echo "Accessible subscriptions:"
+    az account list --query "[].{name:name,id:id}" -o table
+    echo "Confirm you are signed in as your assigned lab user and that provisioning has completed."
+    exit 1
+  fi
 fi
 
 RG_LOCATION="$(az group show --name "${RESOURCE_GROUP}" --query location -o tsv)"
@@ -49,6 +74,7 @@ STUDENT_CIDR="${MY_IP}/32"
 echo "=== FortiWeb lab deploy ==="
 echo "Repo:            ${ROOT}"
 echo "Signed-in user:  $(az account show --query user.name -o tsv)"
+echo "Subscription:    $(az account show --query '{name:name,id:id}' -o json)"
 echo "Cloud Shell user: ${LAB_USER}"
 echo "Resource group:  ${RESOURCE_GROUP}"
 echo "RG location:     ${RG_LOCATION}"
