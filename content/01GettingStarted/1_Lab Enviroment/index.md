@@ -121,7 +121,7 @@ chmod +x deploy-lab.sh
 The script:
 
 * Builds the resource group name as `<whoami>-mcp201-workshop`
-* Updates each phase `terraform.tfvars` with that resource group and your public IP
+* Updates each phase `terraform.tfvars` with that resource group
 * Runs the four Terraform phases (`00-foundation` through `03-routes`)
 
 When the deploy finishes, note the `guacamole_access` output—you will use it in the next section to open Guacamole. The script runs without prompts (`terraform apply -auto-approve`).

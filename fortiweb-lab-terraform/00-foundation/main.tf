@@ -43,26 +43,14 @@ resource "azurerm_network_security_group" "client" {
   resource_group_name = data.azurerm_resource_group.rg.name
 
   security_rule {
-    name                       = "Allow-Guacamole-HTTPS-From-Student"
+    name                       = "Allow-Guacamole-HTTP8080"
     priority                   = 100
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
     source_port_range          = "*"
-    destination_port_range     = "443"
-    source_address_prefix      = var.student_source_cidr
-    destination_address_prefix = "10.10.3.200"
-  }
-
-  security_rule {
-    name                       = "Allow-Guacamole-HTTP8080-From-Student"
-    priority                   = 110
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
     destination_port_range     = "8080"
-    source_address_prefix      = var.student_source_cidr
+    source_address_prefix      = "*"
     destination_address_prefix = "10.10.3.200"
   }
 

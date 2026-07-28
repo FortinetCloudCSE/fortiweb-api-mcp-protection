@@ -6,7 +6,3 @@ variable "resource_group_name" {
 variable "vnet_name" {
   type = string
 }
-
-variable "student_source_cidr" {
-  type = string
-}
