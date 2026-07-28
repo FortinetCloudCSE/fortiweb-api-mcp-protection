@@ -84,7 +84,7 @@ variable "fortiweb_offer" {
 
 variable "fortiweb_sku" {
   type    = string
-  default = "fortinet_fw-vm_payg_v3"
+  default = "fortinet_fw-vm_payg"
 }
 
 variable "fortiweb_version" {

@@ -8,4 +8,4 @@ fortigate_size      = "Standard_F2s_v2"
 fortiweb_size       = "Standard_F2s_v2"
 fortiweb_data_disk_gb = 30
 fortiweb_offer      = "fortinet_fortiweb-vm_v5"
-fortiweb_sku        = "fortinet_fw-vm_payg_v3"
+fortiweb_sku        = "fortinet_fw-vm_payg"

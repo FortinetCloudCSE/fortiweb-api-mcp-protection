@@ -8,7 +8,7 @@ FG_SKU="${FG_SKU:-fortinet_fg-vm_payg_76}"
 
 FW_PUBLISHER="${FW_PUBLISHER:-fortinet}"
 FW_OFFER="${FW_OFFER:-fortinet_fortiweb-vm_v5}"
-FW_SKU="${FW_SKU:-fortinet_fw-vm_payg_v3}"
+FW_SKU="${FW_SKU:-fortinet_fw-vm_payg}"
 
 echo "Location: $LOCATION"
 echo "Terraform defaults (01-appliances/variables.tf):"
