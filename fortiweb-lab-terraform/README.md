@@ -15,7 +15,7 @@ This Terraform is organized in phases so routing is not applied before FortiGate
 - Only Guacamole gets a public IP.
 - FortiGate, FortiWeb, Docker1, and Docker2 do not get public IPs.
 - FortiGate and FortiWeb NICs have IP forwarding enabled.
-- Students update the Guacamole NSG source IP to their own public IP.
+- Guacamole TCP/8080 is publicly reachable for the duration of the workshop.
 - FortiWeb has an extra data disk. Default is 30 GB; 
 - FortiGate is bootstrapped at first boot via `configs/fortigate-bootstrap.conf.tpl` (interfaces, VIPs, 5 firewall policies, `lab-student` admin).
 
@@ -57,7 +57,7 @@ Students log in at `https://10.10.2.100` from Guacamole.
 
 A unique resource group per student must already exist (created outside this project).
 
-**Students using `scripts/deploy-lab.sh` do not edit tfvars.** The script builds the resource group name as `<whoami>-mcp201-workshop` and updates `resource_group_name`, `student_source_cidr`, and `location` automatically before applying.
+**Students using `scripts/deploy-lab.sh` do not edit tfvars.** The script builds the resource group name as `<whoami>-mcp201-workshop` and updates `resource_group_name` and `location` automatically before applying.
 
 For a manual apply (instructors / debugging only), edit each phase `terraform.tfvars` and set:
 
@@ -66,7 +66,6 @@ For a manual apply (instructors / debugging only), edit each phase `terraform.tf
 - `admin_password`
 - FortiGate/FortiWeb marketplace image values if different in your region
 - Custom image IDs for Guacamole/Docker images
-- `student_source_cidr`
 
 Location is taken from the existing resource group; do not create the RG in these phases.
 
@@ -98,7 +97,7 @@ After the final `terraform apply` in `03-routes`, note the output:
 guacamole_access = "20.1.2.3:8080"
 ```
 
-Open `http://<that-value>` in a browser to reach the Guacamole jump host (ensure `student_source_cidr` in `00-foundation` allows your public IP).
+Open `http://<that-value>` in a browser to reach the Guacamole jump host.
 
 ## Student deploy from Azure Cloud Shell 
 
@@ -143,14 +142,7 @@ chmod +x scripts/deploy-lab.sh
 ./scripts/deploy-lab.sh
 ```
 
-The script builds `<whoami>-mcp201-workshop` (for example `fweb11-mcp201-workshop`), writes it into all phases, auto-detects your public IP for `student_source_cidr`, then runs all four applies.
-
-Optional: pin Guacamole NSG source IP if auto-detect is wrong (e.g. VPN):
-
-```bash
-export STUDENT_PUBLIC_IP=203.0.113.10
-./scripts/deploy-lab.sh
-```
+The script builds `<whoami>-mcp201-workshop` (for example `fweb11-mcp201-workshop`), writes it into all phases, then runs all four applies.
 
 **Prerequisite:** background provisioning has already created the lab user and their unique resource group.
 

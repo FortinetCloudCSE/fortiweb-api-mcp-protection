@@ -10,7 +10,6 @@
 # Example: fweb11 -> fweb11-mcp201-workshop
 # This script constructs that name and does not create the resource group.
 #
-# Optional: STUDENT_PUBLIC_IP=<ip> to pin Guacamole NSG source instead of auto-detect.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -68,8 +67,6 @@ if ! az group show --name "${RESOURCE_GROUP}" -o none 2>/dev/null; then
 fi
 
 RG_LOCATION="$(az group show --name "${RESOURCE_GROUP}" --query location -o tsv)"
-MY_IP="${STUDENT_PUBLIC_IP:-$(curl -fsSL https://api.ipify.org)}"
-STUDENT_CIDR="${MY_IP}/32"
 
 echo "=== FortiWeb lab deploy ==="
 echo "Repo:            ${ROOT}"
@@ -78,7 +75,6 @@ echo "Subscription:    $(az account show --query '{name:name,id:id}' -o json)"
 echo "Cloud Shell user: ${LAB_USER}"
 echo "Resource group:  ${RESOURCE_GROUP}"
 echo "RG location:     ${RG_LOCATION}"
-echo "Student NSG IP:  ${STUDENT_CIDR}"
 echo
 
 sed_inplace() {
@@ -95,10 +91,6 @@ for phase in 00-foundation 01-appliances 02-lab-vms 03-routes; do
   sed_inplace "s|resource_group_name = \".*\"|resource_group_name = \"${RESOURCE_GROUP}\"|" "${tfvars}"
   echo "Updated ${tfvars} -> resource_group_name = \"${RESOURCE_GROUP}\""
 done
-
-FOUNDATION_TFVARS="${ROOT}/00-foundation/terraform.tfvars"
-sed_inplace "s|student_source_cidr = \".*\"|student_source_cidr = \"${STUDENT_CIDR}\"|" "${FOUNDATION_TFVARS}"
-echo "Updated ${FOUNDATION_TFVARS} -> student_source_cidr = \"${STUDENT_CIDR}\""
 
 APPLIANCES_TFVARS="${ROOT}/01-appliances/terraform.tfvars"
 if [[ -f "${APPLIANCES_TFVARS}" ]] && grep -q '^location' "${APPLIANCES_TFVARS}"; then
