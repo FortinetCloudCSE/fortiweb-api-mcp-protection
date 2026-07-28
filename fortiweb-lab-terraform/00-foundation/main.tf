@@ -37,6 +37,37 @@ resource "azurerm_public_ip" "guac" {
   sku                 = "Standard"
 }
 
+resource "azurerm_public_ip" "outbound" {
+  name                = "pip-lab-outbound"
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+}
+
+resource "azurerm_nat_gateway" "outbound" {
+  name                    = "natgw-lab-outbound"
+  location                = data.azurerm_resource_group.rg.location
+  resource_group_name     = data.azurerm_resource_group.rg.name
+  sku_name                = "Standard"
+  idle_timeout_in_minutes = 10
+}
+
+resource "azurerm_nat_gateway_public_ip_association" "outbound" {
+  nat_gateway_id       = azurerm_nat_gateway.outbound.id
+  public_ip_address_id = azurerm_public_ip.outbound.id
+}
+
+resource "azurerm_subnet_nat_gateway_association" "protected" {
+  subnet_id      = azurerm_subnet.protected.id
+  nat_gateway_id = azurerm_nat_gateway.outbound.id
+}
+
+resource "azurerm_subnet_nat_gateway_association" "client" {
+  subnet_id      = azurerm_subnet.client.id
+  nat_gateway_id = azurerm_nat_gateway.outbound.id
+}
+
 resource "azurerm_network_security_group" "client" {
   name                = "nsg-client-guacamole"
   location            = data.azurerm_resource_group.rg.location

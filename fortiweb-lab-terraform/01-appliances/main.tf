@@ -28,7 +28,7 @@ data "azurerm_subnet" "client" {
 # Marketplace terms must be accepted once per subscription by an admin
 # (student lab users typically lack Microsoft.MarketplaceOrdering permissions).
 # Accept with:
-#   az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm_v5 --plan fortinet_fg-vm_payg_20190624
+#   az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm --plan fortinet_fg-vm_payg_76
 #   az vm image terms accept --publisher fortinet --offer fortinet_fortiweb-vm_v5 --plan fortinet_fw-vm_payg_v3
 
 resource "azurerm_network_interface" "fg_outside" {

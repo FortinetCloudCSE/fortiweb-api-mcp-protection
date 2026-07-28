@@ -3,8 +3,8 @@ set -euo pipefail
 LOCATION="${1:-eastus}"
 
 FG_PUBLISHER="${FG_PUBLISHER:-fortinet}"
-FG_OFFER="${FG_OFFER:-fortinet_fortigate-vm_v5}"
-FG_SKU="${FG_SKU:-fortinet_fg-vm_payg_20190624}"
+FG_OFFER="${FG_OFFER:-fortinet_fortigate-vm}"
+FG_SKU="${FG_SKU:-fortinet_fg-vm_payg_76}"
 
 FW_PUBLISHER="${FW_PUBLISHER:-fortinet}"
 FW_OFFER="${FW_OFFER:-fortinet_fortiweb-vm_v5}"
@@ -53,9 +53,3 @@ else
   exit 1
 fi
 
-echo
-echo "Newer FortiGate marketplace (Fortinet 2026 templates — optional migration):"
-echo "  offer: fortinet_fortigate-vm"
-echo "  sku:   fortinet_fg-vm_payg_76"
-az vm image show -l "$LOCATION" -p fortinet -f fortinet_fortigate-vm -s fortinet_fg-vm_payg_76 --version latest -o table 2>/dev/null || \
-  echo "  (not listed in $LOCATION — legacy SKU above may still be required)"

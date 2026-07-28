@@ -41,12 +41,12 @@ variable "fortigate_publisher" {
 
 variable "fortigate_offer" {
   type    = string
-  default = "fortinet_fortigate-vm_v5"
+  default = "fortinet_fortigate-vm"
 }
 
 variable "fortigate_sku" {
   type    = string
-  default = "fortinet_fg-vm_payg_20190624"
+  default = "fortinet_fg-vm_payg_76"
 }
 
 variable "fortigate_version" {
