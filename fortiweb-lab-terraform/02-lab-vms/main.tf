@@ -70,37 +70,87 @@ resource "azurerm_network_interface" "docker2" {
   }
 }
 
-resource "azurerm_linux_virtual_machine" "guac" {
-  name                            = "guacamole01"
-  resource_group_name             = data.azurerm_resource_group.rg.name
-  location                        = data.azurerm_resource_group.rg.location
-  size                            = var.guac_size
-  admin_username                  = var.admin_username
-  admin_password                  = var.admin_password
-  disable_password_authentication = false
-  network_interface_ids           = [azurerm_network_interface.guac.id]
-  source_image_id                 = var.guac_image_id
+# Specialized gallery images retain their existing accounts and must be
+# deployed without an osProfile. azurerm_linux_virtual_machine always emits an
+# osProfile, so use AzAPI for Guacamole and Docker1.
+resource "azapi_resource" "guac" {
+  type      = "Microsoft.Compute/virtualMachines@2024-07-01"
+  name      = "guacamole01"
+  parent_id = data.azurerm_resource_group.rg.id
+  location  = data.azurerm_resource_group.rg.location
 
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Premium_LRS"
+  body = {
+    properties = {
+      hardwareProfile = {
+        vmSize = var.guac_size
+      }
+      networkProfile = {
+        networkInterfaces = [{
+          id = azurerm_network_interface.guac.id
+          properties = {
+            primary = true
+          }
+        }]
+      }
+      storageProfile = {
+        imageReference = {
+          id = var.guac_image_id
+        }
+        osDisk = {
+          name         = "guacamole01-osdisk"
+          caching      = "ReadWrite"
+          createOption = "FromImage"
+          deleteOption = "Delete"
+          managedDisk = {
+            storageAccountType = "Premium_LRS"
+          }
+        }
+      }
+    }
   }
 }
 
-resource "azurerm_linux_virtual_machine" "docker1" {
-  name                            = "linux-docker-1"
-  resource_group_name             = data.azurerm_resource_group.rg.name
-  location                        = data.azurerm_resource_group.rg.location
-  size                            = var.docker_size
-  admin_username                  = var.admin_username
-  admin_password                  = var.admin_password
-  disable_password_authentication = false
-  network_interface_ids           = [azurerm_network_interface.docker1.id]
-  source_image_id                 = var.docker1_image_id
+resource "azapi_resource" "docker1" {
+  type      = "Microsoft.Compute/virtualMachines@2024-07-01"
+  name      = "linux-docker-1"
+  parent_id = data.azurerm_resource_group.rg.id
+  location  = data.azurerm_resource_group.rg.location
 
-  os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Premium_LRS"
+  body = {
+    properties = {
+      hardwareProfile = {
+        vmSize = var.docker_size
+      }
+      networkProfile = {
+        networkInterfaces = [{
+          id = azurerm_network_interface.docker1.id
+          properties = {
+            primary = true
+          }
+        }]
+      }
+      securityProfile = {
+        securityType = "TrustedLaunch"
+        uefiSettings = {
+          secureBootEnabled = true
+          vTpmEnabled       = true
+        }
+      }
+      storageProfile = {
+        imageReference = {
+          id = var.docker1_image_id
+        }
+        osDisk = {
+          name         = "linux-docker-1-osdisk"
+          caching      = "ReadWrite"
+          createOption = "FromImage"
+          deleteOption = "Delete"
+          managedDisk = {
+            storageAccountType = "Premium_LRS"
+          }
+        }
+      }
+    }
   }
 }
 
