@@ -25,8 +25,9 @@ variable "fortigate_size" {
 }
 
 variable "fortiweb_size" {
-  type    = string
-  default = "Standard_F2s_v2"
+  type        = string
+  default     = "Standard_D2s_v5"
+  description = "FortiWeb VM size with 2 vCPUs, 8 GiB memory, two NICs, and Premium SSD support."
 }
 
 variable "fortiweb_data_disk_gb" {
