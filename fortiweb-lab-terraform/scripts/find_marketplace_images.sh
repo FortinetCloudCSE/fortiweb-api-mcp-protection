@@ -8,12 +8,13 @@ FG_SKU="${FG_SKU:-fortinet_fg-vm_payg_76}"
 
 FW_PUBLISHER="${FW_PUBLISHER:-fortinet}"
 FW_OFFER="${FW_OFFER:-fortinet_fortiweb-vm_v5}"
-FW_SKU="${FW_SKU:-fortinet_fw-vm_payg}"
+FW_SKU="${FW_SKU:-fortinet_fw-vm_payg_v3}"
+FW_VERSION="${FW_VERSION:-8.0.5}"
 
 echo "Location: $LOCATION"
 echo "Terraform defaults (01-appliances/variables.tf):"
 echo "  FortiGate: $FG_PUBLISHER / $FG_OFFER / $FG_SKU / latest"
-echo "  FortiWeb:  $FW_PUBLISHER / $FW_OFFER / $FW_SKU / latest"
+echo "  FortiWeb:  $FW_PUBLISHER / $FW_OFFER / $FW_SKU / $FW_VERSION"
 echo
 
 echo "Fortinet publishers:"
@@ -46,10 +47,10 @@ fi
 
 echo
 echo "Verify Terraform FortiWeb image (must succeed for deploy):"
-if az vm image show -l "$LOCATION" -p "$FW_PUBLISHER" -f "$FW_OFFER" -s "$FW_SKU" --version latest -o table; then
-  echo "OK: FortiWeb SKU is available in $LOCATION"
+if az vm image show -l "$LOCATION" -p "$FW_PUBLISHER" -f "$FW_OFFER" -s "$FW_SKU" --version "$FW_VERSION" -o table; then
+  echo "OK: FortiWeb $FW_VERSION is available in $LOCATION"
 else
-  echo "FAIL: FortiWeb SKU not found — update 01-appliances/variables.tf or terraform.tfvars"
+  echo "FAIL: FortiWeb $FW_VERSION not found — update 01-appliances/variables.tf or terraform.tfvars"
   exit 1
 fi
 
