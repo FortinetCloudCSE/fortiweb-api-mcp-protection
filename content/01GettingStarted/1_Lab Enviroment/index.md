@@ -138,6 +138,38 @@ Copy the URL shown next to **Open in browser**. You will use this address to acc
 Do not close Cloud Shell while Terraform is applying. If the session disconnects, reopen Cloud Shell and re-run `./deploy-lab.sh` from the `scripts` directory.
 {{% /notice %}}
 
+### Step 9 – Download and Restore the FortiWeb Configuration
+
+After opening the Guacamole desktop, launch a terminal and download the prepared FortiWeb 8.0.5 configuration:
+
+```bash
+mkdir -p ~/Downloads
+curl -fL \
+  https://raw.githubusercontent.com/FortinetCloudCSE/fortiweb-api-mcp-protection/main/downloads/fwb_system_no_defaults.conf \
+  -o ~/Downloads/fwb_system_no_defaults.conf
+```
+
+Confirm that the file was downloaded:
+
+```bash
+ls -lh ~/Downloads/fwb_system_no_defaults.conf
+```
+
+From the Guacamole desktop:
+
+1. Open the FortiWeb GUI at [https://10.10.2.100](https://10.10.2.100).
+2. Sign in with `azureuser / Fortinetlab1!`.
+3. Go to **System > Maintenance > Backup & Restore**.
+4. Select **Restore**, then click **Upload** in the **From File** field.
+5. Browse to the **Downloads** folder and select `fwb_system_no_defaults.conf`.
+6. Click **Restore** and confirm the operation.
+
+FortiWeb applies the configuration and restarts. The browser session will disconnect during the restart. Wait several minutes, refresh [https://10.10.2.100](https://10.10.2.100), and sign in again with the same credentials.
+
+{{% notice note %}}
+This configuration was prepared specifically for the FortiWeb 8.0.5 training environment. Do not restore it to another FortiWeb deployment or a production appliance.
+{{% /notice %}}
+
 ### Topics Covered
 
 - Lab architecture overview

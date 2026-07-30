@@ -5,7 +5,7 @@ This Terraform is organized in phases so routing is not applied before FortiGate
 ## Phases
 
 1. `00-foundation` - VNet, subnets, NSGs, Guacamole public IP (uses a pre-created student resource group)
-2. `01-appliances` - FortiGate PAYG and FortiWeb PAYG marketplace VMs
+2. `01-appliances` - FortiGate PAYG and FortiWeb PAYG 8.0.5 marketplace VMs
 3. `02-lab-vms` - Guacamole, Docker1, Docker2 from captured images
 4. `03-routes` - route tables and subnet associations
 
@@ -13,7 +13,7 @@ This Terraform is organized in phases so routing is not applied before FortiGate
 
 - The student resource group is created outside this project; Terraform only deploys into it.
 - Only Guacamole gets an inbound public IP.
-- A NAT Gateway provides outbound-only Internet access for FortiGate/FortiWeb PAYG licensing and FortiGuard.
+- A NAT Gateway provides outbound-only Internet access for FortiGate/FortiWeb licensing and FortiGuard.
 - FortiGate, FortiWeb, Docker1, and Docker2 do not get public IPs.
 - FortiGate and FortiWeb NICs have IP forwarding enabled.
 - Guacamole TCP/8080 is publicly reachable for the duration of the workshop.
