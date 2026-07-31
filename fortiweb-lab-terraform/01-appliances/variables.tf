@@ -26,8 +26,8 @@ variable "fortigate_size" {
 
 variable "fortiweb_size" {
   type        = string
-  default     = "Standard_D2s_v5"
-  description = "FortiWeb VM size with 2 vCPUs, 8 GiB memory, two NICs, and Premium SSD support."
+  default     = "Standard_D2s_v3"
+  description = "FortiWeb VM size with 2 vCPUs, 8 GiB memory, a local temp disk, two NICs, and Premium SSD support. The local temp disk is required so Azure presents the managed log disk as sdc and FortiWeb can format it for /var/log."
 }
 
 variable "fortiweb_data_disk_gb" {
