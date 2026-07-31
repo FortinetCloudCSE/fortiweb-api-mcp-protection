@@ -7,7 +7,7 @@ This Terraform is organized in phases so routing is not applied before FortiGate
 1. `00-foundation` - VNet, subnets, NSGs, Guacamole public IP (uses a pre-created student resource group)
 2. `01-appliances` - FortiGate PAYG and FortiWeb PAYG 8.0.5 marketplace VMs
 3. `02-lab-vms` - Guacamole, Docker1, Docker2 from captured images
-4. `03-routes` - route tables and subnet associations
+4. `03-routes` - route tables and subnet associations (client and protected traffic through FortiGate; server default through FortiWeb)
 
 ## Important
 
@@ -16,6 +16,7 @@ This Terraform is organized in phases so routing is not applied before FortiGate
 - A NAT Gateway provides outbound-only Internet access for FortiGate/FortiWeb licensing and FortiGuard.
 - FortiGate, FortiWeb, Docker1, and Docker2 do not get public IPs.
 - FortiGate and FortiWeb NICs have IP forwarding enabled.
+- Protected subnet UDR sends `10.10.3.0/24` through FortiGate (`10.10.2.101`) so VIP reverse DNAT restores client replies to `10.10.3.150–153`.
 - Guacamole TCP/8080 is publicly reachable for the duration of the workshop.
 - FortiWeb has an extra data disk. Default is 30 GB; 
 - FortiGate is bootstrapped at first boot via `configs/fortigate-bootstrap.conf.tpl` (interfaces, VIPs, 5 firewall policies, `lab-student` admin).
