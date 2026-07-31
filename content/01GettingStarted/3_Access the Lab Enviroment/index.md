@@ -59,7 +59,53 @@ On the Linux desktop, click the blue **Internet** globe icon on the bottom panel
 
 ![Internet button used to launch Google Chrome](open-chrome.png)
 
-### Step 5 – Review the Browser Bookmarks
+### Step 5 – Download and Restore the FortiWeb Configuration
+
+From the Guacamole desktop, launch a terminal and download the prepared FortiWeb 8.0.5 configuration:
+
+```bash
+mkdir -p ~/Downloads
+curl -fL \
+  https://raw.githubusercontent.com/FortinetCloudCSE/fortiweb-api-mcp-protection/main/downloads/fwb_system_no_defaults.conf \
+  -o ~/Downloads/fwb_system_no_defaults.conf
+```
+
+Confirm that the file was downloaded:
+
+```bash
+ls -lh ~/Downloads/fwb_system_no_defaults.conf
+```
+
+![Guacamole desktop terminal showing the FortiWeb configuration downloaded to the Downloads folder](fortiweb-config-download.png)
+
+From the Guacamole desktop:
+
+1. Open the FortiWeb bookmark or browse to [https://10.10.2.100](https://10.10.2.100).
+2. Sign in with `azureuser / Fortinetlab1!`.
+3. Go to **System > Maintenance > Backup & Restore**.
+4. Select **Restore**, then click **Upload** in the **From File** field.
+
+![FortiWeb Backup and Restore page with Restore selected and the Upload button displayed](fortiweb-backup-restore.png)
+
+5. Browse to the **Downloads** folder and select `fwb_system_no_defaults.conf`.
+
+![File chooser showing fwb_system_no_defaults.conf in the Guacamole Downloads folder](fortiweb-config-file-select.png)
+
+6. Click **Restore** and confirm the operation.
+
+![FortiWeb confirmation that the system settings were uploaded successfully](fortiweb-config-restore-success.png)
+
+FortiWeb applies the configuration and restarts. The browser session will disconnect during the restart. Wait several minutes, then refresh [https://10.10.2.100](https://10.10.2.100).
+
+{{% notice note %}}
+The FortiWeb login changes after the configuration is restored. Sign in with username `Fortilab` and password `Fortinetlab1!`. The initial `azureuser` account is used only to upload the configuration.
+{{% /notice %}}
+
+{{% notice note %}}
+This configuration was prepared specifically for the FortiWeb 8.0.5 training environment. Do not restore it to another FortiWeb deployment or a production appliance.
+{{% /notice %}}
+
+### Step 6 – Review the Browser Bookmarks
 
 The applications and administrative interfaces used in the lab are already bookmarked in Chrome. The bookmarks include:
 
@@ -81,7 +127,7 @@ Use the bookmarks rather than manually entering each application URL.
 |--------|----------|----------|
 | Guacamole | `guacadmin` | `Fortinet1!` |
 | FortiGate | `lab-student` | `Fortinetlab1!` |
-| FortiWeb | `azureuser` | `Fortinetlab1!` |
+| FortiWeb | `Fortilab` | `Fortinetlab1!` |
 
 {{% notice tip %}}
 FortiGate and FortiWeb use lab certificates. Accept the self-signed certificate warning when prompted.
@@ -105,4 +151,5 @@ Refer to the topology diagram in [The Lab Environment](../1_Lab%20Enviroment/) a
 * Sign in with the dedicated Guacamole lab credentials
 * Open the **Client** connection to reach the Linux desktop
 * Use the Internet button to launch Chrome
+* Download and restore the FortiWeb 8.0.5 training configuration
 * Use the preconfigured bookmarks to access FortiWeb and the lab applications
