@@ -32,7 +32,7 @@ Later exercises generate legitimate traffic, verify the behavioral model, and te
 
 | Setting | Value |
 |---------|-------|
-| Username | `azureuser` |
+| Username | `Fortilab` |
 | Password | `Fortinetlab1!` |
 
 ![FortiWeb login page](fortiweb-login.png)

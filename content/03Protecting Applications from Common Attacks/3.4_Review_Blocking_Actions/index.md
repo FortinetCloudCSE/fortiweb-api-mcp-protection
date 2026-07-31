@@ -27,7 +27,7 @@ You identify different attack types detected by the Web Protection Profile, exam
 
 | Field | Value |
 |-------|-------|
-| Username | `azureuser` |
+| Username | `Fortilab` |
 | Password | `Fortinetlab1!` |
 
 ![FortiWeb login page](fortiweb-login.png)
