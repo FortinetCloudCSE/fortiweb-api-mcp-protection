@@ -59,6 +59,15 @@ On the Linux desktop, click the blue **Internet** globe icon on the bottom panel
 
 ![Internet button used to launch Google Chrome](open-chrome.png)
 
+{{% notice tip %}}
+**Paste into the Guacamole desktop**
+
+Guacamole does not accept a direct paste from your local machine into the remote session. Use the Guacamole clipboard:
+
+* **macOS:** Press **Ctrl + Option (⌥) + Shift** to open the Guacamole menu → **Clipboard** → click the text box → **⌘ Command + V** to paste from your Mac → return to the desktop → **Ctrl + V** in the remote session.
+* **Windows:** Press **Ctrl + Alt + Shift** → **Clipboard** → click the text box → **Ctrl + V** to paste from your PC → return to the desktop → **Ctrl + V** in the remote session.
+{{% /notice %}}
+
 ### Step 5 – Download and Restore the FortiWeb Configuration
 
 From the Guacamole desktop, launch a terminal and download the prepared FortiWeb 8.0.5 configuration:
@@ -105,7 +114,28 @@ The FortiWeb login changes after the configuration is restored. Sign in with use
 This configuration was prepared specifically for the FortiWeb 8.0.5 training environment. Do not restore it to another FortiWeb deployment or a production appliance.
 {{% /notice %}}
 
-### Step 6 – Review the Browser Bookmarks
+### Step 6 – Format the FortiWeb Log Disk
+
+After the configuration restore completes and you can sign in again as `Fortilab`, prepare the attached log disk so FortiWeb can store attack and traffic logs.
+
+1. From any FortiWeb GUI page, click the **CLI Console** icon (`>_`) in the top-right header.
+2. At the CLI prompt, run:
+
+```text
+exec formatlogdisk
+```
+
+3. When prompted, type `y` and press Enter to continue.
+
+![FortiWeb CLI Console running exec formatlogdisk and confirming the operation](fortiweb-formatlogdisk.png)
+
+FortiWeb clears the log disk and restarts. The CLI session shows **Connection lost** while the operation runs. Wait several minutes, then refresh [https://10.10.2.100](https://10.10.2.100) and sign in again with `Fortilab` / `Fortinetlab1!`.
+
+{{% notice note %}}
+`exec formatlogdisk` erases existing log data on the hard disk. In this lab, run it only after the training configuration restore so the appliance is ready for later attack-log and machine-learning exercises.
+{{% /notice %}}
+
+### Step 7 – Review the Browser Bookmarks
 
 The applications and administrative interfaces used in the lab are already bookmarked in Chrome. The bookmarks include:
 
@@ -152,4 +182,5 @@ Refer to the topology diagram in [The Lab Environment](../1_Lab%20Enviroment/) a
 * Open the **Client** connection to reach the Linux desktop
 * Use the Internet button to launch Chrome
 * Download and restore the FortiWeb 8.0.5 training configuration
+* Format the FortiWeb log disk with `exec formatlogdisk`
 * Use the preconfigured bookmarks to access FortiWeb and the lab applications
