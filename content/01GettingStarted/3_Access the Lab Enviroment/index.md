@@ -119,6 +119,9 @@ This configuration was prepared specifically for the FortiWeb 8.0.5 training env
 After the configuration restore completes and you can sign in again as `Fortilab`, prepare the attached log disk so FortiWeb can store attack and traffic logs.
 
 1. From any FortiWeb GUI page, click the **CLI Console** icon (`>_`) in the top-right header.
+
+![FortiWeb dashboard with the CLI Console icon highlighted in the top-right header](fortiweb-cli-console-icon.png)
+
 2. At the CLI prompt, run:
 
 ```text
