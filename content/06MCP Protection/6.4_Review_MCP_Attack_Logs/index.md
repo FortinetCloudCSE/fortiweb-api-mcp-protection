@@ -8,7 +8,7 @@ weight: 40
 
 ### Objective
 
-After the MCP Attack Campaign completes, review FortiWeb Attack Logs to identify how signature-based protection (and other MCP Security layers, when present) detected malicious tool arguments and protocol abuse against `mcp.fortiweblab.local`.
+After the AI Agent attack demonstrations in Exercise 6.3 complete, review FortiWeb Attack Logs to identify how signature-based protection (and other MCP Security layers, when present) detected malicious tool arguments and protocol abuse against `mcp.fortiweblab.local`.
 
 ---
 
