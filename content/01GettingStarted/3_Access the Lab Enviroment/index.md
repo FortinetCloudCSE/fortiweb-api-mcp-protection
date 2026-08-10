@@ -53,12 +53,6 @@ Guacamole opens the Linux working desktop in the browser.
 
 ![Linux working desktop opened through Guacamole](guacamole-desktop.png)
 
-### Step 4 – Open Google Chrome
-
-On the Linux desktop, click the blue **Internet** globe icon on the bottom panel to open Google Chrome.
-
-![Internet button used to launch Google Chrome](open-chrome.png)
-
 {{% notice tip %}}
 **Paste into the Guacamole desktop**
 
@@ -68,7 +62,7 @@ Guacamole does not accept a direct paste from your local machine into the remote
 * **Windows:** Press **Ctrl + Alt + Shift** → **Clipboard** → click the text box → **Ctrl + V** to paste from your PC → return to the desktop → **Ctrl + V** in the remote session.
 {{% /notice %}}
 
-### Step 5 – Download and Restore the FortiWeb Configuration
+### Step 4 – Download the FortiWeb Configuration
 
 From the Guacamole desktop, launch a terminal and download the prepared FortiWeb 8.0.5 configuration:
 
@@ -87,7 +81,15 @@ ls -lh ~/Downloads/fwb_system_no_defaults.conf
 
 ![Guacamole desktop terminal showing the FortiWeb configuration downloaded to the Downloads folder](fortiweb-config-download.png)
 
-From the Guacamole desktop:
+### Step 5 – Open a Browser on the Guacamole Desktop
+
+On the Linux desktop, click the blue **Internet** globe icon on the bottom panel to open the web browser.
+
+![Internet globe icon on the Guacamole desktop dock used to open the browser](open-browser.png)
+
+### Step 6 – Restore the FortiWeb Configuration
+
+From the browser on the Guacamole desktop:
 
 1. Open the FortiWeb bookmark or browse to [https://10.10.2.100](https://10.10.2.100).
 2. Sign in with `azureuser / Fortinetlab1!`.
@@ -114,7 +116,7 @@ The FortiWeb login changes after the configuration is restored. Sign in with use
 This configuration was prepared specifically for the FortiWeb 8.0.5 training environment. Do not restore it to another FortiWeb deployment or a production appliance.
 {{% /notice %}}
 
-### Step 6 – Format the FortiWeb Log Disk
+### Step 7 – Format the FortiWeb Log Disk
 
 After the configuration restore completes and you can sign in again as `Fortilab`, prepare the attached log disk so FortiWeb can store attack and traffic logs.
 
@@ -138,7 +140,7 @@ FortiWeb clears the log disk and restarts. The CLI session shows **Connection lo
 `exec formatlogdisk` erases existing log data on the hard disk. In this lab, run it only after the training configuration restore so the appliance is ready for later attack-log and machine-learning exercises.
 {{% /notice %}}
 
-### Step 7 – Review the Browser Bookmarks
+### Step 8 – Review the Browser Bookmarks
 
 The applications and administrative interfaces used in the lab are already bookmarked in Chrome. The bookmarks include:
 
@@ -183,7 +185,7 @@ Refer to the topology diagram in [The Lab Environment](../1_Lab%20Enviroment/) a
 * Access Guacamole at `http://<provided-ip-address>:8080/guacamole/#/`
 * Sign in with the dedicated Guacamole lab credentials
 * Open the **Client** connection to reach the Linux desktop
-* Use the Internet button to launch Chrome
-* Download and restore the FortiWeb 8.0.5 training configuration
-* Format the FortiWeb log disk with `exec formatlogdisk`
+* Download the FortiWeb 8.0.5 training configuration
+* Open the browser from the Guacamole desktop dock
+* Restore the FortiWeb configuration and format the log disk
 * Use the preconfigured bookmarks to access FortiWeb and the lab applications
