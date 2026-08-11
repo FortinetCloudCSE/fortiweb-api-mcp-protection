@@ -306,4 +306,4 @@ If the GUI reports a connection error:
 
 ### Next Exercise
 
-In Exercise 6.3, you use the same AI Agent Instructor scenarios to generate command injection, SQL injection, prompt poisoning, malformed JSON-RPC, and oversized MCP response traffic.
+In Exercise 6.3, you use the same AI Agent Instructor scenarios to generate command injection, SQL injection, malformed JSON-RPC, and oversized MCP response traffic.
