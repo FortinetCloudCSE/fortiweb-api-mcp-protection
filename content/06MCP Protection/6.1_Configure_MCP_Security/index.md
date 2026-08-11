@@ -46,8 +46,8 @@ The recommended configuration sequence is:
 | Name | `MCP` |
 | Host Status | Enabled |
 | Host | `mcp.fortiweblab.local` |
-| Request URL Type | Simple String |
-| Request URL | `*` |
+| Request URL Type | Regular Expression |
+| Request URL | `.*` |
 | Message Size Limit | Leave the lab default (for example, `4194303`) |
 | Action | `Alert Deny` |
 | Severity | `Low` |
