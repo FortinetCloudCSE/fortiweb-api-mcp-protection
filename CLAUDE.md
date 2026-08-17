@@ -45,7 +45,7 @@ fortiweb-lab-terraform/
   configs/fortigate-bootstrap.conf.tpl, fortiweb-bootstrap.conf.tpl
   scripts/deploy-lab.sh, find_marketplace_images.sh
   README.md                 — authoritative lab topology, IPs, phase ordering, student instructions
-plans/                      — plan/log/spec files for this repo (see gotchas); plans/README.md explains why
+plans/                      — plan/log/spec files, `NNNN_` prefixed (see gotchas); plans/README.md explains why
 Jenkinsfile                 — GitHub commit-status pipeline; its content-check stage is disabled
 fdevsec.yaml                — FortiDevSec scan config
 .github/workflows/
@@ -120,7 +120,7 @@ Optional locally: `DOCKER_CONTEXT` / `DOCKER_HOST` — fortihugorunner honors th
 
 **Change site chrome**: edit `scripts/repoConfig.json`.
 
-**Plan/log/spec files**: write them to root-level `plans/` as `YYYY-MM-DD_<git-username>_<slug>.md` (+ `.log.md`, optional `.spec.md`). Never `docs/plans/`.
+**Plan/log/spec files**: write them to root-level `plans/` as `NNNN_YYYY-MM-DD_<git-username>_<slug>.md` (+ optional `.log.md`, `.spec.md`). Never `docs/plans/`. `NNNN` is a per-repo sequence; the log is optional; on completion, durable facts get promoted into this file and the plan is left to decay. See `plans/README.md`.
 
 **Change the lab topology**: edit the relevant `fortiweb-lab-terraform/0N-*/` phase, update `fortiweb-lab-terraform/README.md`, and update every content page that references the changed IP/port/credential.
 
