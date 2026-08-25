@@ -14,6 +14,7 @@
   "quizUrl": "",
   "videoHeaderSrc": "/videos/CloudsAnimated.mp4",
   "videoHeaderInterval": "60",
+  "provisionApiBaseUrl": "https://func-cse-lab-provisioning.azurewebsites.net",
   "shortcuts": [
     {
       "text": "Fortinet Cloud CSE GitHub Org",
