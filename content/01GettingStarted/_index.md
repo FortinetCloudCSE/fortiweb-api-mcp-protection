@@ -12,11 +12,11 @@ weight: 3
 Provision your Azure Environment, enter your Email address and click _Provision_
 {{< launchdemoform labdefinition="fweb-mcp-110" >}}
 
-{{< notice warning >}} After submitting, this page will return with a blank email address box and no other indications.
+{{< notice warning >}} Enter your email and click _Provision_ once. You'll see a live progress bar while your account is created — this typically takes a few minutes.
 
-Provisioning can take several minutes.
+When it's done, your credentials (username and sign-in info) will appear directly on this page, and a copy is also sent to your email as a backup.
 
-\*\*\* __PLEASE DO NOT SUBMIT MULTIPLE TIMES__ \*\*\*  {{< /notice >}}
+If you reload this page or come back later, your credentials will still be here — no need to re-submit. {{< /notice >}}
 
 When provisioning is complete, one of the following will happen.
 
