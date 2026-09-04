@@ -9,4 +9,4 @@ package-lock.json
 package.json
 /venv
 fortihugorunner
-tools/fortiweb-lab-traffic/fortiweb-lab-traffic
+/tools/

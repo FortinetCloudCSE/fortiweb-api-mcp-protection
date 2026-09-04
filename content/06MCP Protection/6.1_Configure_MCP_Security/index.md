@@ -16,15 +16,18 @@ According to the FortiWeb Administration Guide, MCP Security sits in the **Proto
 * **Poisoning Attack Protection** — inspect tool descriptions, parameters, and prompt text for jailbreak / override attempts
 * **JSON Schema Validation** — validate streamed messages against FortiGuard MCP schemas
 
-For additional detail, see [MCP Protocol](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/97697/mcp-protocol).
+For additional detail, see [MCP Protocol](https://docs.fortinet.com/document/fortiweb/8.0.7/administration-guide/97697/mcp-protocol).
+
+{{% notice note %}}
+This lab uses **FortiWeb 8.0.7**. Signature Detection for MCP is enabled on the **Web Protection Profile** (Signature Detection → **MCP**), not as a toggle on the MCP Security Policy. The MCP Security Policy still holds **Poisoning Attack Protection** and **JSON Schema Validation**.
+{{% /notice %}}
 
 The recommended configuration sequence is:
 
 1. Create an MCP Security Rule  
-2. Create an MCP Security Policy and enable inspection engines  
-3. Attach the rule to the policy  
-4. Create a Web Protection Profile that references the MCP policy  
-5. Assign that profile to the MCP server policy  
+2. Create an MCP Security Policy (Poisoning + JSON Schema) and attach the rule  
+3. Create a Web Protection Profile that references the MCP policy **and** enables Signature Detection → MCP  
+4. Assign that profile to the MCP server policy  
 
 ---
 
@@ -76,19 +79,19 @@ Confirm the host name with your instructor if the lab uses a different MCP virtu
 | Setting | Value |
 |---------|-------|
 | Name | `MCP` |
-| Signature Detection | Enabled |
 | Poisoning Attack Protection | Enabled |
 | JSON Schema Validation | Enabled |
 
-![Enable Signature, Poisoning, and JSON Schema Validation](new-mcp-security-policy.png)
+![Enable Poisoning and JSON Schema Validation](new-mcp-security-policy.png)
 
 4. Click **OK** to save the policy.
 
 The FortiWeb UI describes these engines as:
 
-* **Signature Detection** — detects attacks in methods, parameters, and arguments  
 * **Poisoning Attack Protection** — detects threats in tool parameters, tool descriptions, and prompt texts  
 * **JSON Schema Validation** — validates messages against supported open-source MCP schema versions published through FortiGuard  
+
+Signature Detection for MCP is configured on the Web Protection Profile in Step 4.  
 
 ---
 
@@ -121,7 +124,8 @@ Confirm that the Rules table lists **MCP**.
 | Setting | Value |
 |---------|-------|
 | Name | `MCP` |
-| Signatures | `Standard Protection` |
+| Signatures | `Standard Protection` or `Extended Protection` |
+| Signature Detection | **MCP** checked |
 | X-Forwarded-For | `X-Forwarded-For` |
 | MCP Security (under Protocol) | `MCP` |
 
@@ -130,7 +134,7 @@ Confirm that the Rules table lists **MCP**.
 4. Click **OK**.
 
 {{% notice tip %}}
-The Signatures information note in the GUI reminds you that signature detection for protocol applications such as MCP also depends on enabling signature inspection in the relevant API/protocol protection settings. In this lab, Signature Detection is already enabled on the MCP Security Policy.
+If **MCP Security** is empty on this profile, FortiWeb still logs HTTPS to the MCP server policy (Traffic Log Policy = MCP) but **does not** classify Streamable HTTP as MCP. FortiView MCP Analysis stays empty. Signature Detection → **MCP** must also be checked or argument signatures will not run inside parsed MCP fields.
 {{% /notice %}}
 
 ---
@@ -157,12 +161,12 @@ FortiWeb is now ready to inspect MCP traffic for `mcp.fortiweblab.local` using s
 
 ### Verification Checklist
 
-* Created the MCP Security rule for `mcp.fortiweblab.local`
-* Created the MCP Security Policy with Signature Detection, Poisoning Attack Protection, and JSON Schema Validation enabled
+* Created the MCP Security rule for `mcp.fortiweblab.local` (or host status off with URL `.*`)
+* Created the MCP Security Policy with Poisoning Attack Protection and JSON Schema Validation enabled
 * Attached the MCP rule to the MCP policy
-* Created the `MCP` Web Protection Profile and selected MCP Security = `MCP`
+* Created the `MCP` Web Protection Profile, set **MCP Security = MCP**, and checked **Signature Detection → MCP**
 * Assigned the `MCP` profile to the MCP server policy and enabled Traffic Log
 
 ### Next Exercise
 
-In Exercise 6.2, you generate legitimate MCP traffic and confirm that valid requests still succeed with the policy enabled.
+In Exercise 6.2, you confirm the running path and open the AcmeCorp assistant.
