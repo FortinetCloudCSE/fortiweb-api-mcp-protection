@@ -3,6 +3,14 @@ output "guacamole_access" {
   value       = "${data.azurerm_public_ip.guac.ip_address}:8080"
 }
 
+output "guacamole_http_url" {
+  value = "http://${data.azurerm_public_ip.guac.ip_address}:8080/guacamole/#/"
+}
+
+output "guacamole_https_url" {
+  value = "https://${coalesce(data.azurerm_public_ip.guac.fqdn, data.azurerm_public_ip.guac.ip_address)}/guacamole/#/"
+}
+
 output "guacamole_private_ip" {
   value = "10.10.3.200"
 }

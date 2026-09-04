@@ -35,6 +35,9 @@ resource "azurerm_public_ip" "guac" {
   resource_group_name = data.azurerm_resource_group.rg.name
   allocation_method   = "Static"
   sku                 = "Standard"
+  # Let's Encrypt needs a hostname; this becomes
+  # <label>.<region>.cloudapp.azure.com
+  domain_name_label = "guac-${replace(lower(var.resource_group_name), "_", "-")}"
 }
 
 resource "azurerm_public_ip" "outbound" {
@@ -81,6 +84,30 @@ resource "azurerm_network_security_group" "client" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "8080"
+    source_address_prefix      = "*"
+    destination_address_prefix = "10.10.3.200"
+  }
+
+  security_rule {
+    name                       = "Allow-Guacamole-HTTPS443"
+    priority                   = 110
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "443"
+    source_address_prefix      = "*"
+    destination_address_prefix = "10.10.3.200"
+  }
+
+  security_rule {
+    name                       = "Allow-Guacamole-HTTP80"
+    priority                   = 120
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "80"
     source_address_prefix      = "*"
     destination_address_prefix = "10.10.3.200"
   }

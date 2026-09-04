@@ -110,6 +110,26 @@ resource "azapi_resource" "guac" {
   }
 }
 
+# Terminate TLS on the Guacamole VM (Caddy :443 → HTTP :8080) so students
+# behind corporate firewalls that block HTTP logins can use HTTPS.
+resource "azurerm_virtual_machine_run_command" "guac_https" {
+  name               = "EnableGuacamoleHttps"
+  location           = data.azurerm_resource_group.rg.location
+  virtual_machine_id = azapi_resource.guac.id
+
+  source {
+    script = <<-EOT
+      FQDN=${jsonencode(coalesce(data.azurerm_public_ip.guac.fqdn, ""))}
+      ${file("${path.module}/../scripts/enable-guacamole-https.sh")}
+    EOT
+  }
+
+  timeouts {
+    create = "20m"
+    update = "20m"
+  }
+}
+
 resource "azapi_resource" "docker1" {
   type      = "Microsoft.Compute/virtualMachines@2024-07-01"
   name      = "linux-docker-1"

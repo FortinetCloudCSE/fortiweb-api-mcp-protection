@@ -112,6 +112,7 @@ echo "========== DONE =========="
 terraform output guacamole_access
 echo
 echo "Resource group:  ${RESOURCE_GROUP}"
-echo "Open in browser: http://$(terraform output -raw guacamole_access)"
+echo "Open in browser (HTTPS): $(terraform output -raw guacamole_https_url)"
+echo "Open in browser (HTTP):  $(terraform output -raw guacamole_http_url)"
 echo "FortiGate GUI: lab-student / Fortinetlab1!"
 echo "FortiWeb GUI: azureuser / Fortinetlab1!"
