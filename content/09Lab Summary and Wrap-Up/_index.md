@@ -14,14 +14,15 @@ At the conclusion of this lab, participants will have:
 * Protected applications from common web attacks  
 * Built and enforced Machine Learning-Based Anomaly Detection models  
 * Secured REST APIs  
-* Protected MCP/AI-enabled services  
-* Detected and mitigated automated bot traffic
-* Investigated events using FortiWeb logging and troubleshooting tools
+* Protected enterprise AI agents on the MCP tool path with FortiWeb MCP Security (Chapter 6)  
+* Distinguished prompt attacks from MCP attacks, and FortiWeb MCP inspection from FortiAIGate  
+* Detected and mitigated automated bot traffic  
+* Investigated events using FortiWeb logging and troubleshooting tools  
 
 ### **Lab Journey**
 
 ```text
-Deploy → Understand Traffic Flow → Protect Web Apps → Learn Behavior → Protect APIs → Protect MCP → Stop Bots/DDoS → Investigate & Troubleshoot
+Deploy → Traffic flow → Protect web apps → Learn behavior → Protect APIs → Protect MCP / AI agents → Stop bots → Operate
 ```
 
 | Chapter | Focus |
@@ -31,6 +32,7 @@ Deploy → Understand Traffic Flow → Protect Web Apps → Learn Behavior → P
 | Ch 3 | Protecting Applications from Common Attacks |
 | Ch 4 | Machine Learning-Based Anomaly Detection |
 | Ch 5 | API Security |
-| Ch 6 | MCP Protection |
+| Ch 6 | Protecting Enterprise AI Agents with MCP |
 | Ch 7 | Protecting Web Applications from Automated Bot Traffic |
 | Ch 8 | Operations, Logging, and Troubleshooting |
+| Ch 9 | Lab Summary and Wrap-Up |

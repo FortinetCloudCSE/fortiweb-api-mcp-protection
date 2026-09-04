@@ -59,7 +59,7 @@ In this lab example, a **Machine Learning** / **Query Parameter Violation (OpenA
 
 ### Step 3 – Investigate an MCP Event
 
-Locate an MCP event from Chapter 6. Determine whether it was caused by a signature, prompt protection, or JSON schema validation.
+Locate an MCP event from Chapter 6 (`mcp.fortiweblab.local`, `POST /mcp`). Determine whether it was caused by a signature, prompt poisoning protection, or JSON schema validation. Confirm it in **FortiView → MCP Analysis** if the session was classified as Streamable HTTP.
 
 In this lab example, an XSS Signature Detection on `mcp.fortiweblab.local` (`POST /mcp`) shows Signature ID `010000063` with matched pattern `alert(1)` and action `Alert_Deny`.
 
