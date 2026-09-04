@@ -5,7 +5,7 @@ This Terraform is organized in phases so routing is not applied before FortiGate
 ## Phases
 
 1. `00-foundation` - VNet, subnets, NSGs, Guacamole public IP (uses a pre-created student resource group)
-2. `01-appliances` - FortiGate PAYG and FortiWeb PAYG 8.0.5 marketplace VMs
+2. `01-appliances` - FortiGate PAYG and FortiWeb PAYG 8.0.7 marketplace VMs
 3. `02-lab-vms` - Guacamole, Docker1, Docker2 from captured images
 4. `03-routes` - route tables and subnet associations (client and protected traffic through FortiGate; server default through FortiWeb)
 

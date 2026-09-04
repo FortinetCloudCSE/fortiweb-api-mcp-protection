@@ -90,5 +90,5 @@ variable "fortiweb_sku" {
 
 variable "fortiweb_version" {
   type    = string
-  default = "8.0.5"
+  default = "8.0.7"
 }
