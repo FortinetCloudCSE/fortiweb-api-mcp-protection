@@ -10,22 +10,28 @@ After deployment completes, use Apache Guacamole to access the lab’s Linux des
 
 ### Before You Begin
 
-Locate the public IP address provided at the end of the deployment process in the previous section. You will use that address to reach Guacamole.
+Locate the **HTTPS** and **HTTP** Guacamole URLs printed at the end of the deployment process. Prefer HTTPS.
 
 ### Step 1 – Open the Guacamole Login Page
 
-From your local desktop, open a web browser and enter:
+From your local desktop, open a web browser and enter the **HTTPS** URL from the deployment output:
+
+```text
+https://guac-<your-resource-group>.eastus.cloudapp.azure.com/guacamole/#/
+```
+
+If HTTPS is blocked or the certificate is still provisioning, use HTTP:
 
 ```text
 http://<provided-ip-address>:8080/guacamole/#/
 ```
 
-Replace `<provided-ip-address>` with the public IP address from the deployment output.
+Replace the hostname or IP with the values printed when deploy finished.
 
 ![Apache Guacamole login page](guacamole-login.png)
 
 {{% notice note %}}
-Guacamole uses HTTP in this isolated lab. Your browser may label the connection **Not Secure**. Do not reuse these lab credentials outside the training environment.
+Use **HTTPS** when you can. Some corporate firewalls block HTTP sites that ask for a password. The HTTPS name is the Azure DNS name on the Guacamole public IP (`*.cloudapp.azure.com`) with a Let's Encrypt certificate. HTTP on port 8080 remains available for networks that allow it.
 {{% /notice %}}
 
 ### Step 2 – Sign In to Guacamole
@@ -182,7 +188,7 @@ Refer to the topology diagram in [The Lab Environment](../1_Lab%20Enviroment/) a
 
 ### Key Takeaways
 
-* Access Guacamole at `http://<provided-ip-address>:8080/guacamole/#/`
+* Access Guacamole at the HTTPS URL from deploy output (HTTP on `:8080` still works)
 * Sign in with the dedicated Guacamole lab credentials
 * Open the **Client** connection to reach the Linux desktop
 * Download the FortiWeb 8.0.5 training configuration

@@ -5,7 +5,7 @@ This Terraform is organized in phases so routing is not applied before FortiGate
 ## Phases
 
 1. `00-foundation` - VNet, subnets, NSGs, Guacamole public IP (uses a pre-created student resource group)
-2. `01-appliances` - FortiGate PAYG and FortiWeb PAYG 8.0.7 marketplace VMs
+2. `01-appliances` - FortiGate PAYG and FortiWeb PAYG 8.0.5 marketplace VMs
 3. `02-lab-vms` - Guacamole, Docker1, Docker2 from captured images
 4. `03-routes` - route tables and subnet associations (client and protected traffic through FortiGate; server default through FortiWeb)
 
@@ -17,7 +17,7 @@ This Terraform is organized in phases so routing is not applied before FortiGate
 - FortiGate, FortiWeb, Docker1, and Docker2 do not get public IPs.
 - FortiGate and FortiWeb NICs have IP forwarding enabled.
 - Protected subnet UDR sends `10.10.3.0/24` through FortiGate (`10.10.2.101`) so VIP reverse DNAT restores client replies to `10.10.3.150–153`.
-- Guacamole TCP/8080 is publicly reachable for the duration of the workshop.
+- Guacamole TCP/8080 (HTTP) and TCP/443 (HTTPS) are publicly reachable for the duration of the workshop. HTTPS uses the Azure DNS name on the Guacamole public IP.
 - FortiWeb has an extra data disk. Default is 30 GB; 
 - FortiGate is bootstrapped at first boot via `configs/fortigate-bootstrap.conf.tpl` (interfaces, VIPs, 5 firewall policies, `lab-student` admin).
 
@@ -96,10 +96,11 @@ terraform apply
 After the final `terraform apply` in `03-routes`, note the output:
 
 ```text
-guacamole_access = "20.1.2.3:8080"
+guacamole_https_url = "https://guac-fweb11-mcp201-workshop.eastus.cloudapp.azure.com/guacamole/#/"
+guacamole_http_url  = "http://20.1.2.3:8080/guacamole/#/"
 ```
 
-Open `http://<that-value>` in a browser to reach the Guacamole jump host.
+Prefer the HTTPS URL. HTTP on port 8080 remains available.
 
 ## Student deploy from Azure Cloud Shell 
 
@@ -153,10 +154,13 @@ The script builds `<whoami>-mcp201-workshop` (for example `fweb11-mcp201-worksho
 When deploy finishes, note the output:
 
 ```text
-guacamole_access = "20.1.2.3:8080"
+guacamole_https_url = "https://guac-fweb11-mcp201-workshop.eastus.cloudapp.azure.com/guacamole/#/"
+guacamole_http_url  = "http://20.1.2.3:8080/guacamole/#/"
 ```
 
-Open **`http://20.1.2.3:8080`** in your laptop browser.
+Prefer the **HTTPS** URL. Use HTTP only if HTTPS is unreachable.
+
+Open **`https://guac-<your-rg>.eastus.cloudapp.azure.com/guacamole/#/`** in your laptop browser.
 
 | Login | Value |
 |-------|--------|
