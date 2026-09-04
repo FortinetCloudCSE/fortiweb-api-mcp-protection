@@ -9,4 +9,4 @@ fortiweb_size       = "Standard_D2s_v3"
 fortiweb_data_disk_gb = 30
 fortiweb_offer      = "fortinet_fortiweb-vm_v5"
 fortiweb_sku        = "fortinet_fw-vm_payg_v3"
-fortiweb_version    = "8.0.5"
+fortiweb_version    = "8.0.7"
