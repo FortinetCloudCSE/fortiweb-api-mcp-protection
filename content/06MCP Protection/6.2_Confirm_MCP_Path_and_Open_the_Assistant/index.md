@@ -105,14 +105,9 @@ http://127.0.0.1:3000
 
 Confirm **Protected path connected** and that the left rail lists enterprise tools such as `kb.search`, `crm.lookup`, `automation.run`, and `files.get`. A yellow banner means `MCP_URL` is loopback — FortiWeb is not on the path; do not continue until that is fixed.
 
-You can change the MCP headend scenario from the assistant **Headend** rail, from `https://mcp.fortiweblab.local/control`, or:
+On the **Headend** rail, select **normal** if it is not already **ACTIVE**.
 
-```bash
-curl -sk https://mcp.fortiweblab.local/mode
-curl -sk 'https://mcp.fortiweblab.local/mode?set=normal'
-```
-
-![PLACEHOLDER — retake: AcmeCorp assistant home with Protected path connected](ai-agent-home.png)
+![AcmeCorp assistant home with Protected path connected](ai-agent-home.png)
 
 Treat this UI as a **company AI assistant**. The important question is not “does JSON-RPC work?” It is:
 

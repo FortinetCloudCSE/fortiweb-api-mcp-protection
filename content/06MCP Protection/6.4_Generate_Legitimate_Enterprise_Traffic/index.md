@@ -16,25 +16,15 @@ This baseline is required before Exercise 6.5. Without it you cannot tell a bloc
 FortiWeb MCP Security does not learn from this traffic. You generate it so **you** can recognize a healthy `/mcp` session (initialize → tools/call, HTTP 200/202) before you send attacks.
 {{% /notice %}}
 
-{{% notice note %}}
-Screenshots on this page are **placeholders**. Retake them from the baked assistant and FortiWeb Traffic Log before class.
-{{% /notice %}}
-
-![PLACEHOLDER — retake: AcmeCorp assistant with protected path connected](ai-agent-home.png)
-
 ---
 
 ### Step 1 – Set the broker to normal
 
 1. Open `http://127.0.0.1:3000`.
-2. On the **Headend** rail, select **normal** (or `curl -sk 'https://mcp.fortiweblab.local/mode?set=normal'`).
-3. Stay on **Student**.
+2. On the **Headend** rail, select **normal** until it shows **ACTIVE**.
+3. Stay on **Student**. Confirm the header shows **Protected path connected** and **mode normal**.
 
-```bash
-curl https://mcp.fortiweblab.local/healthz
-```
-
-Expect `"mode":"normal"`.
+![Headend rail set to normal](ai-agent-headend-normal.png)
 
 ---
 
@@ -56,9 +46,9 @@ Submit these prompts **one at a time** (chips on the AcmeCorp assistant match th
 | Pricing | **Product pricing** | `pricing.get` |
 | Cloud | **Cloud inventory** | `cloud.inventory` |
 
-Use the **legitimate** chips on the AcmeCorp assistant (List MCP tools, Search knowledge base, Lookup customer C-1001, and so on). There is no separate Chapter 6 toy agent.
+Use the **legitimate** chips on the AcmeCorp assistant, including **Search knowledge base**, **Lookup customer C-1001**, and **Open ticket**. Leave the red attack chips for Exercise 6.5.
 
-![PLACEHOLDER — retake: Legitimate enterprise tool call through the protected MCP path](ai-agent-inventory-search.png)
+![Legitimate chips: Search knowledge base, Lookup customer C-1001, Open ticket](ai-agent-legitimate-chips.png)
 
 Behind each GUI prompt the client typically sends:
 
@@ -90,7 +80,7 @@ If your instructor provides the expanded AcmeCorp tools, send equivalent **legit
 }
 ```
 
-The GUI workflows in Step 2 are the required legitimate baseline. Optional instructor campaigns use `enterprise-campaign.sh` from the AcmeCorp demo tree (`/Users/wtefera/tools/acmecorp-mcp-demo/scripts/`, SSE `data:` frames, `Content-Type: text/event-stream`).
+The GUI workflows in Step 2 are the required legitimate baseline. Optional instructor campaigns use `enterprise-campaign.sh` from the AcmeCorp demo tree (`~acmecorp-mcp-demo/scripts/`, SSE `data:` frames, `Content-Type: text/event-stream`).
 
 ---
 
@@ -109,7 +99,7 @@ The GUI workflows in Step 2 are the required legitimate baseline. Optional instr
 | Return code | `200` or `202` |
 | Destination | `10.10.1.202` |
 
-![PLACEHOLDER — retake: Traffic Log showing allowed MCP POSTs](mcp-traffic-log-legitimate.png)
+![Traffic Log showing allowed POST /mcp to mcp.fortiweblab.local](mcp-traffic-log-legitimate.png)
 
 4. In the assistant sidebar, note the **Session** id and match the time window to the Traffic Log.
 

@@ -8,28 +8,28 @@ weight: 10
 
 ### Objective
 
-Configure FortiWeb MCP Security so the appliance can inspect Model Context Protocol traffic before you generate legitimate or attack traffic.
+Configure FortiWeb MCP Security to inspect Model Context Protocol traffic before generating legitimate requests or launching attacks.
+MCP Security sits in the **Protocol Constraints** layer.FortiWeb operates as a reverse proxy between the MCP client (AI application) and MCP server (tool provider), parsing Streamable HTTP / Server-Sent Events (SSE) JSON-RPC messages and applying:
 
-According to the FortiWeb Administration Guide, MCP Security sits in the **Protocol Constraints** layer. FortiWeb acts as a reverse proxy between the MCP client (AI application) and MCP server (tool provider), parsing Streamable HTTP / Server-Sent Events (SSE) JSON-RPC messages and applying:
-
-* **Signature Detection** — inspect methods, tool names, and argument values for injection and other known attacks
+ * **Signature Detection** — inspect methods, tool names, and argument values for injection and other known attacks
 * **Poisoning Attack Protection** — inspect tool descriptions, parameters, and prompt text for jailbreak / override attempts
 * **JSON Schema Validation** — validate streamed messages against FortiGuard MCP schemas
 
 For additional detail, see [MCP Protocol](https://docs.fortinet.com/document/fortiweb/8.0.7/administration-guide/97697/mcp-protocol).
 
 {{% notice note %}}
-This lab uses **FortiWeb 8.0.7**. Signature Detection for MCP is enabled on the **Web Protection Profile** (Signature Detection → **MCP**), not as a toggle on the MCP Security Policy. The MCP Security Policy still holds **Poisoning Attack Protection** and **JSON Schema Validation**.
+This lab uses FortiWeb 8.0.7. In this lab environment, MCP signature inspection is enabled in the Web Protection Profile under Signature Detection → MCP. The MCP Security Policy contains the Poisoning Attack Protection and JSON Schema Validation settings.
 {{% /notice %}}
 
-The recommended configuration sequence is:
+Configure the components in the following order:
 
 1. Create an MCP Security Rule  
-2. Create an MCP Security Policy (Poisoning + JSON Schema) and attach the rule  
-3. Create a Web Protection Profile that references the MCP policy **and** enables Signature Detection → MCP  
-4. Assign that profile to the MCP server policy  
+2. Create an MCP Security Policy, enable Poisoning Attack Protection and JSON Schema Validation, and add the MCP Security Rule. 
+3. Create a Web Protection Profile, select the MCP Security Policy, and enable Signature Detection → MCP  
+4. Assign the Web Protection Profile to the server policy that handles MCP traffic. 
 
 ---
+
 
 ### Step 1 – Create an MCP Security Rule
 
@@ -51,7 +51,7 @@ The recommended configuration sequence is:
 | Host | `mcp.fortiweblab.local` |
 | Request URL Type | Regular Expression |
 | Request URL | `.*` |
-| Message Size Limit | Leave the lab default (for example, `4194303`) |
+| Message Size Limit | `1048576` (1 MiB) |
 | Action | `Alert Deny` |
 | Severity | `Low` |
 
@@ -61,9 +61,6 @@ Leave **Exception** and **Trigger Policy** empty unless your instructor provides
 
 5. Click **OK**.
 
-{{% notice note %}}
-Confirm the host name with your instructor if the lab uses a different MCP virtual host.
-{{% /notice %}}
 
 ---
 

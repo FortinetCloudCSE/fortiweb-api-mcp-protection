@@ -12,11 +12,7 @@ Inventory what the AI assistant can **discover and invoke**. Students should lea
 
 MCP discovery is itself part of the attack surface. `tools/list` tells an agent (or an attacker) what the broker can reach.
 
-{{% notice note %}}
-Screenshots on this page are **placeholders**. Retake them from the baked AcmeCorp assistant before class.
-{{% /notice %}}
-
-![PLACEHOLDER — retake: Student view of the AcmeCorp assistant](ai-agent-student-tab.png)
+![AcmeCorp assistant Student view with advertised tools](ai-agent-student-tab.png)
 
 ---
 
@@ -31,26 +27,19 @@ For every tool, record:
 | **Input parameters** | Where malicious arguments land |
 | **Returned data** | What can leak if the call succeeds |
 
-The GUI shows this after a successful call as **Agent > FortiWeb > MCP**, with the function name and JSON result.
+The GUI shows this after a successful call as **User > LLM > FortiWeb > MCP > Enterprise tools**, with the function name and JSON result. Click **Lookup customer C-1001** (or send `Use tool crm.lookup`) to produce the example below.
 
-![PLACEHOLDER — retake: Tool call details on the protected path](ai-agent-weather-tool-details.png)
+![crm.lookup result on the protected MCP path](ai-agent-crm-lookup-details.png)
 
 ---
 
 ### Step 1 – List tools from the agent
 
-From Guacamole, either:
+Open the AcmeCorp assistant at `http://127.0.0.1:3000` and stay on **Student**. Click **List MCP tools** (or **List available MCP tools**).
 
-```bash
-curl -s http://127.0.0.1:3000/api/tools
-curl -sk https://mcp.fortiweblab.local/tools
-```
+That chip sends `tools/list` over Streamable HTTP through FortiWeb. The reply lists each advertised name, description, and `inputSchema`. Copy those names into the table in Step 3.
 
-The **List MCP tools** chip in the assistant sends `tools/list` over Streamable HTTP through FortiWeb.
-
-If the agent API is unavailable, use the Student UI: send a prompt such as `What can you help me with?` and note every tool name that appears in the activity pane.
-
-Copy the advertised names into the table in Step 3.
+If a chip is not visible, type `What can you help me with?` and note every tool name that appears.
 
 ---
 
@@ -84,7 +73,7 @@ Privileged tools such as `admin.deleteAllUsers`, `admin.exportDatabase`, and `ad
 
 Fill this table from Step 1. Use the current lab names on the left and the closest AcmeCorp analogue on the right.
 
-| Lab tool (from `/api/tools` or GUI) | Parameters you observed | Returned data you observed | Enterprise system |
+| Lab tool (from the assistant GUI) | Parameters you observed | Returned data you observed | Enterprise system |
 |-------------------------------------|-------------------------|----------------------------|-------------------|
 | `kb.search` | | | Knowledge base / wiki |
 | `crm.lookup` | | | CRM |
@@ -116,7 +105,7 @@ tools/list  →  model reads names + descriptions + schemas
 
 ### Verification Checklist
 
-* Retrieved the live tool list from the agent or GUI
+* Retrieved the live tool list from the assistant GUI
 * Recorded name, parameters, and result shape for at least four tools
 * Mapped each lab tool to an enterprise system
 * Can explain why `tools/list` itself expands the attack surface
