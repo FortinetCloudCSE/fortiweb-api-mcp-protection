@@ -6,14 +6,14 @@ weight: 60
 
 ## Objective
 
-Traditional applications expose APIs to users. MCP exposes enterprise tools to AI agents. FortiWeb protects those AI-to-tool interactions.
+Traditional applications expose APIs to users. MCP exposes enterprise tools to AI agents. FortiWeb protects the interactions between those agents and the tools they invoke.
 
-In this chapter you treat the Model Context Protocol as an **AI control plane**: the LLM discovers tools, reads their descriptions and schemas, invokes them, and receives structured data from systems that were never meant to be called by a chatbot. You configure FortiWeb MCP Security, explore the lab assistant’s tools, generate legitimate enterprise-style traffic, launch individual MCP attacks, and prove each detection in Attack, Traffic, and FortiView MCP Analysis logs.
+In this chapter, you will treat the Model Context Protocol as an **AI control plane**. You will examine how an LLM discovers tools, interprets their descriptions and schemas, invokes them, and receives structured data from enterprise systems that were never designed for chatbot access. You will then configure FortiWeb MCP Security, explore the lab assistant’s available tools, generate legitimate enterprise traffic, launch targeted MCP attacks, and verify each detection in the Attack, Traffic, and FortiView MCP Analysis logs.
 
-The class path is the **AcmeCorp Internal Assistant** at `http://127.0.0.1:3000` (Guacamole) talking **Streamable HTTP** through FortiWeb to the MCP headend on linux-docker-2 `:8082`.
+The class path is the **AcmeCorp Internal Assistant** at `http://127.0.0.1:3000` (Guacamole Desktop) talking **Streamable HTTP** through FortiWeb to the MCP headend on linux-docker-2 :8082.
 
 {{% notice note %}}
-FortiWeb only classifies a request as MCP when it is Streamable HTTP / SSE: `Accept: text/event-stream` or `Content-Type: text/event-stream`, with JSON-RPC carried as SSE `data:` frames. A plain `application/json` POST to `/mcp` is ordinary HTTPS. Traffic Log **Policy = MCP** only means the HTTPS **server policy** named MCP matched—not that MCP Security ran.
+FortiWeb only classifies a request as MCP when it is Streamable HTTP / SSE: `Accept: text/event-stream` or `Content-Type: text/event-stream`, with JSON-RPC carried as SSE `data:` frames. A plain `application/json` POST to `/mcp` is treated as a normal HTTPS traffic. 
 {{% /notice %}}
 
 ### Learning Objectives
@@ -45,7 +45,7 @@ An MCP deployment normally includes:
 
 MCP carries structured JSON-RPC over **Streamable HTTP**. FortiWeb identifies those streams from `Accept: text/event-stream` or `Content-Type: text/event-stream`, then inspects each message block as it arrives.
 
-![MCP client, FortiWeb, and MCP server architecture](mcp-architecture.png)
+![MCP client, FortiWeb reverse proxy, MCP server, and internal/external tools](mcp-architecture.png)
 
 For protocol detail, see [MCP Protocol](https://docs.fortinet.com/document/fortiweb/8.0.7/administration-guide/97697/mcp-protocol) in the FortiWeb 8.0.7 Administration Guide.
 
@@ -127,7 +127,7 @@ Relevant threats include:
 ![FortiWeb on the User → LLM → MCP → enterprise tools path](enterprise-ai-architecture.png)
 
 {{% notice note %}}
-MCP-aware inspection complements—not replaces—authorization, least-privilege tool design, input validation, and application-side security controls.
+MCP aware inspection complements but does not replace, authorization, least-privilege tool design, input validation, and application side security controls.
 {{% /notice %}}
 
 ---
@@ -150,7 +150,7 @@ A prompt attack may still lead to an MCP attack. FortiWeb’s job on this path i
 
 ---
 
-## How FortiWeb Protects the AI-to-Tool Path
+## How FortiWeb Protects the AI to Tool Path
 
 FortiWeb is a reverse proxy between the MCP client (the AI agent) and the MCP server (the tool broker). MCP Security sits in the **Protocol Constraints** layer.
 
@@ -181,9 +181,9 @@ Attack  →  FortiWeb detection  →  log entry  →  blocked or allowed
 
 ## FortiAIGate vs FortiWeb MCP Protection
 
-This lab configures **FortiWeb**. FortiAIGate is a separate Fortinet product. It is **not** deployed in this environment. You still need to know where each sits, because customers will ask why a WAF and an LLM gateway are not the same control.
+This lab focuses on configuring **FortiWeb**. **FortiAIGate** is a separate Fortinet product and is not deployed in this environment. However, you should understand the role of each product so you can explain why a web application firewall (WAF) and an LLM gateway provide distinct security controls.
 
-[FortiAIGate](https://www.fortinet.com/products/fortiaigate) is an **LLM / AI runtime security gateway**. It is deployed **between the application and the model**. It applies natural-language guardrails on prompts and completions, steers LLM traffic, tracks token cost, and can inspect MCP-related risks on that AI path (prompt injection, jailbreak, data leakage, excessive consumption, MCP tool scanning).
+[FortiAIGate](https://www.fortinet.com/products/fortiaigate) is an **LLM / AI runtime security gateway**. FortAigate is deployed **between the application and the model**. It applies natural-language guardrails on prompts and completions, steers LLM traffic, tracks token cost, and can inspect MCP-related risks on that AI path (prompt injection, jailbreak, data leakage, excessive consumption, MCP tool scanning).
 
 **FortiWeb MCP Security** is a **protocol inspection** control on the **agent-to-tool** hop. It sits in Protocol Constraints, identifies Streamable HTTP / SSE, and validates JSON-RPC tool discovery and tool calls before they reach CRM, Git, files, or admin APIs.
 
@@ -218,13 +218,12 @@ They are complementary:
 * FortiAIGate answers: “Is this a safe thing to **say to / hear from** the model?”
 * FortiWeb MCP Security answers: “Is this a safe thing for the agent to **do** through MCP?”
 
-A jailbroken model that cannot call tools is still a content problem. A jailbroken model that can call `crm.lookup` or `admin.exportDatabase` is a data-plane problem. This chapter is the second of those.
-
+A jailbroken model without access to tools poses a content risk. Give that same model access to tools such as `crm.lookup` or `admin.exportDatabase`, and it becomes a data-plane risk. This chapter focuses on the latter.
 ---
 
 ## Lab Flow
 
-The assistant and MCP headend are already running on the gallery images. You configure FortiWeb, then use the assistant.
+The assistant and MCP headend are already running on Guacamole Desktop and the application Server. In this lab, you will configure FortiWeb and then interact with the assistant.
 
 | Exercise | Focus |
 |----------|--------|
