@@ -8,67 +8,23 @@ weight: 50
 
 ### Objective
 
-Run **one attack class at a time** against the AI-to-tool path. For each class, record:
+Run **one attack class at a time** from the AcmeCorp assistant. For each class, record:
 
 ```text
 Attack  →  FortiWeb detection  →  log entry  →  blocked or allowed
 ```
 
-Do not blend all scenarios in one burst. Isolated runs make Exercise 6.6 log review possible.
+Do not blend scenarios. Isolated runs make Exercise 6.6 log review possible.
 
 {{% notice warning %}}
-Use these demonstrations only against the lab MCP service (`mcp.fortiweblab.local`). Do not target any other system. Privileged tools in this lab are simulated and must not execute host operations.
+Use these demonstrations only against the lab MCP service. Privileged tools in this lab are simulated and must not execute host operations.
 {{% /notice %}}
 
-The endpoint remains:
+Open `http://127.0.0.1:3000`. Stay on **Student**. Use the red attack chips (**SQLi in customer id**, **XSS in ticket**, **Command injection**, **Export database**, **Traversal file read**, **Reveal API keys**, **List poisoned tools**).
 
-```text
-https://mcp.fortiweblab.local/mcp
-```
+Set the scenario from the **Headend** rail (**normal**, **invalid_schema**, **oversized_payload**, **tool_poisoning**, **rogue_admin_tools**). Return to **normal** before the next class. After each attack, glance at **Log & Report → Log Access → Attack** (detail in Exercise 6.6).
 
-Every `/mcp` call in this exercise must be **Streamable HTTP**. Include:
-
-```text
-Accept: text/event-stream
-Content-Type: text/event-stream
-```
-
-and send the JSON-RPC message as an SSE frame (`data: {...}` followed by a blank line). FortiWeb will not classify a plain `application/json` POST as MCP. The lab assistant already sends SSE frames.
-
-Open the AcmeCorp assistant at `http://127.0.0.1:3000`. Use the attack chips (**SQL in customer id**, **XSS in ticket**, **Command injection**, **Export database**, **Traversal file read**, **Reveal API keys**) or the curl examples below.
-
-Set the headend scenario from the client (no Headend page required):
-
-```bash
-curl -sk 'https://mcp.fortiweblab.local/mode?set=normal'
-# also: tool_poisoning | rogue_admin_tools | invalid_schema | oversized_payload
-```
-
-Browser: assistant **Headend** rail, or https://mcp.fortiweblab.local/control
-
-{{% notice note %}}
-Screenshots on this page are **placeholders**. Retake them after the baked UI and Attack Log are available.
-{{% /notice %}}
-
-![PLACEHOLDER — retake: Headend scenario rail](ai-agent-instructor-scenarios.png)
-
----
-
-### How to send a tool call (when the GUI has no chip)
-
-From Guacamole you can POST JSON-RPC through FortiWeb. FortiWeb inspects the body **before** the MCP server decides whether the tool exists. A `method not found` from the backend does not mean FortiWeb skipped inspection.
-
-```bash
-sse() { printf 'data: %s\n\n' "$1"; }
-
-curl -sk https://mcp.fortiweblab.local/mcp \
-  -H "Content-Type: text/event-stream" \
-  -H "Accept: text/event-stream" \
-  -H "MCP-Protocol-Version: 2024-11-05" \
-  --data-binary "$(sse '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{}}')"
-```
-
-Replace the JSON in later steps. After each attack, glance at **Log & Report → Log Access → Attack** (detail in Exercise 6.6). Return the headend to **normal** (`/mode?set=normal`) before the next class.
+![Red attack chips on the AcmeCorp assistant; start with SQLi in customer id](ai-agent-attack-chips.png)
 
 ---
 
@@ -76,7 +32,7 @@ Replace the JSON in later steps. After each attack, glance at **Log & Report →
 
 **Story:** The user (or a poisoned prompt) still calls an allowed tool—`crm.lookup` / `database.query`—but the **parameter** is an injection string. The attacker is not inventing a new API; they are abusing the AI’s tool arguments.
 
-**GUI:** AcmeCorp assistant chip **SQL in customer id**.
+**GUI:** AcmeCorp assistant chip **SQLi in customer id**.
 
 Typical lab call:
 
@@ -106,7 +62,7 @@ database.query({"query":"Run SQL 1 OR 1=1"})
 | Attack Log | `Alert_Deny`, policy `MCP` |
 | GUI | Block banner / HTTP 500 |
 
-![PLACEHOLDER — retake: SQL injection tool call blocked](ai-agent-sql-injection-blocked.png)
+![SQLi chip blocked: crm.lookup with HTTP 500 on the FortiWeb path](ai-agent-sql-injection-blocked.png)
 
 ---
 
@@ -198,7 +154,7 @@ POST /mcp?id=1;ls%20/etc
 }
 ```
 
-![PLACEHOLDER — retake: Command injection blocked by FortiWeb](ai-agent-command-attack-blocked.png)
+![Command injection chip blocked: automation.run with 1;ls /etc](ai-agent-command-attack-blocked.png)
 
 | FortiWeb capability | Expected |
 |---------------------|----------|
@@ -211,9 +167,9 @@ POST /mcp?id=1;ls%20/etc
 
 **Story:** MCP is a contract. Attackers send malformed JSON-RPC, extra fields, wrong types, or missing required members so the broker or the model mis-parses the message.
 
-**GUI:** `curl -sk 'https://mcp.fortiweblab.local/mode?set=invalid_schema'` then Student: `What time is it?` or any legitimate chip. Return to `normal` afterward.
+**GUI:** On the **Headend** rail, select **invalid_schema**. Stay on **Student** and click **Search knowledge base** (or any legitimate chip). Return **Headend** to **normal** afterward.
 
-![PLACEHOLDER — retake: Invalid schema — malformed Streamable HTTP result](ai-agent-invalid-schema-result.png)
+![invalid_schema mode: Search knowledge base returns IncompleteRead](ai-agent-invalid-schema-result.png)
 
 **Also try (one at a time):**
 
@@ -403,14 +359,7 @@ One call may look legitimate. The **MCP layer** is still a high-value exfiltrati
 
 ### Step – Return to normal
 
-1. `curl -sk 'https://mcp.fortiweblab.local/mode?set=normal'` (or assistant **Headend → normal**).
-2. Confirm:
-
-```bash
-curl https://mcp.fortiweblab.local/healthz
-```
-
-![PLACEHOLDER — retake: healthz mode normal](mcp-healthz-normal.png)
+On the assistant **Headend** rail, select **normal** until it shows **ACTIVE**. Confirm the header reads **Protected path connected - mode normal**.
 
 ---
 

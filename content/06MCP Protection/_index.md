@@ -228,7 +228,7 @@ The assistant and MCP headend are already running on Guacamole Desktop and the a
 | Exercise | Focus |
 |----------|--------|
 | [6.1 – Configure MCP Security](6.1_Configure_MCP_Security/) | Rule, policy, Web Protection Profile, server policy (8.0.7) |
-| [6.2 – Confirm the MCP path and open the assistant](6.2_Confirm_MCP_Path_and_Open_the_Assistant/) | Architecture in the running lab |
+| [6.2 – Open the assistant](6.2_Confirm_MCP_Path_and_Open_the_Assistant/) | Confirm FortiWeb is on the path |
 | [6.3 – Explore enterprise tools](6.3_Explore_Enterprise_Tools/) | Tool name, description, schema, returned data |
 | [6.4 – Generate legitimate enterprise MCP traffic](6.4_Generate_Legitimate_Enterprise_Traffic/) | Normal workflows, Traffic Log, FortiView |
 | [6.5 – Launch individual MCP attacks](6.5_Launch_MCP_Attacks/) | Arguments, methods, schema, poisoning, injection, traversal |

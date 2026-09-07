@@ -166,4 +166,4 @@ FortiWeb is now ready to inspect MCP traffic for `mcp.fortiweblab.local` using s
 
 ### Next Exercise
 
-In Exercise 6.2, you confirm the running path and open the AcmeCorp assistant.
+In Exercise 6.2, you open the AcmeCorp assistant and confirm FortiWeb is on the path.
