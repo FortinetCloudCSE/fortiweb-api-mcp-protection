@@ -62,29 +62,7 @@ That is why one sentence in the UI can create several Traffic Log rows for `POST
 
 ---
 
-### Step 3 – Optional: enterprise-shaped JSON-RPC (same FortiWeb path)
-
-If your instructor provides the expanded AcmeCorp tools, send equivalent **legitimate** calls (valid IDs, no injection). Example shape—do **not** use attack strings here:
-
-```json
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "tools/call",
-  "params": {
-    "name": "crm.lookup",
-    "arguments": {
-      "customer_id": "C-1001"
-    }
-  }
-}
-```
-
-The GUI workflows in Step 2 are the required legitimate baseline. Optional instructor campaigns use `enterprise-campaign.sh` from the AcmeCorp demo tree (`~acmecorp-mcp-demo/scripts/`, SSE `data:` frames, `Content-Type: text/event-stream`).
-
----
-
-### Step 4 – Observe normal traffic in FortiWeb
+### Step 3 – Observe normal traffic in FortiWeb
 
 1. Sign in to FortiWeb.
 2. Open **Log & Report → Log Access → Traffic**.
@@ -101,10 +79,7 @@ The GUI workflows in Step 2 are the required legitimate baseline. Optional instr
 
 ![Traffic Log showing allowed POST /mcp to mcp.fortiweblab.local](mcp-traffic-log-legitimate.png)
 
-4. In the assistant sidebar, note the **Session** id and match the time window to the Traffic Log.
-
-![PLACEHOLDER — retake: Session identifier in the AcmeCorp assistant](ai-agent-session-id.png)
-
+4. In the assistant sidebar, note the **Session** id and match the time window to the Traffic Log (the packet header also shows `Mcp-Session-Id`).
 5. Open **Dashboard → FortiView → MCP Analysis**. Set policy **MCP**, MCP server **All** or `acmecorp-mcp-headend`, last hour. You should see sessions and methods such as `initialize`, `tools/list`, and `tools/call`. Traffic Log Policy = MCP is **not** the same as this dashboard.
 
 Legitimate calls should **not** produce Attack Log **Alert_Deny** rows for these prompts. If they do, stop and tell the instructor—the baseline is dirty.

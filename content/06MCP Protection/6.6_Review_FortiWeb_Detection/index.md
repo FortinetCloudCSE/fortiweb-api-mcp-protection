@@ -16,10 +16,6 @@ Attack  →  FortiWeb detection  →  log entry  →  blocked or allowed
 
 ---
 
-{{% notice note %}}
-Screenshots on this page are **placeholders**. Retake them from FortiWeb Attack Log before class.
-{{% /notice %}}
-
 ### Step 1 – Open Attack Log
 
 **Log & Report → Log Access → Attack**
@@ -46,7 +42,7 @@ You should see a mix similar to:
 | MCP Violations | MCP Security Size Limit | 6.5-3 oversized |
 | Poisoning / prompt findings | Tool or prompt text | 6.5-4, 6.5-6, 6.5-8 |
 
-![PLACEHOLDER — retake: Attack Log overview for MCP policy](mcp-attack-log-overview.png)
+![Attack Log for policy MCP: schema validation, generic attacks, and SQL Injection](mcp-attack-log-overview.png)
 
 Also open **Dashboard → FortiView → MCP Analysis** (policy **MCP**, MCP server **All** or `acmecorp-mcp-headend`). Attack Log proves the engine and action. FortiView proves FortiWeb **classified** the session as MCP. Traffic Log Policy = MCP only proves the HTTPS server policy matched.
 
@@ -65,9 +61,9 @@ Confirm:
 | Action | `Alert_Deny` |
 | Main Type | Signature Detection |
 | Sub Type | SQL Injection |
-| Message / pattern | Injection inside a JSON parameter such as `query` or `customer_id` |
+| Message / pattern | `' OR '1` inside `crm.lookup` `customer_id` (signature ID such as `040000163`) |
 
-![PLACEHOLDER — retake: SQL Injection inside an MCP tool parameter](attack-log-sqli-detail.png)
+![SQL Injection in crm.lookup JSON-RPC on POST /mcp](attack-log-sqli-detail.png)
 
 {{% notice tip %}}
 Signatures inspect values **inside MCP JSON-RPC arguments**, not only HTML forms. `' OR '1'='1` in `crm.lookup` is still SQL Injection.
@@ -75,19 +71,62 @@ Signatures inspect values **inside MCP JSON-RPC arguments**, not only HTML forms
 
 ---
 
-### Step 3 – Open an XSS or other injection in tool JSON
+### Step 3 – Open an XSS event
 
-Select **Cross Site Scripting** (or another injection subtype) and confirm the matched pattern sits in a JSON field, for example:
+Select **Signature Detection** / **Cross Site Scripting** for `mcp.fortiweblab.local`.
 
-```json
-{"summary": "<svg onload=alert(1)>"}
-```
+Confirm:
 
-![PLACEHOLDER — retake: XSS matched inside MCP JSON](attack-log-xss-detail.png)
+| Field | Example |
+|-------|---------|
+| Action | `Alert_Deny` |
+| Main Type | Signature Detection |
+| Sub Type | Cross Site Scripting |
+| Signature ID | `010000063` |
+| Message / pattern | `<svg onload` inside `tickets.create` `summary` |
+
+![XSS in tickets.create JSON-RPC on POST /mcp](attack-log-xss-detail.png)
 
 ---
 
-### Step 4 – Correlate Traffic Log
+### Step 4 – Open a command injection event
+
+Select **Signature Detection** / **Generic Attacks** for URL `/mcp?id=1;ls /etc`.
+
+Confirm:
+
+| Field | Example |
+|-------|---------|
+| Action | `Alert_Deny` |
+| Main Type | Signature Detection |
+| Sub Type | Generic Attacks |
+| Signature Subclass | Command Injection |
+| Signature ID | `050050004` (or similar) |
+| Matched pattern | `;ls` |
+
+![Command injection Alert_Deny on /mcp?id=1;ls /etc](attack-log-cmdi-detail.png)
+
+---
+
+### Step 5 – Open an MCP Security Size Limit event
+
+Select **MCP Violations** / **MCP Security Size Limit** for `POST /mcp`. This is the Exercise 6.5 **oversized_payload** (or **invalid_schema**) class.
+
+Confirm:
+
+| Field | Example |
+|-------|---------|
+| Action | `Alert_Deny` |
+| Main Type | MCP Violations |
+| Sub Type | MCP Security Size Limit |
+| OWASP API Top10 | API4:2023 Unrestricted Resource Consumption |
+| Message | `Message Size … exceeds limit …` (compared with the rule **Message Size Limit** from Exercise 6.1) |
+
+![MCP Security Size Limit Alert_Deny on POST /mcp](attack-log-size-limit-detail.png)
+
+---
+
+### Step 6 – Correlate Traffic Log
 
 **Log & Report → Log Access → Traffic**
 
@@ -100,7 +139,7 @@ Enumeration (`tools/list`) may appear **only** in Traffic Log if it was allowed.
 
 ---
 
-### Step 5 – Complete the evidence table
+### Step 7 – Complete the evidence table
 
 Copy your 6.5 scorecard and add log IDs or timestamps.
 
@@ -121,7 +160,8 @@ If a class produced **no** Attack Log, say so honestly. That is either “allowe
 
 * Filtered Attack Log to policy **MCP** / host `mcp.fortiweblab.local`
 * Opened at least one SQL Injection detail showing a JSON argument
-* Opened at least one additional MCP-related event (schema, size, XSS, or poisoning)
+* Opened the XSS (`tickets.create`) and command injection detail events
+* Opened an **MCP Security Size Limit** event
 * Matched time windows in Traffic Log
 * Confirmed the same window in **Dashboard → FortiView → MCP Analysis** (policy **MCP**, server **All**)
 * Filled the evidence table, including any allows

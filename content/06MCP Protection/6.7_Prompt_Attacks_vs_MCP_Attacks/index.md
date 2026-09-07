@@ -13,7 +13,7 @@ Make the chapter’s core distinction observable in the lab, not just in a slide
 > **Prompt attack** — attempts to manipulate what the AI **thinks**.  
 > **MCP attack** — attempts to manipulate what the AI **does**.
 
-FortiWeb’s value on this path is stopping the second class, and stopping the first class when jailbreak text rides in MCP prompts or tool metadata.
+A jailbroken model that **cannot** call tools is a content problem. The same model that **can** call `crm.lookup` is a data-plane problem. Poisoned tool descriptions are still MCP attacks even when the user typed a harmless question. FortiWeb does not replace IAM on CRM or Git; it inspects the brokered channel so injection, schema abuse, and poisoning are visible and deniable.
 
 ---
 
@@ -80,16 +80,6 @@ This is an MCP attack: the control plane tried to query an enterprise-style data
 
 ---
 
-### Part D – Instructor talking points
-
-Use these in class without extra clicks:
-
-1. A jailbroken model that **cannot** call tools is a content problem. A jailbroken model that **can** call `crm.lookup` is a data-plane problem.
-2. Tool descriptions are part of the control plane. Poisoned metadata is an MCP attack even if the user typed a harmless question.
-3. FortiWeb does not replace IAM on CRM or Git. It inspects the brokered channel so injection, schema abuse, and poisoning are visible and deniable.
-
----
-
 ### Reflection Questions
 
 1. Which of your Part A and Part B runs produced an Attack Log event, and which engine named it?
@@ -103,6 +93,4 @@ Use these in class without extra clicks:
 
 You confirmed FortiWeb on the User → LLM → MCP → tools path, inventoried tools as enterprise capabilities, generated legitimate MCP traffic, launched individual control-plane attacks, and proved detections in logs. MCP is not “JSON-RPC to inspect for sport.” It is how an AI agent reaches CRM, Git, files, databases, cloud, and admin systems—and FortiWeb is the inspection point on that path.
 
-### Next
 
-Continue to the [Lab Summary](../../09Lab Summary and Wrap-Up/).
