@@ -8,7 +8,7 @@ weight: 2
 
 Use the Azure credentials from your provisioning email to sign in, open **Azure Cloud Shell**, clone the lab repository, and run the initialization script. Your lab user is paired with a resource group named `<username>-mcp201-workshop` (for example `fweb11-mcp201-workshop`). The deploy script builds that name from `whoami`—you do not edit Terraform variable files by hand.
 
-Allow about **25–40 minutes** for the full Terraform deploy after Cloud Shell is ready.
+Allow about **10-15 minutes** for the full Terraform deploy after Cloud Shell is ready.
 
 ### Step 1 – Sign In to the Azure Portal
 
@@ -110,11 +110,11 @@ When the deploy finishes, note the `guacamole_access` output—you will use it i
 
 ### Expected Deployment Output
 
-When all Terraform phases complete successfully, Cloud Shell displays **Apply complete!** followed by the Guacamole access address, resource group, and appliance credentials. Your resource group name and public IP address will be different from the example below.
+When all Terraform phases complete successfully, Cloud Shell displays **Apply complete!** followed by the Guacamole access address, HTTPS and HTTP URLs, resource group, and appliance credentials. Your resource group name and public IP address will be different from the example below.
 
-![Successful Terraform deployment showing Apply complete and the Guacamole access address](terraform-apply-complete.png)
+![Successful Terraform deployment showing Apply complete, Guacamole URLs, and appliance credentials](terraform-apply-complete.png)
 
-Copy the URL shown next to **Open in browser**. You will use this address to access the lab environment through Guacamole in the next section.
+Copy the URL shown next to **Open in browser (HTTPS)** (or **Open in browser (HTTP)** if HTTPS is not available). You will use this address to access the lab environment through Guacamole in the next section.
 
 {{% notice warning %}}
 Do not close Cloud Shell while Terraform is applying. If the session disconnects, reopen Cloud Shell and re-run `./deploy-lab.sh` from the `scripts` directory.
