@@ -38,7 +38,7 @@ Sophisticated bots can rotate source addresses, spoof browser identifiers, and i
 
 In FortiWeb, **Known Bots** uses FortiGuard intelligence to classify **Known Good Bots** (for example, search-engine spiders that may be exempted from DoS, brute-force, Geo IP, and related sensors), **Likely Good Bots** (partial IP or User-Agent match), and **Malicious Bots** (content scrapers, vulnerability spiders, and other unwanted automation identified largely via `User-Agent` analysis).
 
-For additional detail, see [Bot mitigation](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/881142/bot-mitigation) and [Configuring known bots](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/584423/configuring-known-bots) in the FortiWeb 8.0.5 Administration Guide.
+For additional detail, see [Bot mitigation](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/881142/bot-mitigation) and [Configuring known bots](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/584423/configuring-known-bots) in the FortiWeb 8.0.8 Administration Guide.
 
 ### FortiWeb Bot Mitigation
 

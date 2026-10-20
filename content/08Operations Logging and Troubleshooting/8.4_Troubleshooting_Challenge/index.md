@@ -10,7 +10,7 @@ weight: 40
 
 Use a structured methodology to investigate an application-access problem without assuming FortiWeb is the cause.
 
-For additional FortiWeb troubleshooting guidance, see [Troubleshooting](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/738263/troubleshooting) in the FortiWeb 8.0.5 Administration Guide.
+For additional FortiWeb troubleshooting guidance, see [Troubleshooting](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/738263/troubleshooting) in the FortiWeb 8.0.8 Administration Guide.
 
 ### Scenario
 
@@ -115,7 +115,7 @@ If the issue remains unresolved, collect:
 * Packet captures or diagnostic output when appropriate
 * Recent configuration or application changes
 
-Use advanced diagnostics with your instructor, operational runbook, or Fortinet Support. See also [Troubleshooting](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/738263/troubleshooting).
+Use advanced diagnostics with your instructor, operational runbook, or Fortinet Support. See also [Troubleshooting](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/738263/troubleshooting).
 
 ---
 

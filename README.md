@@ -1,6 +1,8 @@
 
 # fortiweb-api-mcp-protection
 
+Hands-on workshop: protecting modern applications, APIs, and MCP services with **FortiWeb 8.0.8**.
+
 To view the workshop, please go here: [GitHub Pages Link](https://fortinetcloudcse.github.io/fortiweb-api-mcp-protection/)
 
 Lab traffic tool: see `/Users/wtefera/tools` (not in this repo).

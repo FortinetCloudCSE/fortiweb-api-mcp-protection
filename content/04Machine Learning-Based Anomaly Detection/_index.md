@@ -112,7 +112,7 @@ The following example shows how the two layers work together in practice. FortiW
 | Benign anomaly | `firstname=Janette&lastname=Smit&` | Unusual character, but not a threat | Allowed |
 | Attack | `firstname="SELECT * FROM CUSTOMER"` | Anomaly **and** confirmed attack | Blocked |
 
-For additional detail, see [ML-based anomaly detection](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/94907/ml-based-anomaly-detection) in the FortiWeb 8.0.5 Administration Guide.
+For additional detail, see [ML-based anomaly detection](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/94907/ml-based-anomaly-detection) in the FortiWeb 8.0.8 Administration Guide.
 
 ---
 

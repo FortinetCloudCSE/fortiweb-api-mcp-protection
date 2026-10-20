@@ -94,7 +94,7 @@ If the intermediate group is omitted and the client does not already possess the
 
 FortiWeb includes an integrated **Automatic Certificate Management Environment (ACME)** client based on RFC 8555. ACME automates certificate enrollment, domain validation, issuance, and renewal with supported certificate authorities.
 
-After an ACME account is configured and a certificate is issued, FortiWeb monitors certificate validity and initiates renewal according to the configured renewal period. FortiWeb 8.0.5 can also use External Account Binding (EAB) credentials with ACME providers that require account verification.
+After an ACME account is configured and a certificate is issued, FortiWeb monitors certificate validity and initiates renewal according to the configured renewal period. FortiWeb 8.0.8 can also use External Account Binding (EAB) credentials with ACME providers that require account verification.
 
 {{% notice note %}}
 Automatic renewal depends on the selected ACME challenge method and deployment. For example, DNS-01 challenges may require manual DNS updates when the challenge value changes.
@@ -135,10 +135,10 @@ Confirm that you can identify:
 
 ### Additional Information
 
-Refer to the FortiWeb 8.0.5 Administration Guide:
+Refer to the FortiWeb 8.0.8 Administration Guide:
 
-* [Secure connections (SSL/TLS)](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/173192/secure-connections-ssl-tls)
-* [Uploading a server certificate](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/991825/uploading-a-server-certificate)
-* [ACME certificates](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/916136/acme-certificates)
-* [Configuring an HTTP server policy](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/201872/configuring-an-http-server-policy)
-* [Supported cipher suites and protocol versions](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/742465/supported-cipher-suites-protocol-versions)
+* [Secure connections (SSL/TLS)](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/173192/secure-connections-ssl-tls)
+* [Uploading a server certificate](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/991825/uploading-a-server-certificate)
+* [ACME certificates](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/916136/acme-certificates)
+* [Configuring an HTTP server policy](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/201872/configuring-an-http-server-policy)
+* [Supported cipher suites and protocol versions](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/742465/supported-cipher-suites-protocol-versions)

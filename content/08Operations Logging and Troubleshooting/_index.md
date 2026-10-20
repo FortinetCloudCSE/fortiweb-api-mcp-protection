@@ -14,7 +14,7 @@ Deploying FortiWeb is only the beginning of protecting an application. Administr
 
 In this chapter, you use FortiWeb logs to validate policy behavior and follow a structured troubleshooting process.
 
-For official troubleshooting procedures, diagnostics, and common issue guidance, see [Troubleshooting](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/738263/troubleshooting) in the FortiWeb 8.0.5 Administration Guide.
+For official troubleshooting procedures, diagnostics, and common issue guidance, see [Troubleshooting](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/738263/troubleshooting) in the FortiWeb 8.0.8 Administration Guide.
 
 ### Learning Objectives
 

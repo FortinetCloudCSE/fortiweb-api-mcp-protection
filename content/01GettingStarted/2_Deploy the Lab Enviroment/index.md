@@ -8,7 +8,7 @@ weight: 2
 
 Use the Azure credentials from your provisioning email to sign in, open **Azure Cloud Shell**, clone the lab repository, and run the initialization script. Your lab user is paired with a resource group named `<username>-mcp201-workshop` (for example `fweb11-mcp201-workshop`). The deploy script builds that name from `whoami`—you do not edit Terraform variable files by hand.
 
-Allow about **10-15 minutes** for the full Terraform deploy after Cloud Shell is ready.
+Allow about **10-15 minutes** for the full Terraform deploy after Cloud Shell is ready. The appliance phase deploys **FortiWeb 8.0.8** (PAYG x64).
 
 ### Step 1 – Sign In to the Azure Portal
 
@@ -120,7 +120,6 @@ Copy the URL shown next to **Open in browser (HTTPS)** (or **Open in browser (HT
 Do not close Cloud Shell while Terraform is applying. If the session disconnects, reopen Cloud Shell and re-run `./deploy-lab.sh` from the `scripts` directory.
 {{% /notice %}}
 
-Continue to **[Access the Lab Environment](../3_Access%20the%20Lab%20Enviroment/)**.
 
 ### Topics Covered
 

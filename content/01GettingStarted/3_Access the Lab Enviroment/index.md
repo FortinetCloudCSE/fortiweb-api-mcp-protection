@@ -70,7 +70,7 @@ Guacamole does not accept a direct paste from your local machine into the remote
 
 ### Step 4 – Download the FortiWeb Configuration
 
-From the Guacamole desktop, launch a terminal and download the prepared FortiWeb 8.0.5 configuration:
+From the Guacamole desktop, launch a terminal and download the prepared FortiWeb 8.0.8 configuration:
 
 ```bash
 mkdir -p ~/Downloads
@@ -119,7 +119,7 @@ The FortiWeb login changes after the configuration is restored. Sign in with use
 {{% /notice %}}
 
 {{% notice note %}}
-This configuration was prepared specifically for the FortiWeb 8.0.5 training environment. Do not restore it to another FortiWeb deployment or a production appliance.
+This configuration was prepared specifically for the FortiWeb 8.0.8 training environment. Do not restore it to another FortiWeb deployment or a production appliance.
 {{% /notice %}}
 
 ### Step 7 – Format the FortiWeb Log Disk
@@ -191,7 +191,7 @@ Refer to the topology diagram in [The Lab Environment](../1_Lab%20Enviroment/) a
 * Access Guacamole at the HTTPS URL from deploy output (HTTP on `:8080` still works)
 * Sign in with the dedicated Guacamole lab credentials
 * Open the **Client** connection to reach the Linux desktop
-* Download the FortiWeb 8.0.5 training configuration
+* Download the FortiWeb 8.0.8 training configuration
 * Open the browser from the Guacamole desktop dock
 * Restore the FortiWeb configuration and format the log disk
 * Use the preconfigured bookmarks to access FortiWeb and the lab applications
