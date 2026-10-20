@@ -139,12 +139,12 @@ Open the Server Pool associated with the policy and confirm that the backend mem
 
 If a member is unhealthy, FortiWeb can stop forwarding requests to it until the configured health check succeeds again. A failed health check may indicate a network, service, port, TLS, or application problem.
 
-For additional information, see the FortiWeb 8.0.5 Administration Guide:
+For additional information, see the FortiWeb 8.0.8 Administration Guide:
 
-* [Configuring virtual servers on your FortiWeb](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/219671/configuring-virtual-servers-on-your-fortiweb)
-* [Creating an HTTP server pool](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/399384/defining-your-web-servers)
-* [Configuring an HTTP server policy](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/201872/configuring-an-http-server-policy)
-* [Configuring basic policies](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/40821/configuring-basic-policies)
+* [Configuring virtual servers on your FortiWeb](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/219671/configuring-virtual-servers-on-your-fortiweb)
+* [Creating an HTTP server pool](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/399384/defining-your-web-servers)
+* [Configuring an HTTP server policy](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/201872/configuring-an-http-server-policy)
+* [Configuring basic policies](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/40821/configuring-basic-policies)
 
 ### Verification Checklist
 

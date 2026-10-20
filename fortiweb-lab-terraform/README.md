@@ -5,7 +5,7 @@ This Terraform is organized in phases so routing is not applied before FortiGate
 ## Phases
 
 1. `00-foundation` - VNet, subnets, NSGs, Guacamole public IP (uses a pre-created student resource group)
-2. `01-appliances` - FortiGate PAYG and FortiWeb PAYG 8.0.5 marketplace VMs
+2. `01-appliances` - FortiGate PAYG and FortiWeb PAYG x64 8.0.8 marketplace VMs (`fortinet_fw-vm_payg_v2`)
 3. `02-lab-vms` - Guacamole, Docker1, Docker2 from captured images
 4. `03-routes` - route tables and subnet associations (client and protected traffic through FortiGate; server default through FortiWeb)
 
@@ -41,6 +41,8 @@ Verify after deploy: `diag debug cloudinit show` on the FortiGate CLI.
 Edit `configs/fortigate-bootstrap.conf.tpl` to change lab networking; changing `custom_data` replaces the FortiGate VM on next apply.
 
 ## FortiWeb bootstrap
+
+The marketplace image is FortiWeb PAYG x64 **8.0.8** (`fortinet:fortinet_fortiweb-vm_v5:fortinet_fw-vm_payg_v2:8.0.8`).
 
 Phase `01-appliances` also passes `configs/fortiweb-bootstrap.conf.tpl` to FortiWeb `custom_data`. On first boot it applies:
 

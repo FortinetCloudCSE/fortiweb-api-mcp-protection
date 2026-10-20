@@ -161,7 +161,7 @@ Rather than relying on a single detection technique, FortiWeb combines signature
 
 ![FortiWeb API protection layers](fortiweb-api-protection-layers.png)
 
-For additional detail, see [API Protection](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/904556/api-protection) in the FortiWeb 8.0.5 Administration Guide, including related topics such as [OpenAPI Validation](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/933477/openapi-validation) and [Configuring ML Based API Protection policy](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/98060/configuring-ml-based-api-protection-policy).
+For additional detail, see [API Protection](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/904556/api-protection) in the FortiWeb 8.0.8 Administration Guide, including related topics such as [OpenAPI Validation](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/933477/openapi-validation) and [Configuring ML Based API Protection policy](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/98060/configuring-ml-based-api-protection-policy).
 
 #### API Discovery
 

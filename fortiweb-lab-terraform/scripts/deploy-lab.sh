@@ -68,7 +68,7 @@ fi
 
 RG_LOCATION="$(az group show --name "${RESOURCE_GROUP}" --query location -o tsv)"
 
-echo "=== FortiWeb lab deploy ==="
+echo "=== FortiWeb 8.0.8 lab deploy ==="
 echo "Repo:            ${ROOT}"
 echo "Signed-in user:  $(az account show --query user.name -o tsv)"
 echo "Subscription:    $(az account show --query '{name:name,id:id}' -o json)"

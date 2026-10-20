@@ -15,10 +15,10 @@ MCP Security sits in the **Protocol Constraints** layer.FortiWeb operates as a r
 * **Poisoning Attack Protection** — inspect tool descriptions, parameters, and prompt text for jailbreak / override attempts
 * **JSON Schema Validation** — validate streamed messages against FortiGuard MCP schemas
 
-For additional detail, see [MCP Protocol](https://docs.fortinet.com/document/fortiweb/8.0.7/administration-guide/97697/mcp-protocol).
+For additional detail, see [MCP Protocol](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/97697/mcp-protocol).
 
 {{% notice note %}}
-This lab uses FortiWeb 8.0.7. In this lab environment, MCP signature inspection is enabled in the Web Protection Profile under Signature Detection → MCP. The MCP Security Policy contains the Poisoning Attack Protection and JSON Schema Validation settings.
+This lab uses FortiWeb 8.0.8. In this lab environment, MCP signature inspection is enabled in the Web Protection Profile under Signature Detection → MCP. The MCP Security Policy contains the Poisoning Attack Protection and JSON Schema Validation settings.
 {{% /notice %}}
 
 Configure the components in the following order:

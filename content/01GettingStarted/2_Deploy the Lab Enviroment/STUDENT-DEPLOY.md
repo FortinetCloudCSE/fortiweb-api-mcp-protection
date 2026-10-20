@@ -6,7 +6,7 @@ weight: 1
 
 ## Overview
 
-Step-by-step screenshots for Azure sign-in, Cloud Shell setup, clone, and deployment are in **[Deploy the Lab Environment](../2_Deploy%20the%20Lab%20Enviroment/)**.
+Step-by-step screenshots for Azure sign-in, Cloud Shell setup, clone, and deployment are in **[Deploy the Lab Environment](../2_Deploy%20the%20Lab%20Enviroment/)**. This deploy stands up **FortiWeb 8.0.8** (PAYG x64).
 
 Use that page as the primary guide. Summary:
 

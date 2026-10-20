@@ -47,7 +47,7 @@ MCP carries structured JSON-RPC over **Streamable HTTP**. FortiWeb identifies th
 
 ![MCP client, FortiWeb reverse proxy, MCP server, and internal/external tools](mcp-architecture.png)
 
-For protocol detail, see [MCP Protocol](https://docs.fortinet.com/document/fortiweb/8.0.7/administration-guide/97697/mcp-protocol) in the FortiWeb 8.0.7 Administration Guide.
+For protocol detail, see [MCP Protocol](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/97697/mcp-protocol) in the FortiWeb 8.0.8 Administration Guide.
 
 ---
 
@@ -160,7 +160,7 @@ Unlike Machine Learning Anomaly Detection and ML-based API Protection, **MCP Sec
 
 | FortiWeb capability | What it inspects on this path |
 |---------------------|-------------------------------|
-| Signature Detection | Methods, tool names, and `params.arguments` for SQLi, XSS, command injection, path traversal. In FortiWeb 8.0.7 this is enabled under **Signature Detection → MCP** on the Web Protection Profile. |
+| Signature Detection | Methods, tool names, and `params.arguments` for SQLi, XSS, command injection, path traversal. In FortiWeb 8.0.8 this is enabled under **Signature Detection → MCP** on the Web Protection Profile. |
 | Poisoning Attack Protection | Prompts, tool descriptions, and arguments for jailbreak / override / secret-harvesting text |
 | JSON Schema Validation | Streamed JSON-RPC against FortiGuard MCP schemas (structure, types, required fields) |
 | FortiView MCP Analysis | MCP sessions, methods, topology, and violations **after** Streamable HTTP is classified |
@@ -227,7 +227,7 @@ The assistant and MCP headend are already running on Guacamole Desktop and the a
 
 | Exercise | Focus |
 |----------|--------|
-| [6.1 – Configure MCP Security](6.1_Configure_MCP_Security/) | Rule, policy, Web Protection Profile, server policy (8.0.7) |
+| [6.1 – Configure MCP Security](6.1_Configure_MCP_Security/) | Rule, policy, Web Protection Profile, server policy (8.0.8) |
 | [6.2 – Open the assistant](6.2_Confirm_MCP_Path_and_Open_the_Assistant/) | Confirm FortiWeb is on the path |
 | [6.3 – Explore enterprise tools](6.3_Explore_Enterprise_Tools/) | Tool name, description, schema, returned data |
 | [6.4 – Generate legitimate enterprise MCP traffic](6.4_Generate_Legitimate_Enterprise_Traffic/) | Normal workflows, Traffic Log, FortiView |

@@ -7,6 +7,8 @@ weight: 3
 
 ### ***Setting up your Lab Enviroment***
 
+This workshop deploys **FortiWeb 8.0.8** (PAYG x64) with FortiGate, Guacamole, and the Docker application hosts.
+
 ### Provisioning the Azure environment (40min)
 
 Provision your Azure Environment, enter your Email address and click _Provision_

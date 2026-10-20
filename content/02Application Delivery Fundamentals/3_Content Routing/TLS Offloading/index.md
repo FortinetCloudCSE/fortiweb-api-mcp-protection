@@ -6,6 +6,10 @@ weight: 20
 
 ## Task 2 – Content Routing
 
+{{% notice note %}}
+This is a review-only exercise. The application-delivery configuration is already complete; do not change it unless directed by your instructor.
+{{% /notice %}}
+
 ## Review HTTP Content Routing
 
 HTTP Content Routing allows FortiWeb to publish multiple web applications behind a single Virtual IP address.
@@ -94,7 +98,7 @@ Confirm that:
 * Each rule references the intended Server Pool and Web Protection Profile
 * HTTP and HTTPS services are configured as required
 
-For additional details, see the FortiWeb 8.0.5 Administration Guide:
+For additional details, see the FortiWeb 8.0.8 Administration Guide:
 
-* [Configuring an HTTP server policy](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/201872/configuring-an-http-server-policy)
-* [Configuring virtual servers](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/219671/configuring-virtual-servers-on-your-fortiweb)
+* [Configuring an HTTP server policy](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/201872/configuring-an-http-server-policy)
+* [Configuring virtual servers](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/219671/configuring-virtual-servers-on-your-fortiweb)

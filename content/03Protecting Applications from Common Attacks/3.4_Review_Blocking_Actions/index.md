@@ -169,7 +169,7 @@ When you open an individual attack log, the Log Details pane includes an **Analy
 **Analyze with AI** sends the selected attack log to the FortiAI Assistant for context-aware analysis. FortiAI can summarize the event, assess potential risk and impact, and suggest mitigation or configuration changes—without requiring you to copy log data manually.
 
 {{% notice note %}}
-This lab does **not** require you to use **Analyze with AI**. The button is shown here for awareness only. For details, see [Analyze Individual Attack Logs with FortiAI](https://docs.fortinet.com/document/fortiweb/8.0.5/administration-guide/570355/analyze-individual-attack-logs-with-fortiai-8-0-1) in the FortiWeb 8.0.5 Administration Guide.
+This lab does **not** require you to use **Analyze with AI**. The button is shown here for awareness only. For details, see [Analyze Individual Attack Logs with FortiAI](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/570355/analyze-individual-attack-logs-with-fortiai-8-0-1) in the FortiWeb 8.0.8 Administration Guide.
 {{% /notice %}}
 
 ---

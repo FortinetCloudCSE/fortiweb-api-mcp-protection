@@ -8,7 +8,7 @@ weight: 90
 
 At the conclusion of this lab, participants will have:
 
-* Deployed a complete application security environment using Terraform  
+* Deployed a complete application security environment using Terraform, including FortiWeb **8.0.8**  
 * Accessed and managed the lab through Guacamole  
 * Understood load balancing, SSL offloading, and content routing concepts  
 * Protected applications from common web attacks  
