@@ -12,7 +12,7 @@ Configure FortiWeb MCP Security to inspect Model Context Protocol traffic before
 MCP Security sits in the **Protocol Constraints** layer.FortiWeb operates as a reverse proxy between the MCP client (AI application) and MCP server (tool provider), parsing Streamable HTTP / Server-Sent Events (SSE) JSON-RPC messages and applying:
 
  * **Signature Detection** — inspect methods, tool names, and argument values for injection and other known attacks
-* **Poisoning Attack Protection** — inspect tool descriptions, parameters, and prompt text for jailbreak / override attempts
+* **Poisoning Attack Protection** — scan tool descriptions, parameters, and prompt text (this lab: `lookup_ticket` on `tools/list` with `SYSTEM OVERRIDE` / `collector.example`)
 * **JSON Schema Validation** — validate streamed messages against FortiGuard MCP schemas
 
 For additional detail, see [MCP Protocol](https://docs.fortinet.com/document/fortiweb/8.0.8/administration-guide/97697/mcp-protocol).
@@ -88,6 +88,10 @@ The FortiWeb UI describes these engines as:
 * **Poisoning Attack Protection** — detects threats in tool parameters, tool descriptions, and prompt texts  
 * **JSON Schema Validation** — validates messages against supported open-source MCP schema versions published through FortiGuard  
 
+{{% notice note %}}
+In this lab on FortiWeb 8.0.8, the Poisoning Attack Protection demonstration is a `tools/list` description on `lookup_ticket` (Exercise 6.5). Keep the GUI toggles enabled as shown.
+{{% /notice %}}
+
 Signature Detection for MCP is configured on the Web Protection Profile in Step 4.  
 
 ---
@@ -121,8 +125,8 @@ Confirm that the Rules table lists **MCP**.
 | Setting | Value |
 |---------|-------|
 | Name | `MCP` |
-| Signatures | `Standard Protection` or `Extended Protection` |
-| Signature Detection | **MCP** checked |
+| Signatures | `Extended Protection` |
+| Signature Detection | **JSON** and **MCP** checked |
 | X-Forwarded-For | `X-Forwarded-For` |
 | MCP Security (under Protocol) | `MCP` |
 
@@ -161,7 +165,7 @@ FortiWeb is now ready to inspect MCP traffic for `mcp.fortiweblab.local` using s
 * Created the MCP Security rule for `mcp.fortiweblab.local` (or host status off with URL `.*`)
 * Created the MCP Security Policy with Poisoning Attack Protection and JSON Schema Validation enabled
 * Attached the MCP rule to the MCP policy
-* Created the `MCP` Web Protection Profile, set **MCP Security = MCP**, and checked **Signature Detection → MCP**
+* Created the `MCP` Web Protection Profile, set **MCP Security = MCP**, and checked **Signature Detection → JSON** and **MCP**
 * Assigned the `MCP` profile to the MCP server policy and enabled Traffic Log
 
 ### Next Exercise

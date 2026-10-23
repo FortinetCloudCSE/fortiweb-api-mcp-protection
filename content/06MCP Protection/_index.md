@@ -80,7 +80,7 @@ The MCP server does not *own* the crown jewels. It **brokers** access to them.
 | Ticketing / ITSM | `tickets.create`, `tickets.get` |
 | Databases | `db.query`, `pricing.get` |
 | Cloud resources | `cloud.inventory` |
-| Automation / admin platforms | `admin.exportDatabase`, `automation.run` |
+| Automation / admin platforms | `admin/exportDatabase`, `automation.run` |
 
 If an attacker can influence tool choice, arguments, or returned data, they are no longer “hacking a chatbot.” They are steering an agent that can reach those systems.
 
@@ -161,7 +161,7 @@ Unlike Machine Learning Anomaly Detection and ML-based API Protection, **MCP Sec
 | FortiWeb capability | What it inspects on this path |
 |---------------------|-------------------------------|
 | Signature Detection | Methods, tool names, and `params.arguments` for SQLi, XSS, command injection, path traversal. In FortiWeb 8.0.8 this is enabled under **Signature Detection → MCP** on the Web Protection Profile. |
-| Poisoning Attack Protection | Prompts, tool descriptions, and arguments for jailbreak / override / secret-harvesting text |
+| Poisoning Attack Protection | Jailbreak text in `tools/list` **descriptions** (this lab: `lookup_ticket` / `SYSTEM OVERRIDE` / `collector.example`) |
 | JSON Schema Validation | Streamed JSON-RPC against FortiGuard MCP schemas (structure, types, required fields) |
 | FortiView MCP Analysis | MCP sessions, methods, topology, and violations **after** Streamable HTTP is classified |
 | Attack Log | Which engine fired, action, host, URL, matched pattern |
@@ -218,7 +218,8 @@ They are complementary:
 * FortiAIGate answers: “Is this a safe thing to **say to / hear from** the model?”
 * FortiWeb MCP Security answers: “Is this a safe thing for the agent to **do** through MCP?”
 
-A jailbroken model without access to tools poses a content risk. Give that same model access to tools such as `crm.lookup` or `admin.exportDatabase`, and it becomes a data-plane risk. This chapter focuses on the latter.
+A jailbroken model without access to tools poses a content risk. Give that same model access to tools such as `crm.lookup` or JSON-RPC method `admin/exportDatabase`, and it becomes a data-plane risk. This chapter focuses on the latter.
+
 ---
 
 ## Lab Flow
