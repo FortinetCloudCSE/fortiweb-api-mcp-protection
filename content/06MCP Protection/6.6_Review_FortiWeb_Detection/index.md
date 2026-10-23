@@ -40,7 +40,7 @@ You should see a mix similar to:
 | Signature Detection | Command injection / traversal | 6.5-2, 6.5-7 |
 | MCP Violations | MCP Json Schema Validation | 6.5-3 |
 | MCP Violations | MCP Security Size Limit | 6.5-3 oversized |
-| Poisoning / prompt findings | Tool or prompt text | 6.5-4, 6.5-6, 6.5-8 |
+| Poisoning / prompt findings | JSON-RPC method `admin/deleteAllUsers` or `admin/exportDatabase`; prompt text in arguments | 6.5-2, 6.5-4, 6.5-6 |
 
 ![Attack Log for policy MCP: schema validation, generic attacks, and SQL Injection](mcp-attack-log-overview.png)
 

@@ -61,6 +61,7 @@ Under the **Standard Protection** section, configure the following policies:
 | Setting | Value |
 |---------|-------|
 | Signatures | `DVWA` |
+| Signature Detection | Leave JSON, XML, GraphQL, gRPC, MCP, File Upload, API, Mobile API, and WebSocket cleared |
 | HTTP Protocol Constraints | `DVWA` |
 | X-Forwarded-For | `X-Forwarded-For` |
 

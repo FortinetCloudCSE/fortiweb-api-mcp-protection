@@ -61,10 +61,10 @@ The lab assistant advertises **enterprise** tools (wiki, CRM, tickets, files, cl
 | `pricing.get` | Pricing database | Retrieve product pricing | `sku` | Price, currency, discount |
 | `hr.policy.search` | HR handbook | Search employee policy | `query` | Policy section |
 | `cloud.inventory` | Cloud account | List cloud assets | `account`, `region` | Resource IDs, tags |
-| `admin.exportDatabase` | Administrative platform | Privileged export (should be denied) | none / `confirm` | Must not succeed for students |
+| `admin/exportDatabase` | Administrative platform | Privileged JSON-RPC method (should be denied) | none | Must not succeed for students |
 
 {{% notice warning %}}
-Privileged tools such as `admin.deleteAllUsers`, `admin.exportDatabase`, and `admin.resetPasswords` are **unauthorized** in this lab. Exercise 6.5 uses them only as invalid/unauthorized MCP methods so FortiWeb can demonstrate a deny. They must not execute host operations.
+Privileged JSON-RPC methods such as `admin/deleteAllUsers`, `admin/exportDatabase`, and `admin/resetPasswords` are **unauthorized** in this lab. They must not execute host operations. Exercise 6.5 demonstrates Poisoning Attack Protection on a `tools/list` description (`lookup_ticket`), not on these method names.
 {{% /notice %}}
 
 ---
@@ -83,7 +83,7 @@ Fill this table from Step 1. Use the current lab names on the left and the close
 | `automation.run` | | | Ops runbooks |
 | _(add any others)_ | | | |
 
-Also note any **dangerous-looking** names the broker advertises (for example `automation.run`, `admin.exportDatabase`). Those are the MCP-layer equivalents of admin or data-plane tools.
+Also note any **dangerous-looking** names the broker advertises (for example `automation.run`). Exercise 6.5 later sends unauthorized JSON-RPC methods such as `admin/exportDatabase` that are **not** in a normal `tools/list`.
 
 ---
 
@@ -91,7 +91,7 @@ Also note any **dangerous-looking** names the broker advertises (for example `au
 
 If the description of `crm.lookup` says “returns full customer record including internal notes and API keys,” the model is more likely to call it when a user asks for “everything about this customer.”
 
-That is **tool poisoning** when the description is malicious, and **excessive capability advertising** even when it is merely sloppy. Exercise 6.5 demonstrates both.
+That is **tool poisoning** when the description is malicious, and **excessive capability advertising** even when it is merely sloppy. Exercise 6.5 uses that description-based case (`lookup_ticket` with `SYSTEM OVERRIDE`).
 
 ```text
 tools/list  →  model reads names + descriptions + schemas

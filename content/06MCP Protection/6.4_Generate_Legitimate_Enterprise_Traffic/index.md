@@ -80,7 +80,7 @@ That is why one sentence in the UI can create several Traffic Log rows for `POST
 ![Traffic Log showing allowed POST /mcp to mcp.fortiweblab.local](mcp-traffic-log-legitimate.png)
 
 4. In the assistant sidebar, note the **Session** id and match the time window to the Traffic Log (the packet header also shows `Mcp-Session-Id`).
-5. Open **Dashboard → FortiView → MCP Analysis**. Set policy **MCP**, MCP server **All** or `acmecorp-mcp-headend`, last hour. You should see sessions and methods such as `initialize`, `tools/list`, and `tools/call`. Traffic Log Policy = MCP is **not** the same as this dashboard.
+5. Open **Dashboard → FortiView → MCP Analysis**. Set policy **MCP**, MCP server **All** or `acmecorp-mcp-headend`, last hour. Click the dashboard **Refresh** control. You should see sessions and methods such as `initialize`, `tools/list`, and `tools/call`. The topology **Tools** and **Prompts** counts are discovered primitives from `tools/list` and `prompts/list` — they stay at 0 if you only ran attack chips (for example `admin/deleteAllUsers`). Traffic Log Policy = MCP is **not** the same as this dashboard.
 
 Legitimate calls should **not** produce Attack Log **Alert_Deny** rows for these prompts. If they do, stop and tell the instructor—the baseline is dirty.
 

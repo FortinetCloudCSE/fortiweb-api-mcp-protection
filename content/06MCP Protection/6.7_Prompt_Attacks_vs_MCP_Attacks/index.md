@@ -13,7 +13,7 @@ Make the chapter’s core distinction observable in the lab, not just in a slide
 > **Prompt attack** — attempts to manipulate what the AI **thinks**.  
 > **MCP attack** — attempts to manipulate what the AI **does**.
 
-A jailbroken model that **cannot** call tools is a content problem. The same model that **can** call `crm.lookup` is a data-plane problem. Poisoned tool descriptions are still MCP attacks even when the user typed a harmless question. FortiWeb does not replace IAM on CRM or Git; it inspects the brokered channel so injection, schema abuse, and poisoning are visible and deniable.
+A jailbroken model that **cannot** call tools is a content problem. The same model that **can** call `crm.lookup` is a data-plane problem. A rogue JSON-RPC **`method`** such as `admin/deleteAllUsers` is still an MCP attack even when the user typed a harmless question. FortiWeb does not replace IAM on CRM or Git; it inspects the brokered channel so injection, schema abuse, and poisoning are visible and deniable.
 
 ---
 
