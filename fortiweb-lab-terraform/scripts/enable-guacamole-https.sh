@@ -1,10 +1,15 @@
 #!/bin/bash
 # TLS reverse proxy in front of Guacamole (HTTP :8080).
-# Expects FQDN in the environment (Azure public IP DNS name).
-set -euo pipefail
+# With the Azure public-IP DNS name, Caddy requests a Let's Encrypt cert so
+# https://<fqdn>/guacamole/ has a public CA (no browser warning). Do not fall
+# back to tls internal when FQDN is set — that is the cert warning.
+# Always exit 0: HTTP :8080 remains the lab fallback if ACME is slow/rate-limited.
+set -u
 
 LOG=/var/log/guacamole-https-setup.log
-echo "==== $(date -Is) guacamole HTTPS setup fqdn=${FQDN:-} ====" | tee -a "$LOG"
+# Do not use exec > >(tee) — Azure Run Command can hang on the tee FIFO.
+log() { echo "$*" | tee -a "$LOG"; }
+log "==== $(date -Is) guacamole HTTPS setup fqdn=${FQDN:-} ===="
 
 if command -v ufw >/dev/null 2>&1; then
   ufw allow 80/tcp || true
@@ -12,16 +17,18 @@ if command -v ufw >/dev/null 2>&1; then
   ufw allow 8080/tcp || true
 fi
 
-for _ in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36; do
+for _ in $(seq 1 12); do
   docker info >/dev/null 2>&1 && break
   sleep 5
 done
-docker info >/dev/null 2>&1 || {
-  echo "ERROR: docker is not available"
-  exit 1
-}
+if ! docker info >/dev/null 2>&1; then
+  log "WARNING: docker is not available; students can use HTTP :8080"
+  exit 0
+fi
 
 mkdir -p /opt/guacamole-https
+
+FQDN="$(echo "${FQDN:-}" | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
 
 proxy_block() {
   cat <<'EOF'
@@ -35,79 +42,89 @@ proxy_block() {
 EOF
 }
 
-write_caddyfile_letsencrypt() {
+if [[ -n "$FQDN" ]]; then
+  # Same ACME email on every student VM so Caddy does not register a new
+  # ZeroSSL/Let's Encrypt account per FQDN (that is what delayed this lab).
   cat > /opt/guacamole-https/Caddyfile <<EOF
 {
-  email lab@$(echo "$FQDN" | tr '[:upper:]' '[:lower:]')
+  email mcp201-workshop@users.noreply.github.com
 }
 
-$FQDN {
+${FQDN} {
 $(proxy_block)
 }
 EOF
-}
-
-write_caddyfile_internal() {
+  log "Caddyfile: Let's Encrypt for ${FQDN}"
+else
   cat > /opt/guacamole-https/Caddyfile <<EOF
 {
-  auto_https disable_redirects
+  auto_https off
+  servers {
+    protocols h1 h2
+  }
 }
 
 :443 {
-  tls internal
+  tls {
+    issuer internal
+    on_demand
+  }
 $(proxy_block)
 }
 EOF
+  log "Caddyfile: internal TLS (no FQDN); browser warning expected"
+fi
+
+ensure_caddy_image() {
+  docker image inspect caddy:2-alpine >/dev/null 2>&1 && return 0
+  log "caddy:2-alpine not cached; pulling with 45s timeout"
+  if command -v timeout >/dev/null 2>&1; then
+    timeout 45 docker pull caddy:2-alpine || true
+  else
+    docker pull caddy:2-alpine || true
+  fi
+  docker image inspect caddy:2-alpine >/dev/null 2>&1
 }
 
-if [[ -n "${FQDN:-}" ]]; then
-  write_caddyfile_letsencrypt
-else
-  write_caddyfile_internal
+if ! ensure_caddy_image; then
+  log "WARNING: could not pull caddy:2-alpine; HTTPS skipped; use HTTP :8080"
+  exit 0
 fi
 
 docker rm -f guac-https >/dev/null 2>&1 || true
-docker pull caddy:2-alpine
-docker run -d --name guac-https --restart unless-stopped \
+if docker run -d --name guac-https --restart unless-stopped \
   --network host \
   -v /opt/guacamole-https/Caddyfile:/etc/caddy/Caddyfile:ro \
   -v guacamole-caddy-data:/data \
   -v guacamole-caddy-config:/config \
-  caddy:2-alpine
+  caddy:2-alpine; then
+  log "Caddy container started"
+else
+  log "WARNING: failed to start Caddy; use HTTP :8080"
+  log "==== $(date -Is) guacamole HTTPS setup done ===="
+  exit 0
+fi
 
-sleep 8
-
-https_ok() {
-  local url=$1
-  curl -sfk --max-time 10 "$url" >/dev/null
-}
-
-ok=0
-if [[ -n "${FQDN:-}" ]]; then
-  for _ in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36; do
-    # Verify a public CA certificate, not Guacamole HTTP status (502 is OK).
-    if curl -sS --max-time 10 -o /dev/null "https://${FQDN}/"; then
+if [[ -n "$FQDN" ]]; then
+  # --resolve hits local Caddy with the right SNI. Do not curl the public
+  # FQDN from the guest (Azure hairpin NAT) and do not replace LE with
+  # tls internal if this check fails.
+  ok=0
+  for _ in $(seq 1 24); do
+    if curl -sS --max-time 8 --resolve "${FQDN}:443:127.0.0.1" \
+      -o /dev/null "https://${FQDN}/guacamole/"; then
       ok=1
       break
     fi
     sleep 5
   done
-  if [[ "$ok" -ne 1 ]]; then
-    echo "Let's Encrypt did not succeed; falling back to an internal TLS certificate"
-    write_caddyfile_internal
-    docker rm -f guac-https >/dev/null 2>&1 || true
-    docker run -d --name guac-https --restart unless-stopped \
-      --network host \
-      -v /opt/guacamole-https/Caddyfile:/etc/caddy/Caddyfile:ro \
-      -v guacamole-caddy-data:/data \
-      -v guacamole-caddy-config:/config \
-      caddy:2-alpine
-    sleep 5
+  if [[ "$ok" -eq 1 ]]; then
+      log "Let's Encrypt certificate is trusted for https://${FQDN}/guacamole/"
+  else
+    log "WARNING: Let's Encrypt not ready yet; use HTTP :8080 or wait and retry the FQDN URL"
+    docker logs guac-https --tail 40 || true
   fi
 fi
 
-https_ok "https://127.0.0.1/guacamole/" || https_ok "https://${FQDN:-127.0.0.1}/guacamole/" || {
-  echo "WARNING: HTTPS proxy started but Guacamole is not answering yet"
-}
-
-echo "==== $(date -Is) guacamole HTTPS setup done ===="
+log "==== $(date -Is) guacamole HTTPS setup done ===="
+exit 0

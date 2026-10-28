@@ -125,8 +125,8 @@ resource "azurerm_virtual_machine_run_command" "guac_https" {
   }
 
   timeouts {
-    create = "20m"
-    update = "20m"
+    create = "6m"
+    update = "6m"
   }
 }
 
