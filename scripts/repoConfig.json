@@ -39,6 +39,12 @@
       "URL": "https://www.fortinet.com/content/dam/fortinet/assets/data-sheets/og-fortiweb.pdf",
       "icon": "fa-tools",
       "weight": 40
+    },
+    {
+      "text": "Best Practices",
+      "URL": "https://docs.fortinet.com/4d-resources/WAF",
+      "icon": "fa-book",
+      "weight": 50
     }
   ]
 }
